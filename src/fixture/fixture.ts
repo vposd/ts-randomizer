@@ -1,4 +1,4 @@
-import { SpecimenFactory } from './spicemen-factory';
+import { SpecimenFactory, Value } from './spicemen-factory';
 import { TypeDescription } from '../types';
 
 type FixtureArguments = [TypeDescription?];
@@ -8,7 +8,10 @@ export class Fixture {
    * Creates anonymous variables by description of T.
    * @returns An anonymous variable of type T.
    */
-  static create<T>(...args: FixtureArguments): T | T[] {
+  static create<T>(...args: FixtureArguments): Value<T> | null {
+    if (!args[0]) {
+      return null;
+    }
     return new SpecimenFactory<T>(args[0]).create();
   }
 
@@ -20,11 +23,15 @@ export class Fixture {
     firstArg?: TypeDescription | number,
     minCount?: number,
     maxCount?: number
-  ): T[] {
-    return new SpecimenFactory<T>(firstArg as TypeDescription).createMany(
-      minCount,
-      maxCount
-    );
+  ): Array<Value<T>> | null {
+    if (!firstArg) {
+      return null;
+    }
+    return new SpecimenFactory<T>(firstArg as TypeDescription)
+      .createMany(
+        minCount,
+        maxCount
+      );
   }
 
   /**
@@ -32,6 +39,9 @@ export class Fixture {
    * @param template A Type description that describes what to create.
    */
   static build<T>(...args: FixtureArguments): SpecimenFactory<T> {
+    if (!args[0]) {
+      throw new Error('[Fixture] Error: Missing type description');
+    }
     return new SpecimenFactory<T>(args[0]);
   }
 }

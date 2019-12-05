@@ -11,9 +11,9 @@ import {
   createDate,
 } from './util';
 
-type Mutator<T> = (x: T | null) => unknown;
-type BasicType = string | number | boolean | object | Date;
-type Value<T> = T extends BasicType ? BasicType : T;
+type Mutator<T> = (x: Value<T> | null) => unknown;
+export type BasicType = string | number | boolean | object | Date | Function;
+export type Value<T> = T extends BasicType ? BasicType : T;
 
 /**
  * Creates anonymous variables by description of T.
@@ -57,9 +57,6 @@ export class SpecimenFactory<T> {
   }
 
   private generate() {
-    if (isNil(this.input)) {
-      return null;
-    }
     if (isString(this.input)) {
       return this.generateValue(this.input) as Value<T>;
     }
@@ -68,29 +65,29 @@ export class SpecimenFactory<T> {
         this.input as PropertyDescription[]
       ) as Value<T>;
     }
-    return this.generatePropertyValue(this.input);
+    return this.generatePropertyValue(this.input) as Value<T>;
   }
 
   private generatePropertyValue(prop: PropertyDescription): Value<T> {
     if (prop.isArray) {
       return new SpecimenFactory<keyof T>(prop.type).createMany(
         this.arrayValueCount
-      );
+      ) as Value<T>;
     }
-    return new SpecimenFactory<keyof T>(prop.type).create();
+    return new SpecimenFactory<T>(prop.type).create() as Value<T>;
   }
 
-  private generatePropertiesValues(props: PropertyDescription[]): unknown {
+  private generatePropertiesValues(props: PropertyDescription[]) {
     return props.reduce((output, prop) => {
       if (!prop || !prop.key) {
         return output;
       }
       Reflect.set(output, prop.key, this.generatePropertyValue(prop));
       return output;
-    }, {});
+    }, {} as object);
   }
 
-  private generateValue(type: PropertyType) {
+  private generateValue(type: PropertyType): BasicType {
     switch (type) {
       case PropertyType.String:
         return createString();
