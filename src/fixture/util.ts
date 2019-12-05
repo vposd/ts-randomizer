@@ -5,5 +5,6 @@ export const createString = (): string => uuid();
 export const createNumber = (): number => random(0, 1e10);
 export const createBoolean = (): boolean => Boolean(random(0, 1));
 export const createFunction = (): Function => () => { };
+export const createDate = (): Date => new Date();
 export const createObject = (): object => ({});
-export const createAny = () => [createObject, createNumber, createBoolean, createString][random(0, 3)].call(null);
+export const createAny = () => [createObject, createNumber, createBoolean, createString][random(0, 4)].call(null);
