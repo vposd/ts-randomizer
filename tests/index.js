@@ -1,5 +1,5 @@
 const path = require("path");
-const compile = require("../dist/src/compile").default;
+const compile = require("../dist/debug/compile").default;
 
 compile([
   path.join(__dirname, "./transformer.test.ts"),
