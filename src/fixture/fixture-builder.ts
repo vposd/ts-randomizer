@@ -10,6 +10,9 @@ export class FixtureBuilder<T> {
     private readonly input: TypeDescription
   ) { }
 
+  /**
+   * Creates a data by the requested type.
+   */
   create() {
     return this.mutators
       .reduce((out, mutator) =>
@@ -18,11 +21,18 @@ export class FixtureBuilder<T> {
       );
   }
 
+  /**
+   * Creates many data by the requested type.
+   */
   createMany(minCount?: number, maxCount?: number) {
     return range(minCount || 0, maxCount)
       .map(() => this.create());
   }
 
+  /**
+   * Registers a mutation handler for object prop
+   * @param func Object
+   */
   with(func: (x: T) => any) {
     this.mutators.push(func);
     return this;
@@ -48,7 +58,8 @@ export class FixtureBuilder<T> {
           return output;
         }
         if (prop.isArray) {
-          output[prop.key] = new FixtureBuilder(prop.type).createMany(random(2, 5));
+          const count = 5;
+          output[prop.key] = new FixtureBuilder(prop.type).createMany(count);
           return output;
         }
         output[prop.key] = new FixtureBuilder(prop.type).create();
