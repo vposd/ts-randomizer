@@ -152,56 +152,121 @@ describe('Test transformer.', () => {
     ]);
   });
 
-  test('should generate description for interface with props with type parameters', () => {
-    interface A<T, V> {
-      t: T;
-      v: V
+  test('should generate description for interface with high order props type params', () => {
+    interface C<N> {
+      n: N;
+    }
+    interface B<G> {
+      g: G;
     }
 
-    interface U<T> {
-      c: T
+    interface A<T> {
+      a: B<C<T>>
     }
 
-    interface C<Y> {
-      b: number;
-      y: Y[];
-    }
-
-    interface D {
-      d: U<string>;
-      a: C<U<boolean>>[];
-    }
-
-    expect(Fixture.create<A<number, D>>()).toMatchObject([
+    expect(Fixture.create<A<string[]>>()).toEqual([
       {
-        key: 't',
-        type: PropertyType.Number
-      },
-      {
-        key: 'v',
+        key: "a",
+        isArray: false,
         type: [
           {
-            key: 'd',
-            type: [
-              { key: 'c', type: PropertyType.String }
-            ]
-          },
+            key: "g",
+            isArray: false,
+            type: [{ key: "n", isArray: true, type: PropertyType.String }]
+          }
+        ]
+      }
+    ]);
+  })
+
+  test('should generate description for class with high order props type params', () => {
+    class C<N> {
+      n: N;
+    }
+    class B<G> {
+      g: G;
+    }
+
+    class A<T> {
+      a: B<C<T>>
+    }
+
+    expect(Fixture.create<A<string[]>>()).toEqual([
+      {
+        key: "a",
+        isArray: false,
+        type: [
           {
-            key: 'a',
+            key: "g",
+            isArray: false,
+            type: [{ key: "n", isArray: true, type: PropertyType.String }]
+          }
+        ]
+      }
+    ]);
+  })
+
+  test('should generate description for interface with high order props array type params', () => {
+    interface C<N, D> {
+      n: N[];
+      d: D;
+    }
+    interface B<G> {
+      g: G[];
+    }
+
+    interface A<T, R> {
+      a: B<C<T[], R>>
+    }
+
+    expect(Fixture.create<A<string[], boolean>>()).toEqual([
+      {
+        key: "a",
+        isArray: false,
+        type: [
+          {
+            key: "g",
             isArray: true,
             type: [
-              { key: 'b', type: PropertyType.Number },
-              {
-                key: 'y',
-                isArray: true,
-                type: [{ key: 'c', isArray: false, type: 'boolean' }]
-              }
+              { key: "n", isArray: true, type: { isArray: true, type: PropertyType.String } },
+              { key: "d", isArray: false, type: PropertyType.Boolean }
             ]
           }
         ]
       }
     ]);
-  });
+  })
+
+  test('should generate description for class with high order props array type params', () => {
+    class C<N, D> {
+      n: N[];
+      d: D;
+    }
+    class B<G> {
+      g: G[];
+    }
+
+    class A<T, R> {
+      a: B<C<T[], R>>
+    }
+
+    expect(Fixture.create<A<string[], boolean>>()).toEqual([
+      {
+        key: "a",
+        isArray: false,
+        type: [
+          {
+            key: "g",
+            isArray: true,
+            type: [
+              { key: "n", isArray: true, type: { isArray: true, type: PropertyType.String } },
+              { key: "d", isArray: false, type: PropertyType.Boolean }
+            ]
+          }
+        ]
+      }
+    ]);
+  })
 
   test('should generate description for interface with different type parameters', () => {
     interface K<L, M> {
@@ -275,64 +340,6 @@ describe('Test transformer.', () => {
       { key: 'c', isArray: false, type: PropertyType.Object }
     ]);
   });
-
-  test('should generate description for interface with high order props type params', () => {
-    interface C<N> {
-      n: N;
-    }
-    interface B<G> {
-      g: G;
-    }
-
-    interface A<T> {
-      a: B<C<T>>
-    }
-
-    expect(Fixture.create<A<string[]>>()).toEqual([
-      {
-        key: "a",
-        isArray: false,
-        type: [
-          {
-            key: "g",
-            isArray: false,
-            type: [{ key: "n", isArray: true, type: PropertyType.String }]
-          }
-        ]
-      }
-    ]);
-  })
-
-  test('should generate description for interface with high order props array type params', () => {
-    interface C<N, D> {
-      n: N[];
-      d: boolean;
-    }
-    interface B<G> {
-      g: G[];
-    }
-
-    interface A<T, R> {
-      a: B<C<T[], R>>
-    }
-
-    expect(Fixture.create<A<string[], boolean>>()).toEqual([
-      {
-        key: "a",
-        isArray: false,
-        type: [
-          {
-            key: "g",
-            isArray: true,
-            type: [
-              { key: "n", isArray: true, type: { isArray: true, type: PropertyType.String } },
-              { key: "d", isArray: false, type: PropertyType.Boolean }
-            ]
-          }
-        ]
-      }
-    ]);
-  })
 
   test('should generate description for classes with props with type parameters', () => {
     class W<P> {

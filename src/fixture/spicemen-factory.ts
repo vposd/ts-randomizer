@@ -1,17 +1,25 @@
-import { random, isString, isArray, range, isNil } from 'lodash/fp';
+import { isString, isArray, range, isNil } from 'lodash/fp';
 
 import { TypeDescription, PropertyDescription, PropertyType } from '../types';
-import { createString, createNumber, createBoolean, createFunction, createObject, createAny } from './util';
+import { createString, createNumber, createBoolean, createFunction, createObject, createAny, createDate } from './util';
 
-export class FixtureBuilder<T> {
+/**
+ * Creates anonymous variables by description of T.
+ */
+export class SpecimenFactory<T> {
   private readonly mutators = [];
+  private readonly arrayValueCount = 5;
 
+  /**
+   * @param input The description of type to create.
+   */
   constructor(
     private readonly input: TypeDescription
   ) { }
 
   /**
-   * Creates a data by the requested type.
+   * Creates an variable of the requested type.
+   * @returns An anonymous variable of type T.
    */
   create() {
     return this.mutators
@@ -22,7 +30,8 @@ export class FixtureBuilder<T> {
   }
 
   /**
-   * Creates many data by the requested type.
+   * Creates many anonymous objects.
+   * @returns A sequence of anonymous object of type T.
    */
   createMany(minCount?: number, maxCount?: number) {
     return range(minCount || 0, maxCount)
@@ -30,8 +39,9 @@ export class FixtureBuilder<T> {
   }
 
   /**
-   * Registers a mutation handler for object prop
-   * @param func Object
+   * Registers that a writable property or field should be assigned an anonymous value
+   * as part of specimen post-processing.
+   * @param func An expression that identifies the property or field that will should have a value assigned.
    */
   with(func: (x: T) => any) {
     this.mutators.push(func);
@@ -48,7 +58,14 @@ export class FixtureBuilder<T> {
     if (isArray(this.input)) {
       return this.generatePropertiesValues(this.input as PropertyDescription[]);
     }
-    return this.generateArrayValue(this.input);
+    return this.generatePropertyValue(this.input);
+  }
+
+  private generatePropertyValue(prop: PropertyDescription) {
+    if (prop.isArray) {
+      return new SpecimenFactory(prop.type).createMany(this.arrayValueCount);
+    }
+    return new SpecimenFactory(prop.type).create();
   }
 
   private generatePropertiesValues(props: PropertyDescription[]) {
@@ -57,19 +74,9 @@ export class FixtureBuilder<T> {
         if (!prop) {
           return output;
         }
-        if (prop.isArray) {
-          const count = 5;
-          output[prop.key] = new FixtureBuilder(prop.type).createMany(count);
-          return output;
-        }
-        output[prop.key] = new FixtureBuilder(prop.type).create();
+        output[prop.key] = this.generatePropertyValue(prop);
         return output;
       }, {});
-  }
-
-  private generateArrayValue(description: PropertyDescription) {
-    return range(random(2, 3), random(5, 7))
-      .map(() => this.generateValue(description.type as PropertyType));
   }
 
   private generateValue(type: PropertyType) {
@@ -78,6 +85,7 @@ export class FixtureBuilder<T> {
       case PropertyType.Number: return createNumber();
       case PropertyType.Boolean: return createBoolean();
       case PropertyType.Function: return createFunction();
+      case PropertyType.Date: return createDate();
       case PropertyType.Object: return createObject();
       default: return createAny();
     }
