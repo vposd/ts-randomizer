@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "outDir": "dist",
+    "lib": ["esnext", "dom"],
+    "module": "commonjs",
+    "target": "esnext"
+  },
+  "include": ["./src", "./tests", "./debug"],
+  "exclude": ["node_modules"]
+}
