@@ -1,41 +1,49 @@
 import { isString, isArray, range, isNil } from 'lodash/fp';
 
 import { TypeDescription, PropertyDescription, PropertyType } from '../types';
-import { createString, createNumber, createBoolean, createFunction, createObject, createAny, createDate } from './util';
+import {
+  createString,
+  createNumber,
+  createBoolean,
+  createFunction,
+  createObject,
+  createAny,
+  createDate,
+} from './util';
+
+type Mutator<T> = (x: T | null) => unknown;
+type BasicType = string | number | boolean | object | Date;
+type Value<T> = T extends BasicType ? BasicType : T;
 
 /**
  * Creates anonymous variables by description of T.
  */
 export class SpecimenFactory<T> {
-  private readonly mutators = [];
+  private readonly mutators: Array<Mutator<T>> = [];
   private readonly arrayValueCount = 5;
 
   /**
    * @param input The description of type to create.
    */
-  constructor(
-    private readonly input: TypeDescription
-  ) { }
+  constructor(private readonly input: TypeDescription) {}
 
   /**
    * Creates an variable of the requested type.
    * @returns An anonymous variable of type T.
    */
   create() {
-    return this.mutators
-      .reduce((out, mutator) =>
-        (mutator(out), out),
-        this.generate()
-      );
+    return this.mutators.reduce(
+      (out, mutator) => (mutator(out), out),
+      this.generate()
+    );
   }
 
   /**
    * Creates many anonymous objects.
    * @returns A sequence of anonymous object of type T.
    */
-  createMany(minCount?: number, maxCount?: number) {
-    return range(minCount || 0, maxCount)
-      .map(() => this.create());
+  createMany(minCount = this.arrayValueCount, maxCount = this.arrayValueCount) {
+    return range(minCount, maxCount).map(() => this.create());
   }
 
   /**
@@ -43,51 +51,61 @@ export class SpecimenFactory<T> {
    * as part of specimen post-processing.
    * @param func An expression that identifies the property or field that will should have a value assigned.
    */
-  with(func: (x: T) => any) {
+  with(func: Mutator<T>) {
     this.mutators.push(func);
     return this;
   }
 
   private generate() {
     if (isNil(this.input)) {
-      return this.input;
+      return null;
     }
     if (isString(this.input)) {
-      return this.generateValue(this.input);
+      return this.generateValue(this.input) as Value<T>;
     }
     if (isArray(this.input)) {
-      return this.generatePropertiesValues(this.input as PropertyDescription[]);
+      return this.generatePropertiesValues(
+        this.input as PropertyDescription[]
+      ) as Value<T>;
     }
     return this.generatePropertyValue(this.input);
   }
 
-  private generatePropertyValue(prop: PropertyDescription) {
+  private generatePropertyValue(prop: PropertyDescription): Value<T> {
     if (prop.isArray) {
-      return new SpecimenFactory(prop.type).createMany(this.arrayValueCount);
+      return new SpecimenFactory<keyof T>(prop.type).createMany(
+        this.arrayValueCount
+      );
     }
-    return new SpecimenFactory(prop.type).create();
+    return new SpecimenFactory<keyof T>(prop.type).create();
   }
 
-  private generatePropertiesValues(props: PropertyDescription[]) {
-    return props
-      .reduce((output, prop) => {
-        if (!prop) {
-          return output;
-        }
-        output[prop.key] = this.generatePropertyValue(prop);
+  private generatePropertiesValues(props: PropertyDescription[]): unknown {
+    return props.reduce((output, prop) => {
+      if (!prop || !prop.key) {
         return output;
-      }, {});
+      }
+      Reflect.set(output, prop.key, this.generatePropertyValue(prop));
+      return output;
+    }, {});
   }
 
   private generateValue(type: PropertyType) {
     switch (type) {
-      case PropertyType.String: return createString();
-      case PropertyType.Number: return createNumber();
-      case PropertyType.Boolean: return createBoolean();
-      case PropertyType.Function: return createFunction();
-      case PropertyType.Date: return createDate();
-      case PropertyType.Object: return createObject();
-      default: return createAny();
+      case PropertyType.String:
+        return createString();
+      case PropertyType.Number:
+        return createNumber();
+      case PropertyType.Boolean:
+        return createBoolean();
+      case PropertyType.Function:
+        return createFunction();
+      case PropertyType.Date:
+        return createDate();
+      case PropertyType.Object:
+        return createObject();
+      default:
+        return createAny();
     }
   }
 }

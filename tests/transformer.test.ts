@@ -7,30 +7,22 @@ class Fixture {
 describe('Test transformer.', () => {
   test('should generate description for basic type', () => {
     expect(Fixture.create<string>()).toBe(PropertyType.String);
-    expect(Fixture.create<String>()).toBe(PropertyType.String);
     expect(Fixture.create<number>()).toBe(PropertyType.Number);
-    expect(Fixture.create<Number>()).toBe(PropertyType.Number);
     expect(Fixture.create<boolean>()).toBe(PropertyType.Boolean);
-    expect(Fixture.create<Boolean>()).toBe(PropertyType.Boolean);
     expect(Fixture.create<Function>()).toBe(PropertyType.Function);
     expect(Fixture.create<Date>()).toBe(PropertyType.Date);
     expect(Fixture.create<object>()).toBe(PropertyType.Object);
-    expect(Fixture.create<Object>()).toBe(PropertyType.Object);
     expect(Fixture.create<null>()).toBe(null);
     expect(Fixture.create<undefined>()).toBe(undefined);
   });
 
   test('should generate description for basic array type', () => {
     expect(Fixture.create<string[]>()).toMatchObject({ isArray: true, type: PropertyType.String });
-    expect(Fixture.create<String[][]>()).toMatchObject({ isArray: true, type: { isArray: true, type: PropertyType.String } });
     expect(Fixture.create<number[][][]>()).toMatchObject({ isArray: true, type: { isArray: true, type: { isArray: true, type: PropertyType.Number } } });
-    expect(Fixture.create<Number[]>()).toMatchObject({ isArray: true, type: PropertyType.Number });
     expect(Fixture.create<boolean[]>()).toMatchObject({ isArray: true, type: PropertyType.Boolean });
-    expect(Fixture.create<Boolean[]>()).toMatchObject({ isArray: true, type: PropertyType.Boolean });
     expect(Fixture.create<Function[]>()).toMatchObject({ isArray: true, type: PropertyType.Function });
     expect(Fixture.create<Date[]>()).toMatchObject({ isArray: true, type: PropertyType.Date });
     expect(Fixture.create<object[]>()).toMatchObject({ isArray: true, type: PropertyType.Object });
-    expect(Fixture.create<Object[]>()).toMatchObject({ isArray: true, type: PropertyType.Object });
     expect(Fixture.create<null[]>()).toMatchObject({ isArray: true, type: null });
   });
 
@@ -276,7 +268,7 @@ describe('Test transformer.', () => {
 
     interface E<H, I> {
       h: H;
-      i: K<H, I[]>[]
+      i: Array<K<H, I[]>>
     }
 
     interface A<B, C> {
@@ -284,7 +276,7 @@ describe('Test transformer.', () => {
       c: C;
     }
 
-    expect(Fixture.create<A<E<string, number>[], object>>()).toEqual([
+    expect(Fixture.create<A<Array<E<string, number>>, object>>()).toEqual([
       {
         key: 'b',
         isArray: true,
@@ -313,7 +305,7 @@ describe('Test transformer.', () => {
 
     class E<H, I> {
       h: H;
-      i: K<H, I[]>[]
+      i: Array<K<H, I[]>>
     }
 
     class A<B, C> {
@@ -321,7 +313,7 @@ describe('Test transformer.', () => {
       c: C;
     }
 
-    expect(Fixture.create<A<E<string, number>[], object>>()).toEqual([
+    expect(Fixture.create<A<Array<E<string, number>>, object>>()).toEqual([
       {
         key: 'b',
         isArray: true,

@@ -6,15 +6,11 @@ describe('Fixture class', () => {
   describe('.create', () => {
     test('should create random values for basic types', () => {
       expect(Fixture.create<string>()).toEqual(matchAnyString());
-      expect(Fixture.create<String>()).toEqual(matchAnyString());
       expect(Fixture.create<number>()).toEqual(expect.any(Number));
-      expect(Fixture.create<Number>()).toEqual(expect.any(Number));
       expect(Fixture.create<boolean>()).toEqual(expect.any(Boolean));
-      expect(Fixture.create<Boolean>()).toEqual(expect.any(Boolean));
       expect(Fixture.create<Function>()).toEqual(expect.any(Function));
       expect(Fixture.create<Date>()).toEqual(expect.any(Date));
       expect(Fixture.create<object>()).toEqual(expect.any(Object));
-      expect(Fixture.create<Object>()).toEqual(expect.any(Object));
       expect(Fixture.create<null>()).toBe(null);
       expect(Fixture.create<undefined>()).toBe(undefined);
     });
@@ -144,15 +140,11 @@ describe('.createMany', () => {
       [matchAnyString(), matchAnyString(), matchAnyString(), matchAnyString(), matchAnyString()],
       [matchAnyString(), matchAnyString(), matchAnyString(), matchAnyString(), matchAnyString()]
     ]);
-    expect(Fixture.createMany<String>(3)).toEqual([matchAnyString(), matchAnyString(), matchAnyString()]);
     expect(Fixture.createMany<number>(3)).toEqual([expect.any(Number), expect.any(Number), expect.any(Number)]);
-    expect(Fixture.createMany<Number>(2)).toEqual([expect.any(Number), expect.any(Number)]);
     expect(Fixture.createMany<boolean>(2)).toEqual([expect.any(Boolean), expect.any(Boolean)]);
-    expect(Fixture.createMany<Boolean>(3)).toEqual([expect.any(Boolean), expect.any(Boolean), expect.any(Boolean)]);
     expect(Fixture.createMany<Function>(4)).toEqual([expect.any(Function), expect.any(Function), expect.any(Function), expect.any(Function)]);
     expect(Fixture.createMany<Date>(4)).toEqual([expect.any(Date), expect.any(Date), expect.any(Date), expect.any(Date)]);
     expect(Fixture.createMany<object>(2)).toEqual([expect.any(Object), expect.any(Object)]);
-    expect(Fixture.createMany<Object>(3)).toEqual([expect.any(Object), expect.any(Object), expect.any(Object)]);
     expect(Fixture.createMany<null>(2)).toEqual([null, null]);
   });
 
