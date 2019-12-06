@@ -1,11 +1,7 @@
-class Randomizer {
-  static create<T>(desc?: unknown) {
-    return desc;
-  }
-}
+import { Randomizer } from '../src/randomizer/randomizer';
 
 interface A {
-  a: string;
+  a: string[];
 }
 
-Randomizer.create<A[]>();
+Randomizer.create<A>();

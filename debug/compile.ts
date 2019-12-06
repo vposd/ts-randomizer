@@ -6,7 +6,7 @@ export function compile(
   writeFileCallback?: ts.WriteFileCallback
 ) {
   const program = ts.createProgram(filePaths, {
-    strict: false,
+    outDir: 'build/manual-compiled',
     noEmitOnError: true,
     suppressImplicitAnyIndexErrors: true,
     target: ts.ScriptTarget.ES5,
