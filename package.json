@@ -1,7 +1,7 @@
 {
   "name": "ts-randomizer",
   "version": "1.0.0",
-  "description": "Unit test helper for create random objects by class or interface",
+  "description": "Library for typescript for easy creating data by requested type",
   "main": "main.ts",
   "scripts": {
     "build": "tsc",
