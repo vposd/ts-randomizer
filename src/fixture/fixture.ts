@@ -1,6 +1,7 @@
+import { isUndefined } from 'lodash/fp';
+
 import { SpecimenFactory, Value } from './spicemen-factory';
 import { TypeDescription } from '../types';
-import { isUndefined } from 'lodash/fp';
 
 type FixtureArguments = [TypeDescription?];
 
@@ -13,7 +14,7 @@ export class Fixture {
     if (isUndefined(args[0])) {
       return undefined;
     }
-    return new SpecimenFactory<T>(args[0]).create() as Value<T>;
+    return new SpecimenFactory<T>(args[0]).create();
   }
 
   /**
@@ -31,7 +32,7 @@ export class Fixture {
     return new SpecimenFactory<T>(firstArg as TypeDescription).createMany(
       minCount,
       maxCount
-    ) as Array<Value<T>>;
+    );
   }
 
   /**

@@ -1,4 +1,4 @@
-import { isString, isArray, range, isNil } from 'lodash/fp';
+import { isString, isArray, range } from 'lodash/fp';
 
 import { TypeDescription, PropertyDescription, PropertyType } from '../types';
 import {
@@ -35,7 +35,7 @@ export class SpecimenFactory<T> {
     return this.mutators.reduce(
       (out, mutator) => (mutator(out as T), out),
       this.generate()
-    );
+    ) as Value<T>;
   }
 
   /**
@@ -43,7 +43,9 @@ export class SpecimenFactory<T> {
    * @returns A sequence of anonymous object of type T.
    */
   createMany(minCount?: number, maxCount?: number) {
-    return range(minCount || 0, maxCount || 0).map(() => this.create());
+    return range(minCount || 0, maxCount || 0).map(() =>
+      this.create()
+    ) as Array<Value<T>>;
   }
 
   /**
@@ -73,12 +75,12 @@ export class SpecimenFactory<T> {
   }
 
   private generatePropertyValue(prop: PropertyDescription): Value<T> {
-    if (prop.isArray) {
-      return new SpecimenFactory(prop.type).createMany(
-        this.arrayValueCount
-      ) as Value<T>;
+    if (!prop.isArray) {
+      return new SpecimenFactory<T>(prop.type).create() as Value<T>;
     }
-    return new SpecimenFactory<T>(prop.type).create() as Value<T>;
+    return new SpecimenFactory(prop.type).createMany(
+      this.arrayValueCount
+    ) as Value<T>;
   }
 
   private generatePropertiesValues(props: PropertyDescription[]) {
