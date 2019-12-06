@@ -1,5 +1,6 @@
 import { SpecimenFactory, Value } from './spicemen-factory';
 import { TypeDescription } from '../types';
+import { isUndefined } from 'lodash/fp';
 
 type FixtureArguments = [TypeDescription?];
 
@@ -8,11 +9,11 @@ export class Fixture {
    * Creates anonymous variables by description of T.
    * @returns An anonymous variable of type T.
    */
-  static create<T>(...args: FixtureArguments): Value<T> | null {
-    if (!args[0]) {
-      return null;
+  static create<T>(...args: FixtureArguments): Value<T> | undefined {
+    if (isUndefined(args[0])) {
+      return undefined;
     }
-    return new SpecimenFactory<T>(args[0]).create();
+    return new SpecimenFactory<T>(args[0]).create() as Value<T>;
   }
 
   /**
@@ -23,15 +24,14 @@ export class Fixture {
     firstArg?: TypeDescription | number,
     minCount?: number,
     maxCount?: number
-  ): Array<Value<T>> | null {
-    if (!firstArg) {
-      return null;
+  ): Array<Value<T>> | undefined {
+    if (isUndefined(firstArg)) {
+      return undefined;
     }
-    return new SpecimenFactory<T>(firstArg as TypeDescription)
-      .createMany(
-        minCount,
-        maxCount
-      );
+    return new SpecimenFactory<T>(firstArg as TypeDescription).createMany(
+      minCount,
+      maxCount
+    ) as Array<Value<T>>;
   }
 
   /**
@@ -39,7 +39,7 @@ export class Fixture {
    * @param template A Type description that describes what to create.
    */
   static build<T>(...args: FixtureArguments): SpecimenFactory<T> {
-    if (!args[0]) {
+    if (isUndefined(args[0])) {
       throw new Error('[Fixture] Error: Missing type description');
     }
     return new SpecimenFactory<T>(args[0]);

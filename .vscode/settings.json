@@ -29,15 +29,5 @@
     }
   },
   "files.defaultLanguage": "typescript",
-  "files.trimTrailingWhitespace": true,
-  "prettier.singleQuote": true,
-  "prettier.printWidth": 100,
-  "prettier.jsxBracketSameLine": true,
-  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces": false,
-  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": false,
-  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces": false,
-  "typescript.format.insertSpaceAfterTypeAssertion": true,
-  "[typescript]": {
-    "editor.defaultFormatter": "vscode.typescript-language-features"
-  }
+  "files.trimTrailingWhitespace": true
 }

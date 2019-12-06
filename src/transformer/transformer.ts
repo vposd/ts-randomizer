@@ -29,7 +29,7 @@ export const transformer = (
 const createTypeArgumentsMap = (type: ts.Type) => (
   checker: ts.TypeChecker
 ): TypeArgumentsMap => {
-  const argumentsMap = {};
+  const argumentsMap: TypeArgumentsMap = {};
   const symbol = type.getSymbol();
 
   if (!symbol) {
@@ -58,14 +58,18 @@ const createTypeArgumentsMap = (type: ts.Type) => (
     }
     const itemSymbol = checker.getTypeAtLocation(typeParameterItem).getSymbol();
     const isArray = isArrayType(item);
+    const t = isArray ? getFirstTypeParameter(item) : item;
+    if (!t) {
+      return acc;
+    }
     const typeDesc = {
-      type: isArray ? getFirstTypeParameter(item) : item,
+      type: t,
       isArray,
     };
     if (!itemSymbol) {
       return acc;
     }
-    Reflect.set(acc, itemSymbol.name, typeDesc);
+    acc[itemSymbol.name] = typeDesc;
     return acc;
   }, argumentsMap);
 };
@@ -154,7 +158,7 @@ const resolvePropertyDeclaration = (
         ? arr
           ? arr.symbol && arr.symbol.name
           : i.symbol.name
-        : null;
+        : i.symbol.name;
       if (!symbolName) {
         return;
       }

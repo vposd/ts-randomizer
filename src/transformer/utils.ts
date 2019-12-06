@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import { first } from 'lodash/fp';
+
 import { PropertyType } from '../types';
 
 const TARGET_CALLERS = ['create', 'createMany', 'build'];
@@ -32,7 +33,7 @@ export const getPropertyNameBySyntaxKind = (
     | undefined
 ): PropertyType => {
   if (!propertySignature) {
-    return PropertyType.Any;
+    return PropertyType.Unknown;
   }
   let kind: ts.SyntaxKind | undefined = propertySignature.kind;
   if (
@@ -66,7 +67,7 @@ export const getPropertyNameBySyntaxKind = (
             (propertySignature as ts.ArrayTypeNode).elementType
           );
     default:
-      return PropertyType.Any;
+      return PropertyType.Unknown;
   }
 };
 

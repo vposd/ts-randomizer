@@ -5,7 +5,6 @@ export interface TypeArgumentsMap {
 }
 
 export enum PropertyType {
-  Any = 'any',
   Boolean = 'boolean',
   Date = 'date',
   Function = 'function',

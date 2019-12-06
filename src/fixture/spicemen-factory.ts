@@ -7,11 +7,11 @@ import {
   createBoolean,
   createFunction,
   createObject,
-  createAny,
+  createUnknown,
   createDate,
 } from './util';
 
-type Mutator<T> = (x: Value<T> | null) => unknown;
+type Mutator<T> = (x: T | null) => unknown;
 export type BasicType = string | number | boolean | object | Date | Function;
 export type Value<T> = T extends BasicType ? BasicType : T;
 
@@ -33,7 +33,7 @@ export class SpecimenFactory<T> {
    */
   create() {
     return this.mutators.reduce(
-      (out, mutator) => (mutator(out), out),
+      (out, mutator) => (mutator(out as T), out),
       this.generate()
     );
   }
@@ -42,8 +42,8 @@ export class SpecimenFactory<T> {
    * Creates many anonymous objects.
    * @returns A sequence of anonymous object of type T.
    */
-  createMany(minCount = this.arrayValueCount, maxCount = this.arrayValueCount) {
-    return range(minCount, maxCount).map(() => this.create());
+  createMany(minCount?: number, maxCount?: number) {
+    return range(minCount || 0, maxCount || 0).map(() => this.create());
   }
 
   /**
@@ -57,20 +57,24 @@ export class SpecimenFactory<T> {
   }
 
   private generate() {
+    if (this.input === PropertyType.Undefined) {
+      return undefined;
+    }
+    if (this.input === PropertyType.Null) {
+      return null;
+    }
     if (isString(this.input)) {
-      return this.generateValue(this.input) as Value<T>;
+      return this.generateValue(this.input);
     }
     if (isArray(this.input)) {
-      return this.generatePropertiesValues(
-        this.input as PropertyDescription[]
-      ) as Value<T>;
+      return this.generatePropertiesValues(this.input as PropertyDescription[]);
     }
-    return this.generatePropertyValue(this.input) as Value<T>;
+    return this.generatePropertyValue(this.input);
   }
 
   private generatePropertyValue(prop: PropertyDescription): Value<T> {
     if (prop.isArray) {
-      return new SpecimenFactory<keyof T>(prop.type).createMany(
+      return new SpecimenFactory(prop.type).createMany(
         this.arrayValueCount
       ) as Value<T>;
     }
@@ -82,12 +86,12 @@ export class SpecimenFactory<T> {
       if (!prop || !prop.key) {
         return output;
       }
-      Reflect.set(output, prop.key, this.generatePropertyValue(prop));
+      output[prop.key] = this.generatePropertyValue(prop);
       return output;
-    }, {} as object);
+    }, {} as { [key: string]: Value<T> });
   }
 
-  private generateValue(type: PropertyType): BasicType {
+  private generateValue(type: PropertyType) {
     switch (type) {
       case PropertyType.String:
         return createString();
@@ -102,7 +106,7 @@ export class SpecimenFactory<T> {
       case PropertyType.Object:
         return createObject();
       default:
-        return createAny();
+        return createUnknown();
     }
   }
 }
