@@ -1,9 +1,10 @@
 import * as ts from 'typescript';
 
-export type TypeArgumentsMap = { [key: string]: { type: ts.Type, isArray?: boolean } };
+export interface TypeArgumentsMap {
+  [key: string]: { type: ts.Type; isArray?: boolean };
+}
 
 export enum PropertyType {
-  Any = 'any',
   Boolean = 'boolean',
   Date = 'date',
   Function = 'function',
@@ -11,9 +12,14 @@ export enum PropertyType {
   Object = 'object',
   String = 'string',
   Unknown = 'unknown',
+  Null = 'null',
+  Undefined = 'undefined',
 }
 
-export type TypeDescription = PropertyDescription | PropertyType | (PropertyType | PropertyDescription)[];
+export type TypeDescription =
+  | PropertyDescription
+  | PropertyType
+  | Array<PropertyType | PropertyDescription>;
 
 export interface PropertyDescription {
   key?: string;

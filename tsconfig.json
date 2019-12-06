@@ -1,15 +1,8 @@
 {
+  "extends": "./node_modules/gts/tsconfig-google.json",
   "compilerOptions": {
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "sourceMap": true,
-    "outDir": "dist",
-    "lib": ["esnext", "dom"],
-    "module": "commonjs",
-    "target": "esnext"
+    "rootDir": ".",
+    "outDir": "build"
   },
-  "include": ["./src", "./tests", "./debug"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*.ts", "test/**/*.ts", "debug/**/*.ts"]
 }

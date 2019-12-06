@@ -1,7 +1,10 @@
 import * as ts from 'typescript';
 import { transformer } from '../src/transformer/transformer';
 
-export default function compile(filePaths: string[], writeFileCallback?: ts.WriteFileCallback) {
+export function compile(
+  filePaths: string[],
+  writeFileCallback?: ts.WriteFileCallback
+) {
   const program = ts.createProgram(filePaths, {
     strict: false,
     noEmitOnError: true,
@@ -14,9 +17,17 @@ export default function compile(filePaths: string[], writeFileCallback?: ts.Writ
     after: [],
   };
 
-  const { emitSkipped, diagnostics } = program.emit(undefined, writeFileCallback, undefined, false, tramsformers);
+  const { emitSkipped, diagnostics } = program.emit(
+    undefined,
+    writeFileCallback,
+    undefined,
+    false,
+    tramsformers
+  );
 
   if (emitSkipped) {
-    throw new Error(diagnostics.map(diagnostic => diagnostic.messageText).join('\n'));
+    throw new Error(
+      diagnostics.map(diagnostic => diagnostic.messageText).join('\n')
+    );
   }
 }

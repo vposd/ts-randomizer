@@ -1,37 +1,53 @@
 import { PropertyType } from '../src/types';
 
-class Fixture {
+class Randomizer {
   static create = <T>(a?: T) => a;
 }
 
 describe('Test transformer.', () => {
   test('should generate description for basic type', () => {
-    expect(Fixture.create<string>()).toBe(PropertyType.String);
-    expect(Fixture.create<String>()).toBe(PropertyType.String);
-    expect(Fixture.create<number>()).toBe(PropertyType.Number);
-    expect(Fixture.create<Number>()).toBe(PropertyType.Number);
-    expect(Fixture.create<boolean>()).toBe(PropertyType.Boolean);
-    expect(Fixture.create<Boolean>()).toBe(PropertyType.Boolean);
-    expect(Fixture.create<Function>()).toBe(PropertyType.Function);
-    expect(Fixture.create<Date>()).toBe(PropertyType.Date);
-    expect(Fixture.create<object>()).toBe(PropertyType.Object);
-    expect(Fixture.create<Object>()).toBe(PropertyType.Object);
-    expect(Fixture.create<null>()).toBe(null);
-    expect(Fixture.create<undefined>()).toBe(undefined);
+    expect(Randomizer.create<string>()).toBe(PropertyType.String);
+    expect(Randomizer.create<number>()).toBe(PropertyType.Number);
+    expect(Randomizer.create<boolean>()).toBe(PropertyType.Boolean);
+    expect(Randomizer.create<Function>()).toBe(PropertyType.Function);
+    expect(Randomizer.create<Date>()).toBe(PropertyType.Date);
+    expect(Randomizer.create<object>()).toBe(PropertyType.Object);
+    expect(Randomizer.create<null>()).toBe(PropertyType.Null);
+    expect(Randomizer.create<undefined>()).toBe(PropertyType.Undefined);
   });
 
   test('should generate description for basic array type', () => {
-    expect(Fixture.create<string[]>()).toMatchObject({ isArray: true, type: PropertyType.String });
-    expect(Fixture.create<String[][]>()).toMatchObject({ isArray: true, type: { isArray: true, type: PropertyType.String } });
-    expect(Fixture.create<number[][][]>()).toMatchObject({ isArray: true, type: { isArray: true, type: { isArray: true, type: PropertyType.Number } } });
-    expect(Fixture.create<Number[]>()).toMatchObject({ isArray: true, type: PropertyType.Number });
-    expect(Fixture.create<boolean[]>()).toMatchObject({ isArray: true, type: PropertyType.Boolean });
-    expect(Fixture.create<Boolean[]>()).toMatchObject({ isArray: true, type: PropertyType.Boolean });
-    expect(Fixture.create<Function[]>()).toMatchObject({ isArray: true, type: PropertyType.Function });
-    expect(Fixture.create<Date[]>()).toMatchObject({ isArray: true, type: PropertyType.Date });
-    expect(Fixture.create<object[]>()).toMatchObject({ isArray: true, type: PropertyType.Object });
-    expect(Fixture.create<Object[]>()).toMatchObject({ isArray: true, type: PropertyType.Object });
-    expect(Fixture.create<null[]>()).toMatchObject({ isArray: true, type: null });
+    expect(Randomizer.create<string[]>()).toMatchObject({
+      isArray: true,
+      type: PropertyType.String,
+    });
+    expect(Randomizer.create<number[][][]>()).toMatchObject({
+      isArray: true,
+      type: {
+        isArray: true,
+        type: { isArray: true, type: PropertyType.Number },
+      },
+    });
+    expect(Randomizer.create<boolean[]>()).toMatchObject({
+      isArray: true,
+      type: PropertyType.Boolean,
+    });
+    expect(Randomizer.create<Function[]>()).toMatchObject({
+      isArray: true,
+      type: PropertyType.Function,
+    });
+    expect(Randomizer.create<Date[]>()).toMatchObject({
+      isArray: true,
+      type: PropertyType.Date,
+    });
+    expect(Randomizer.create<object[]>()).toMatchObject({
+      isArray: true,
+      type: PropertyType.Object,
+    });
+    expect(Randomizer.create<null[]>()).toMatchObject({
+      isArray: true,
+      type: PropertyType.Null,
+    });
   });
 
   test('should generate description for interface', () => {
@@ -39,7 +55,9 @@ describe('Test transformer.', () => {
       a: string;
     }
 
-    expect(Fixture.create<A>()).toMatchObject([{ key: 'a', type: PropertyType.String }]);
+    expect(Randomizer.create<A>()).toMatchObject([
+      { key: 'a', type: PropertyType.String },
+    ]);
   });
 
   test('should generate description for class', () => {
@@ -47,7 +65,9 @@ describe('Test transformer.', () => {
       a: string;
     }
 
-    expect(Fixture.create<A>()).toMatchObject([{ key: 'a', type: PropertyType.String }]);
+    expect(Randomizer.create<A>()).toMatchObject([
+      { key: 'a', type: PropertyType.String },
+    ]);
   });
 
   test('should generate description for interface with different type parameters', () => {
@@ -58,18 +78,27 @@ describe('Test transformer.', () => {
       f: F[][];
     }
 
-    expect(Fixture.create<A<string, number[], boolean[], object[][]>>()).toMatchObject([
+    expect(
+      Randomizer.create<A<string, number[], boolean[], object[][]>>()
+    ).toMatchObject([
       { key: 'b', type: PropertyType.String },
       { key: 'c', isArray: true, type: PropertyType.Number },
-      { key: 'd', isArray: true, type: { isArray: true, type: PropertyType.Boolean } },
+      {
+        key: 'd',
+        isArray: true,
+        type: { isArray: true, type: PropertyType.Boolean },
+      },
       {
         key: 'f',
         isArray: true,
         type: {
           isArray: true,
-          type: { isArray: true, type: { isArray: true, type: PropertyType.Object } }
-        }
-      }
+          type: {
+            isArray: true,
+            type: { isArray: true, type: PropertyType.Object },
+          },
+        },
+      },
     ]);
   });
 
@@ -81,18 +110,27 @@ describe('Test transformer.', () => {
       f: F[][];
     }
 
-    expect(Fixture.create<A<string, number[], boolean[], object[][]>>()).toMatchObject([
+    expect(
+      Randomizer.create<A<string, number[], boolean[], object[][]>>()
+    ).toMatchObject([
       { key: 'b', type: PropertyType.String },
       { key: 'c', isArray: true, type: PropertyType.Number },
-      { key: 'd', isArray: true, type: { isArray: true, type: PropertyType.Boolean } },
+      {
+        key: 'd',
+        isArray: true,
+        type: { isArray: true, type: PropertyType.Boolean },
+      },
       {
         key: 'f',
         isArray: true,
         type: {
           isArray: true,
-          type: { isArray: true, type: { isArray: true, type: PropertyType.Object } }
-        }
-      }
+          type: {
+            isArray: true,
+            type: { isArray: true, type: PropertyType.Object },
+          },
+        },
+      },
     ]);
   });
 
@@ -109,18 +147,16 @@ describe('Test transformer.', () => {
       a: Y;
     }
 
-    expect(Fixture.create<A<B<C>>>()).toMatchObject([
+    expect(Randomizer.create<A<B<C>>>()).toMatchObject([
       {
         key: 'a',
         type: [
           {
             key: 'b',
-            type: [
-              { key: 'c', type: PropertyType.String }
-            ]
-          }
-        ]
-      }
+            type: [{ key: 'c', type: PropertyType.String }],
+          },
+        ],
+      },
     ]);
   });
 
@@ -137,18 +173,16 @@ describe('Test transformer.', () => {
       a: Y;
     }
 
-    expect(Fixture.create<A<B<C<boolean>>>>()).toMatchObject([
+    expect(Randomizer.create<A<B<C<boolean>>>>()).toMatchObject([
       {
         key: 'a',
         type: [
           {
             key: 'b',
-            type: [
-              { key: 'c', type: PropertyType.Boolean }
-            ]
-          }
-        ]
-      }
+            type: [{ key: 'c', type: PropertyType.Boolean }],
+          },
+        ],
+      },
     ]);
   });
 
@@ -161,23 +195,23 @@ describe('Test transformer.', () => {
     }
 
     interface A<T> {
-      a: B<C<T>>
+      a: B<C<T>>;
     }
 
-    expect(Fixture.create<A<string[]>>()).toEqual([
+    expect(Randomizer.create<A<string[]>>()).toEqual([
       {
-        key: "a",
+        key: 'a',
         isArray: false,
         type: [
           {
-            key: "g",
+            key: 'g',
             isArray: false,
-            type: [{ key: "n", isArray: true, type: PropertyType.String }]
-          }
-        ]
-      }
+            type: [{ key: 'n', isArray: true, type: PropertyType.String }],
+          },
+        ],
+      },
     ]);
-  })
+  });
 
   test('should generate description for class with high order props type params', () => {
     class C<N> {
@@ -188,23 +222,23 @@ describe('Test transformer.', () => {
     }
 
     class A<T> {
-      a: B<C<T>>
+      a: B<C<T>>;
     }
 
-    expect(Fixture.create<A<string[]>>()).toEqual([
+    expect(Randomizer.create<A<string[]>>()).toEqual([
       {
-        key: "a",
+        key: 'a',
         isArray: false,
         type: [
           {
-            key: "g",
+            key: 'g',
             isArray: false,
-            type: [{ key: "n", isArray: true, type: PropertyType.String }]
-          }
-        ]
-      }
+            type: [{ key: 'n', isArray: true, type: PropertyType.String }],
+          },
+        ],
+      },
     ]);
-  })
+  });
 
   test('should generate description for interface with high order props array type params', () => {
     interface C<N, D> {
@@ -216,26 +250,30 @@ describe('Test transformer.', () => {
     }
 
     interface A<T, R> {
-      a: B<C<T[], R>>
+      a: B<C<T[], R>>;
     }
 
-    expect(Fixture.create<A<string[], boolean>>()).toEqual([
+    expect(Randomizer.create<A<string[], boolean>>()).toEqual([
       {
-        key: "a",
+        key: 'a',
         isArray: false,
         type: [
           {
-            key: "g",
+            key: 'g',
             isArray: true,
             type: [
-              { key: "n", isArray: true, type: { isArray: true, type: PropertyType.String } },
-              { key: "d", isArray: false, type: PropertyType.Boolean }
-            ]
-          }
-        ]
-      }
+              {
+                key: 'n',
+                isArray: true,
+                type: { isArray: true, type: PropertyType.String },
+              },
+              { key: 'd', isArray: false, type: PropertyType.Boolean },
+            ],
+          },
+        ],
+      },
     ]);
-  })
+  });
 
   test('should generate description for class with high order props array type params', () => {
     class C<N, D> {
@@ -247,26 +285,30 @@ describe('Test transformer.', () => {
     }
 
     class A<T, R> {
-      a: B<C<T[], R>>
+      a: B<C<T[], R>>;
     }
 
-    expect(Fixture.create<A<string[], boolean>>()).toEqual([
+    expect(Randomizer.create<A<string[], boolean>>()).toEqual([
       {
-        key: "a",
+        key: 'a',
         isArray: false,
         type: [
           {
-            key: "g",
+            key: 'g',
             isArray: true,
             type: [
-              { key: "n", isArray: true, type: { isArray: true, type: PropertyType.String } },
-              { key: "d", isArray: false, type: PropertyType.Boolean }
-            ]
-          }
-        ]
-      }
+              {
+                key: 'n',
+                isArray: true,
+                type: { isArray: true, type: PropertyType.String },
+              },
+              { key: 'd', isArray: false, type: PropertyType.Boolean },
+            ],
+          },
+        ],
+      },
     ]);
-  })
+  });
 
   test('should generate description for interface with different type parameters', () => {
     interface K<L, M> {
@@ -276,7 +318,8 @@ describe('Test transformer.', () => {
 
     interface E<H, I> {
       h: H;
-      i: K<H, I[]>[]
+      // tslint:disable-next-line: array-type
+      i: K<H, I[]>[];
     }
 
     interface A<B, C> {
@@ -284,7 +327,7 @@ describe('Test transformer.', () => {
       c: C;
     }
 
-    expect(Fixture.create<A<E<string, number>[], object>>()).toEqual([
+    expect(Randomizer.create<A<Array<E<string, number>>, object>>()).toEqual([
       {
         key: 'b',
         isArray: true,
@@ -294,16 +337,23 @@ describe('Test transformer.', () => {
             key: 'i',
             isArray: true,
             type: [
-              { key: 'l', isArray: true, type: { isArray: true, type: PropertyType.String } },
-              { key: 'm', isArray: true, type: { isArray: true, type: PropertyType.Number } }
-            ]
-          }
-        ]
+              {
+                key: 'l',
+                isArray: true,
+                type: { isArray: true, type: PropertyType.String },
+              },
+              {
+                key: 'm',
+                isArray: true,
+                type: { isArray: true, type: PropertyType.Number },
+              },
+            ],
+          },
+        ],
       },
-      { key: 'c', isArray: false, type: PropertyType.Object }
+      { key: 'c', isArray: false, type: PropertyType.Object },
     ]);
-
-  })
+  });
 
   test('should generate description for class with different type parameters', () => {
     class K<L, M> {
@@ -313,7 +363,8 @@ describe('Test transformer.', () => {
 
     class E<H, I> {
       h: H;
-      i: K<H, I[]>[]
+      // tslint:disable-next-line: array-type
+      i: K<H, I[]>[];
     }
 
     class A<B, C> {
@@ -321,7 +372,7 @@ describe('Test transformer.', () => {
       c: C;
     }
 
-    expect(Fixture.create<A<E<string, number>[], object>>()).toEqual([
+    expect(Randomizer.create<A<Array<E<string, number>>, object>>()).toEqual([
       {
         key: 'b',
         isArray: true,
@@ -331,13 +382,21 @@ describe('Test transformer.', () => {
             key: 'i',
             isArray: true,
             type: [
-              { key: 'l', isArray: true, type: { isArray: true, type: PropertyType.String } },
-              { key: 'm', isArray: true, type: { isArray: true, type: PropertyType.Number } }
-            ]
-          }
-        ]
+              {
+                key: 'l',
+                isArray: true,
+                type: { isArray: true, type: PropertyType.String },
+              },
+              {
+                key: 'm',
+                isArray: true,
+                type: { isArray: true, type: PropertyType.Number },
+              },
+            ],
+          },
+        ],
       },
-      { key: 'c', isArray: false, type: PropertyType.Object }
+      { key: 'c', isArray: false, type: PropertyType.Object },
     ]);
   });
 
@@ -352,14 +411,14 @@ describe('Test transformer.', () => {
 
     class J<G, H> {
       g: G;
-      h: I<H[]>
+      h: I<H[]>;
     }
 
     class A<T, V> {
       t: J<T[], V>;
     }
 
-    expect(Fixture.create<A<string, number>>()).toEqual([
+    expect(Randomizer.create<A<string, number>>()).toEqual([
       {
         key: 't',
         isArray: false,
@@ -372,12 +431,12 @@ describe('Test transformer.', () => {
               {
                 key: 'i',
                 isArray: false,
-                type: [{ key: 'p', isArray: true, type: PropertyType.Number }]
-              }
-            ]
-          }
-        ]
-      }
+                type: [{ key: 'p', isArray: true, type: PropertyType.Number }],
+              },
+            ],
+          },
+        ],
+      },
     ]);
   });
 });

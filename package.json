@@ -1,15 +1,22 @@
 {
-  "name": "@vposd/ts-autofixture",
+  "name": "ts-randomizer",
   "version": "1.0.0",
-  "description": "Unit test helper for create random objects by class or interface",
+  "description": "Library for typescript for easy creating data by requested type",
   "main": "main.ts",
   "scripts": {
     "build": "tsc",
     "version": "npm run format && git add -A src",
     "postversion": "git push && git push --tags",
     "install": "npm run build",
-    "test": "tsc && node tests/index.js && npx jest",
-    "test-watch": "nodemon --watch src --watch tests -e ts --exec npm run test"
+    "test": "node tests/index.js && npx jest",
+    "test-watch": "nodemon --watch src --watch tests -e ts --exec npm run test",
+    "check": "gts check",
+    "clean": "gts clean",
+    "compile": "tsc -p .",
+    "fix": "gts fix",
+    "prepare": "npm run compile",
+    "pretest": "npm run compile",
+    "posttest": "npm run check"
   },
   "author": "Valerii Pozdniakov",
   "license": "ISC",
@@ -20,17 +27,20 @@
     "transformer.ts"
   ],
   "devDependencies": {
-    "@types/jest": "^24.0.21",
-    "@types/lodash": "^4.14.144",
+    "@types/jest": "^24.0.23",
+    "@types/lodash": "^4.14.149",
     "@types/uuid": "^3.4.6",
     "nodemon": "^2.0.1",
     "ts-jest": "^24.2.0",
-    "uuid": "^3.3.3"
+    "tslint": "^5.20.1",
+    "jest": "^24.9.0",
+    "typescript": "^3.6.4",
+    "gts": "^1.1.2",
+    "@types/node": "^10.0.3"
   },
   "dependencies": {
-    "jest": "^24.9.0",
+    "uuid": "^3.3.3",
     "lodash": "^4.17.15",
-    "path": "^0.12.7",
-    "typescript": "^3.6.4"
+    "path": "^0.12.7"
   }
 }

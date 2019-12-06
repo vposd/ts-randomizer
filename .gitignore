@@ -1,6 +1,7 @@
 .idea
-dist
+build
 node_modules
 **/*.js
 !tests/index.js
+!prettier.config.js
 !jest.config.js
