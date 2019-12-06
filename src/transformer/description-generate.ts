@@ -239,6 +239,7 @@ export const generateNodeDescription = (
         type: generateNodeDescription(node.type, typeArgumentsMap)(checker),
       };
     }
+
     const symbol = checker.getSymbolAtLocation(node.name);
     const type = checker.getTypeAtLocation(node);
 
