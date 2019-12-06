@@ -10,7 +10,7 @@
       "name": "Launch Program",
       "program": "${workspaceFolder}/debug/index.ts",
       "preLaunchTask": "tsc: build - tsconfig.json",
-      "outFiles": ["${workspaceFolder}/dist/**/*.js"]
+      "outFiles": ["${workspaceFolder}/build/**/*.js"]
     }
   ]
 }

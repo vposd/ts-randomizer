@@ -4,7 +4,7 @@ import { first, flatMap } from 'lodash/fp';
 import { PropertyType, TypeArgumentsMap } from '../types';
 
 const TARGET_CALLERS = ['create', 'createMany', 'build'];
-const TARGET_CLASS_NAME = 'Fixture';
+const TARGET_CLASS_NAME = 'Randomizer';
 
 /**
  * Create type arguments map where key is type argument symbol name, value is concrete argument type

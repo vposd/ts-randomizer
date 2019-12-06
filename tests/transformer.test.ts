@@ -1,50 +1,50 @@
 import { PropertyType } from '../src/types';
 
-class Fixture {
+class Randomizer {
   static create = <T>(a?: T) => a;
 }
 
 describe('Test transformer.', () => {
   test('should generate description for basic type', () => {
-    expect(Fixture.create<string>()).toBe(PropertyType.String);
-    expect(Fixture.create<number>()).toBe(PropertyType.Number);
-    expect(Fixture.create<boolean>()).toBe(PropertyType.Boolean);
-    expect(Fixture.create<Function>()).toBe(PropertyType.Function);
-    expect(Fixture.create<Date>()).toBe(PropertyType.Date);
-    expect(Fixture.create<object>()).toBe(PropertyType.Object);
-    expect(Fixture.create<null>()).toBe(PropertyType.Null);
-    expect(Fixture.create<undefined>()).toBe(PropertyType.Undefined);
+    expect(Randomizer.create<string>()).toBe(PropertyType.String);
+    expect(Randomizer.create<number>()).toBe(PropertyType.Number);
+    expect(Randomizer.create<boolean>()).toBe(PropertyType.Boolean);
+    expect(Randomizer.create<Function>()).toBe(PropertyType.Function);
+    expect(Randomizer.create<Date>()).toBe(PropertyType.Date);
+    expect(Randomizer.create<object>()).toBe(PropertyType.Object);
+    expect(Randomizer.create<null>()).toBe(PropertyType.Null);
+    expect(Randomizer.create<undefined>()).toBe(PropertyType.Undefined);
   });
 
   test('should generate description for basic array type', () => {
-    expect(Fixture.create<string[]>()).toMatchObject({
+    expect(Randomizer.create<string[]>()).toMatchObject({
       isArray: true,
       type: PropertyType.String,
     });
-    expect(Fixture.create<number[][][]>()).toMatchObject({
+    expect(Randomizer.create<number[][][]>()).toMatchObject({
       isArray: true,
       type: {
         isArray: true,
         type: { isArray: true, type: PropertyType.Number },
       },
     });
-    expect(Fixture.create<boolean[]>()).toMatchObject({
+    expect(Randomizer.create<boolean[]>()).toMatchObject({
       isArray: true,
       type: PropertyType.Boolean,
     });
-    expect(Fixture.create<Function[]>()).toMatchObject({
+    expect(Randomizer.create<Function[]>()).toMatchObject({
       isArray: true,
       type: PropertyType.Function,
     });
-    expect(Fixture.create<Date[]>()).toMatchObject({
+    expect(Randomizer.create<Date[]>()).toMatchObject({
       isArray: true,
       type: PropertyType.Date,
     });
-    expect(Fixture.create<object[]>()).toMatchObject({
+    expect(Randomizer.create<object[]>()).toMatchObject({
       isArray: true,
       type: PropertyType.Object,
     });
-    expect(Fixture.create<null[]>()).toMatchObject({
+    expect(Randomizer.create<null[]>()).toMatchObject({
       isArray: true,
       type: PropertyType.Null,
     });
@@ -55,7 +55,7 @@ describe('Test transformer.', () => {
       a: string;
     }
 
-    expect(Fixture.create<A>()).toMatchObject([
+    expect(Randomizer.create<A>()).toMatchObject([
       { key: 'a', type: PropertyType.String },
     ]);
   });
@@ -65,7 +65,7 @@ describe('Test transformer.', () => {
       a: string;
     }
 
-    expect(Fixture.create<A>()).toMatchObject([
+    expect(Randomizer.create<A>()).toMatchObject([
       { key: 'a', type: PropertyType.String },
     ]);
   });
@@ -79,7 +79,7 @@ describe('Test transformer.', () => {
     }
 
     expect(
-      Fixture.create<A<string, number[], boolean[], object[][]>>()
+      Randomizer.create<A<string, number[], boolean[], object[][]>>()
     ).toMatchObject([
       { key: 'b', type: PropertyType.String },
       { key: 'c', isArray: true, type: PropertyType.Number },
@@ -111,7 +111,7 @@ describe('Test transformer.', () => {
     }
 
     expect(
-      Fixture.create<A<string, number[], boolean[], object[][]>>()
+      Randomizer.create<A<string, number[], boolean[], object[][]>>()
     ).toMatchObject([
       { key: 'b', type: PropertyType.String },
       { key: 'c', isArray: true, type: PropertyType.Number },
@@ -147,7 +147,7 @@ describe('Test transformer.', () => {
       a: Y;
     }
 
-    expect(Fixture.create<A<B<C>>>()).toMatchObject([
+    expect(Randomizer.create<A<B<C>>>()).toMatchObject([
       {
         key: 'a',
         type: [
@@ -173,7 +173,7 @@ describe('Test transformer.', () => {
       a: Y;
     }
 
-    expect(Fixture.create<A<B<C<boolean>>>>()).toMatchObject([
+    expect(Randomizer.create<A<B<C<boolean>>>>()).toMatchObject([
       {
         key: 'a',
         type: [
@@ -198,7 +198,7 @@ describe('Test transformer.', () => {
       a: B<C<T>>;
     }
 
-    expect(Fixture.create<A<string[]>>()).toEqual([
+    expect(Randomizer.create<A<string[]>>()).toEqual([
       {
         key: 'a',
         isArray: false,
@@ -225,7 +225,7 @@ describe('Test transformer.', () => {
       a: B<C<T>>;
     }
 
-    expect(Fixture.create<A<string[]>>()).toEqual([
+    expect(Randomizer.create<A<string[]>>()).toEqual([
       {
         key: 'a',
         isArray: false,
@@ -253,7 +253,7 @@ describe('Test transformer.', () => {
       a: B<C<T[], R>>;
     }
 
-    expect(Fixture.create<A<string[], boolean>>()).toEqual([
+    expect(Randomizer.create<A<string[], boolean>>()).toEqual([
       {
         key: 'a',
         isArray: false,
@@ -288,7 +288,7 @@ describe('Test transformer.', () => {
       a: B<C<T[], R>>;
     }
 
-    expect(Fixture.create<A<string[], boolean>>()).toEqual([
+    expect(Randomizer.create<A<string[], boolean>>()).toEqual([
       {
         key: 'a',
         isArray: false,
@@ -327,7 +327,7 @@ describe('Test transformer.', () => {
       c: C;
     }
 
-    expect(Fixture.create<A<Array<E<string, number>>, object>>()).toEqual([
+    expect(Randomizer.create<A<Array<E<string, number>>, object>>()).toEqual([
       {
         key: 'b',
         isArray: true,
@@ -372,7 +372,7 @@ describe('Test transformer.', () => {
       c: C;
     }
 
-    expect(Fixture.create<A<Array<E<string, number>>, object>>()).toEqual([
+    expect(Randomizer.create<A<Array<E<string, number>>, object>>()).toEqual([
       {
         key: 'b',
         isArray: true,
@@ -418,7 +418,7 @@ describe('Test transformer.', () => {
       t: J<T[], V>;
     }
 
-    expect(Fixture.create<A<string, number>>()).toEqual([
+    expect(Randomizer.create<A<string, number>>()).toEqual([
       {
         key: 't',
         isArray: false,

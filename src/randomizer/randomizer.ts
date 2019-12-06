@@ -3,14 +3,14 @@ import { isUndefined } from 'lodash/fp';
 import { SpecimenFactory, Value } from './spicemen-factory';
 import { TypeDescription } from '../types';
 
-type FixtureArguments = [TypeDescription?];
+type RandomizerArguments = [TypeDescription?];
 
-export class Fixture {
+export class Randomizer {
   /**
    * Creates anonymous variables by description of T.
    * @returns An anonymous variable of type T.
    */
-  static create<T>(...args: FixtureArguments): Value<T> | undefined {
+  static create<T>(...args: RandomizerArguments): Value<T> | undefined {
     if (isUndefined(args[0])) {
       return undefined;
     }
@@ -37,11 +37,10 @@ export class Fixture {
 
   /**
    * Returns a spicemen factory
-   * @param template A Type description that describes what to create.
    */
-  static build<T>(...args: FixtureArguments): SpecimenFactory<T> {
+  static build<T>(...args: RandomizerArguments): SpecimenFactory<T> {
     if (isUndefined(args[0])) {
-      throw new Error('[Fixture] Error: Missing type description');
+      throw new Error('[Randomizer] Error: Missing type description');
     }
     return new SpecimenFactory<T>(args[0]);
   }

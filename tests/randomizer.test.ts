@@ -1,32 +1,32 @@
-import { Fixture } from '../src/fixture/fixture';
+import { Randomizer } from '../src/randomizer/randomizer';
 
 const matchAnyString = () =>
   expect.stringMatching(
     /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
   );
 
-describe('Fixture class', () => {
+describe('Randomizer class', () => {
   describe('.create', () => {
     test('should create random values for basic types', () => {
-      expect(Fixture.create<string>()).toEqual(matchAnyString());
-      expect(Fixture.create<number>()).toEqual(expect.any(Number));
-      expect(Fixture.create<boolean>()).toEqual(expect.any(Boolean));
-      expect(Fixture.create<Function>()).toEqual(expect.any(Function));
-      expect(Fixture.create<Date>()).toEqual(expect.any(Date));
-      expect(Fixture.create<object>()).toEqual(expect.any(Object));
-      expect(Fixture.create<null>()).toBe(null);
-      expect(Fixture.create<undefined>()).toBe(undefined);
+      expect(Randomizer.create<string>()).toEqual(matchAnyString());
+      expect(Randomizer.create<number>()).toEqual(expect.any(Number));
+      expect(Randomizer.create<boolean>()).toEqual(expect.any(Boolean));
+      expect(Randomizer.create<Function>()).toEqual(expect.any(Function));
+      expect(Randomizer.create<Date>()).toEqual(expect.any(Date));
+      expect(Randomizer.create<object>()).toEqual(expect.any(Object));
+      expect(Randomizer.create<null>()).toBe(null);
+      expect(Randomizer.create<undefined>()).toBe(undefined);
     });
 
     test('should create random values for basic array types', () => {
-      expect(Fixture.create<string[]>()).toMatchObject([
+      expect(Randomizer.create<string[]>()).toMatchObject([
         matchAnyString(),
         matchAnyString(),
         matchAnyString(),
         matchAnyString(),
         matchAnyString(),
       ]);
-      expect(Fixture.create<number[][]>()).toMatchObject([
+      expect(Randomizer.create<number[][]>()).toMatchObject([
         [
           expect.any(Number),
           expect.any(Number),
@@ -70,7 +70,7 @@ describe('Fixture class', () => {
         a: string;
       }
 
-      expect(Fixture.create<A>()).toMatchObject({ a: matchAnyString() });
+      expect(Randomizer.create<A>()).toMatchObject({ a: matchAnyString() });
     });
 
     test('should create array of objects for interface', () => {
@@ -78,7 +78,7 @@ describe('Fixture class', () => {
         a: string;
       }
 
-      expect(Fixture.create<A[]>()).toMatchObject([
+      expect(Randomizer.create<A[]>()).toMatchObject([
         { a: matchAnyString() },
         { a: matchAnyString() },
         { a: matchAnyString() },
@@ -92,7 +92,7 @@ describe('Fixture class', () => {
         a: T;
       }
 
-      expect(Fixture.create<A<string>>()).toMatchObject({
+      expect(Randomizer.create<A<string>>()).toMatchObject({
         a: matchAnyString(),
       });
     });
@@ -102,7 +102,7 @@ describe('Fixture class', () => {
         a: string;
       }
 
-      expect(Fixture.create<A>()).toMatchObject({ a: matchAnyString() });
+      expect(Randomizer.create<A>()).toMatchObject({ a: matchAnyString() });
     });
 
     test('should create object for class with type arguments', () => {
@@ -110,7 +110,7 @@ describe('Fixture class', () => {
         a: T;
       }
 
-      expect(Fixture.create<A<number>>()).toMatchObject({
+      expect(Randomizer.create<A<number>>()).toMatchObject({
         a: expect.any(Number),
       });
     });
@@ -129,7 +129,7 @@ describe('Fixture class', () => {
         t: C<T[]>;
       }
 
-      expect(Fixture.create<A<string>>()).toEqual({
+      expect(Randomizer.create<A<string>>()).toEqual({
         t: {
           d: expect.any(Number),
           k: {
@@ -155,7 +155,7 @@ describe('Fixture class', () => {
         t: C<T[]>;
       }
 
-      expect(Fixture.create<A<string>>()).toEqual({
+      expect(Randomizer.create<A<string>>()).toEqual({
         t: {
           d: expect.any(Number),
           k: [
@@ -180,7 +180,7 @@ describe('Fixture class', () => {
       t: C<T[]>;
     }
 
-    expect(Fixture.create<A<string>>()).toEqual({
+    expect(Randomizer.create<A<string>>()).toEqual({
       t: {
         d: expect.any(Number),
         k: [
@@ -197,7 +197,7 @@ describe('Fixture class', () => {
 
 describe('.createMany', () => {
   test('should create random array values for basic types', () => {
-    expect(Fixture.createMany<string[]>(2)).toEqual([
+    expect(Randomizer.createMany<string[]>(2)).toEqual([
       [
         matchAnyString(),
         matchAnyString(),
@@ -213,32 +213,32 @@ describe('.createMany', () => {
         matchAnyString(),
       ],
     ]);
-    expect(Fixture.createMany<number>(3)).toEqual([
+    expect(Randomizer.createMany<number>(3)).toEqual([
       expect.any(Number),
       expect.any(Number),
       expect.any(Number),
     ]);
-    expect(Fixture.createMany<boolean>(2)).toEqual([
+    expect(Randomizer.createMany<boolean>(2)).toEqual([
       expect.any(Boolean),
       expect.any(Boolean),
     ]);
-    expect(Fixture.createMany<Function>(4)).toEqual([
+    expect(Randomizer.createMany<Function>(4)).toEqual([
       expect.any(Function),
       expect.any(Function),
       expect.any(Function),
       expect.any(Function),
     ]);
-    expect(Fixture.createMany<Date>(4)).toEqual([
+    expect(Randomizer.createMany<Date>(4)).toEqual([
       expect.any(Date),
       expect.any(Date),
       expect.any(Date),
       expect.any(Date),
     ]);
-    expect(Fixture.createMany<object>(2)).toEqual([
+    expect(Randomizer.createMany<object>(2)).toEqual([
       expect.any(Object),
       expect.any(Object),
     ]);
-    expect(Fixture.createMany<null>(2)).toEqual([null, null]);
+    expect(Randomizer.createMany<null>(2)).toEqual([null, null]);
   });
 
   test('should create many random objects for interface', () => {
@@ -264,7 +264,7 @@ describe('.createMany', () => {
       },
     };
 
-    expect(Fixture.createMany<A<string>>(2)).toEqual([
+    expect(Randomizer.createMany<A<string>>(2)).toEqual([
       expectedObject,
       expectedObject,
     ]);
@@ -280,7 +280,7 @@ describe('.createMany', () => {
         a: B<T>;
       }
 
-      const result = Fixture.build<A<string>>()
+      const result = Randomizer.build<A<string>>()
         .with(x => (x.a.b = 'mutated'))
         .create();
 
@@ -297,7 +297,7 @@ describe('.createMany', () => {
         a: B<T>;
       }
 
-      const result = Fixture.build<A<string>>()
+      const result = Randomizer.build<A<string>>()
         .with(x => (x.a.b = 'mutated'))
         .with(x => (x.a.c = 1))
         .with(x => (x.a.b = 'mutated-2'))
