@@ -318,8 +318,7 @@ describe('Test transformer.', () => {
 
     interface E<H, I> {
       h: H;
-      // tslint:disable-next-line: array-type
-      i: K<H, I[]>[];
+      i: Array<K<H, I[]>>;
     }
 
     interface A<B, C> {
@@ -363,6 +362,7 @@ describe('Test transformer.', () => {
 
     class E<H, I> {
       h: H;
+      // For ensure to resolve w/o Array<T>
       // tslint:disable-next-line: array-type
       i: K<H, I[]>[];
     }

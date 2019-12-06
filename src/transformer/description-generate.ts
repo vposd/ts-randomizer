@@ -89,21 +89,27 @@ const generateArrayTypeArgumentDescription = (
   typeArgumentsMap: TypeArgumentsMap = {}
 ) => (checker: ts.TypeChecker) => {
   const type = checker.getTypeAtLocation(node);
-  const isArray = type.symbol
+  const isArrayNode = isArrayType(type);
+  const isTypeArray = type.symbol
     ? typeArgumentsMap[type.symbol.name] &&
       typeArgumentsMap[type.symbol.name].isArray
     : false;
+  const isArray = isArrayNode || isTypeArray;
 
   if (!isArray) {
     return;
   }
+
+  const argumentType = isArrayNode
+    ? getFirstTypeParameter(type)
+    : typeArgumentsMap[type.symbol.name].type;
 
   return {
     key: symbol.getName(),
     isArray,
     type: generatePropertyDescription(
       symbol.getName(),
-      typeArgumentsMap[type.symbol.name].type,
+      argumentType || typeArgumentsMap[type.symbol.name].type,
       typeArgumentsMap
     )(checker),
   };
