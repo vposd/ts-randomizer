@@ -22,9 +22,30 @@ const generateDeclarationDescription = (
   nodeTypeArguments: TypeArgumentsMap = {},
   typeArgumentsMap: TypeArgumentsMap = {}
 ) => (checker: ts.TypeChecker) => {
-  if (!node || !node.type) {
+  if (!node) {
     return PropertyType.Unknown;
   }
+  if (!node.type) {
+    const key = node.name.getText();
+    return {
+      key,
+      description: PropertyType.Unknown,
+    };
+  }
+
+  // if (ts.isTupleTypeNode(node.type)) {
+  //   const types = node.type.elementTypes.map(i => ({
+  //     type: generateNodeDescription(i, typeArgumentsMap)(checker),
+  //   })) as TypeDescription;
+
+  //   const s = checker.getSymbolAtLocation(node.name);
+
+  //   return {
+  //     key: s ? s.name : '',
+  //     type: types,
+  //   };
+  // }
+
   const nodeTypeNode = ts.isArrayTypeNode(node.type)
     ? node.type.elementType
     : node.type;
@@ -107,7 +128,7 @@ const generateArrayTypeArgumentDescription = (
   return {
     key: symbol.getName(),
     isArray,
-    type: generatePropertyDescription(
+    description: generatePropertyDescription(
       symbol.getName(),
       argumentType || typeArgumentsMap[type.symbol.name].type,
       typeArgumentsMap
@@ -145,7 +166,7 @@ const generatePropertyDescription = (
   if (isArrayType(type) && arrayTypeParam) {
     return {
       isArray: true,
-      type: generatePropertyDescription(
+      description: generatePropertyDescription(
         key,
         arrayTypeParam,
         typeArgumentsMap
@@ -164,7 +185,7 @@ const generatePropertyDescription = (
     if (isArray) {
       return {
         isArray,
-        type: generatePropertyDescription(
+        description: generatePropertyDescription(
           key,
           typeArg && typeArg.type,
           typeArgumentsMap
@@ -204,7 +225,7 @@ export const generateNodeDescription = (
     if (ts.isArrayTypeNode(node.elementType)) {
       return {
         isArray: true,
-        type: generateNodeDescription(
+        description: generateNodeDescription(
           node.elementType,
           typeArgumentsMap
         )(checker),
@@ -215,7 +236,7 @@ export const generateNodeDescription = (
     if (isEmpty(typeArgumentsMap)) {
       return {
         isArray: true,
-        type: generatePropertyDescription(
+        description: generatePropertyDescription(
           null,
           type,
           typeArgumentsMap
@@ -224,6 +245,19 @@ export const generateNodeDescription = (
     }
     return generatePropertyDescription(null, type, typeArgumentsMap)(checker);
   }
+
+  // if (ts.isTupleTypeNode(node)) {
+  //   const types = node.elementTypes.map(i => ({
+  //     type: generateNodeDescription(i, typeArgumentsMap)(checker),
+  //   })) as TypeDescription;
+
+  //   const s = checker.getSymbolAtLocation(node);
+
+  //   return {
+  //     key: s ? s.name : '',
+  //     type: types,
+  //   };
+  // }
 
   // Return description for type node
   if (ts.isTypeNode(node)) {
@@ -242,7 +276,10 @@ export const generateNodeDescription = (
       return {
         key: symbol ? symbol.getName() : '',
         isArray: true,
-        type: generateNodeDescription(node.type, typeArgumentsMap)(checker),
+        description: generateNodeDescription(
+          node.type,
+          typeArgumentsMap
+        )(checker),
       };
     }
 
@@ -261,7 +298,7 @@ export const generateNodeDescription = (
       )(checker) || {
         key: symbol.getName(),
         isArray: ts.isArrayTypeNode(node.type),
-        type: generatePropertyDescription(
+        description: generatePropertyDescription(
           symbol.getName(),
           type,
           typeArgumentsMap
@@ -292,7 +329,7 @@ export const generateNodeDescription = (
       )(checker) || {
         key: symbol.getName(),
         isArray: ts.isArrayTypeNode(node.type),
-        type: generatePropertyDescription(
+        description: generatePropertyDescription(
           symbol.getName(),
           type,
           typeArgumentsMap
@@ -308,13 +345,16 @@ export const generateNodeDescription = (
       return {
         key: symbol.getName(),
         isArray: true,
-        type: generateNodeDescription(node.type, typeArgumentsMap)(checker),
+        description: generateNodeDescription(
+          node.type,
+          typeArgumentsMap
+        )(checker),
       };
     }
     return {
       key: symbol.getName(),
       isArray: true,
-      type: generatePropertyDescription(
+      description: generatePropertyDescription(
         symbol.getName(),
         type,
         typeArgumentsMap
@@ -326,6 +366,6 @@ export const generateNodeDescription = (
   return {
     key: symbol.getName(),
     isArray: ts.isArrayTypeNode(node.type),
-    type: getPropertyNameBySyntaxKind(node),
+    description: getPropertyNameBySyntaxKind(node),
   };
 };

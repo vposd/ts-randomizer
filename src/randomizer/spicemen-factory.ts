@@ -76,9 +76,9 @@ export class SpecimenFactory<T> {
 
   private generatePropertyValue(prop: PropertyDescription): Value<T> {
     if (!prop.isArray) {
-      return new SpecimenFactory<T>(prop.type).create() as Value<T>;
+      return new SpecimenFactory<T>(prop.description).create() as Value<T>;
     }
-    return new SpecimenFactory(prop.type).createMany(
+    return new SpecimenFactory(prop.description).createMany(
       this.arrayValueCount
     ) as Value<T>;
   }

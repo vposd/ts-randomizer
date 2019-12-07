@@ -24,5 +24,5 @@ export type TypeDescription =
 export interface PropertyDescription {
   key?: string;
   isArray?: boolean;
-  type: TypeDescription;
+  description: TypeDescription;
 }

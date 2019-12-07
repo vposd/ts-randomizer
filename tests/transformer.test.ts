@@ -70,6 +70,25 @@ describe('Test transformer.', () => {
     ]);
   });
 
+  test('should generate description for class which extends other class', () => {
+    class C {
+      c: string;
+    }
+
+    class B extends C {}
+
+    interface A<T extends B> {
+      a: T;
+    }
+
+    expect(Randomizer.create<A<B>>()).toMatchObject([
+      {
+        key: 'a',
+        type: [{ key: 'uid', type: PropertyType.String }],
+      },
+    ]);
+  });
+
   test('should generate description for interface with different type parameters', () => {
     interface A<B, C, D, F> {
       b: B;
