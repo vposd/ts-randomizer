@@ -62,7 +62,7 @@ describe('Test transformer.', () => {
 
   test('should generate description for class', () => {
     class A {
-      a: string;
+      a!: string;
     }
 
     expect(Randomizer.create<A>()).toMatchObject([
@@ -104,10 +104,10 @@ describe('Test transformer.', () => {
 
   test('should generate description for class with different type parameters', () => {
     class A<B, C, D, F> {
-      b: B;
-      c: C;
-      d: D[];
-      f: F[][];
+      b!: B;
+      c!: C;
+      d!: D[];
+      f!: F[][];
     }
 
     expect(
@@ -162,15 +162,15 @@ describe('Test transformer.', () => {
 
   test('should generate description for class with high order type parameters', () => {
     class C<M> {
-      c: M;
+      c!: M;
     }
 
     class B<T> {
-      b: T;
+      b!: T;
     }
 
     class A<Y> {
-      a: Y;
+      a!: Y;
     }
 
     expect(Randomizer.create<A<B<C<boolean>>>>()).toMatchObject([
@@ -215,14 +215,14 @@ describe('Test transformer.', () => {
 
   test('should generate description for class with high order props type params', () => {
     class C<N> {
-      n: N;
+      n!: N;
     }
     class B<G> {
-      g: G;
+      g!: G;
     }
 
     class A<T> {
-      a: B<C<T>>;
+      a!: B<C<T>>;
     }
 
     expect(Randomizer.create<A<string[]>>()).toEqual([
@@ -277,15 +277,15 @@ describe('Test transformer.', () => {
 
   test('should generate description for class with high order props array type params', () => {
     class C<N, D> {
-      n: N[];
-      d: D;
+      n!: N[];
+      d!: D;
     }
     class B<G> {
-      g: G[];
+      g!: G[];
     }
 
     class A<T, R> {
-      a: B<C<T[], R>>;
+      a!: B<C<T[], R>>;
     }
 
     expect(Randomizer.create<A<string[], boolean>>()).toEqual([
@@ -356,20 +356,22 @@ describe('Test transformer.', () => {
 
   test('should generate description for class with different type parameters', () => {
     class K<L, M> {
-      l: L[][];
-      m: M[];
+      l!: L[][];
+      m!: M[];
     }
 
     class E<H, I> {
-      h: H;
+      h!: H;
       // For ensure to resolve w/o Array<T>
       // tslint:disable-next-line: array-type
-      i: K<H, I[]>[];
+      // For ensure to resolve w/o Array<T>
+      // tslint:disable-next-line: array-type
+      i!: K<H, I[]>[];
     }
 
     class A<B, C> {
-      b: B;
-      c: C;
+      b!: B;
+      c!: C;
     }
 
     expect(Randomizer.create<A<Array<E<string, number>>, object>>()).toEqual([
@@ -402,20 +404,20 @@ describe('Test transformer.', () => {
 
   test('should generate description for classes with props with type parameters', () => {
     class W<P> {
-      p: P;
+      p!: P;
     }
 
     class I<D> {
-      i: W<D[]>;
+      i!: W<D[]>;
     }
 
     class J<G, H> {
-      g: G;
-      h: I<H[]>;
+      g!: G;
+      h!: I<H[]>;
     }
 
     class A<T, V> {
-      t: J<T[], V>;
+      t!: J<T[], V>;
     }
 
     expect(Randomizer.create<A<string, number>>()).toEqual([
