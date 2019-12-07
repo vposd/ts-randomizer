@@ -21,8 +21,13 @@ export type TypeDescription =
   | PropertyType
   | Array<PropertyType | PropertyDescription>;
 
+export enum DescriptionFlag {
+  Array,
+  Turple,
+}
+
 export interface PropertyDescription {
   key?: string;
-  isArray?: boolean;
+  flag?: DescriptionFlag | null;
   description: TypeDescription;
 }

@@ -1,7 +1,12 @@
 import * as ts from 'typescript';
 import { isEmpty, flatMap } from 'lodash/fp';
 
-import { TypeArgumentsMap, PropertyType, TypeDescription } from '../types';
+import {
+  TypeArgumentsMap,
+  PropertyType,
+  TypeDescription,
+  DescriptionFlag,
+} from '../types';
 import {
   isArrayType,
   getFirstTypeParameter,
@@ -127,7 +132,7 @@ const generateArrayTypeArgumentDescription = (
 
   return {
     key: symbol.getName(),
-    isArray,
+    flag: isArray ? DescriptionFlag.Array : null,
     description: generatePropertyDescription(
       symbol.getName(),
       argumentType || typeArgumentsMap[type.symbol.name].type,
@@ -165,7 +170,7 @@ const generatePropertyDescription = (
   const arrayTypeParam = getFirstTypeParameter(type);
   if (isArrayType(type) && arrayTypeParam) {
     return {
-      isArray: true,
+      flag: DescriptionFlag.Array,
       description: generatePropertyDescription(
         key,
         arrayTypeParam,
@@ -184,7 +189,7 @@ const generatePropertyDescription = (
     const isArray = typeArg && typeArg.isArray;
     if (isArray) {
       return {
-        isArray,
+        flag: DescriptionFlag.Array,
         description: generatePropertyDescription(
           key,
           typeArg && typeArg.type,
@@ -224,7 +229,7 @@ export const generateNodeDescription = (
   if (ts.isArrayTypeNode(node)) {
     if (ts.isArrayTypeNode(node.elementType)) {
       return {
-        isArray: true,
+        flag: DescriptionFlag.Array,
         description: generateNodeDescription(
           node.elementType,
           typeArgumentsMap
@@ -235,7 +240,7 @@ export const generateNodeDescription = (
     const type = checker.getTypeFromTypeNode(node.elementType);
     if (isEmpty(typeArgumentsMap)) {
       return {
-        isArray: true,
+        flag: DescriptionFlag.Array,
         description: generatePropertyDescription(
           null,
           type,
@@ -275,7 +280,7 @@ export const generateNodeDescription = (
       const symbol = checker.getSymbolAtLocation(node.name);
       return {
         key: symbol ? symbol.getName() : '',
-        isArray: true,
+        flag: DescriptionFlag.Array,
         description: generateNodeDescription(
           node.type,
           typeArgumentsMap
@@ -297,7 +302,7 @@ export const generateNodeDescription = (
         typeArgumentsMap
       )(checker) || {
         key: symbol.getName(),
-        isArray: ts.isArrayTypeNode(node.type),
+        flag: ts.isArrayTypeNode(node.type) ? DescriptionFlag.Array : null,
         description: generatePropertyDescription(
           symbol.getName(),
           type,
@@ -328,7 +333,7 @@ export const generateNodeDescription = (
         typeArgumentsMap
       )(checker) || {
         key: symbol.getName(),
-        isArray: ts.isArrayTypeNode(node.type),
+        flag: ts.isArrayTypeNode(node.type) ? DescriptionFlag.Array : null,
         description: generatePropertyDescription(
           symbol.getName(),
           type,
@@ -344,7 +349,7 @@ export const generateNodeDescription = (
     if (ts.isArrayTypeNode(node.type.elementType)) {
       return {
         key: symbol.getName(),
-        isArray: true,
+        flag: DescriptionFlag.Array,
         description: generateNodeDescription(
           node.type,
           typeArgumentsMap
@@ -353,7 +358,7 @@ export const generateNodeDescription = (
     }
     return {
       key: symbol.getName(),
-      isArray: true,
+      flag: DescriptionFlag.Array,
       description: generatePropertyDescription(
         symbol.getName(),
         type,
@@ -365,7 +370,6 @@ export const generateNodeDescription = (
   // Return basic type description
   return {
     key: symbol.getName(),
-    isArray: ts.isArrayTypeNode(node.type),
     description: getPropertyNameBySyntaxKind(node),
   };
 };

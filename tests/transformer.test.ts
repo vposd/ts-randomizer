@@ -1,4 +1,4 @@
-import { PropertyType } from '../src/types';
+import { PropertyType, DescriptionFlag } from '../src/types';
 
 class Randomizer {
   static create = <T>(a?: T) => a;
@@ -18,35 +18,38 @@ describe('Test transformer.', () => {
 
   test('should generate description for basic array type', () => {
     expect(Randomizer.create<string[]>()).toMatchObject({
-      isArray: true,
-      type: PropertyType.String,
+      flag: DescriptionFlag.Array,
+      description: PropertyType.String,
     });
     expect(Randomizer.create<number[][][]>()).toMatchObject({
-      isArray: true,
-      type: {
-        isArray: true,
-        type: { isArray: true, type: PropertyType.Number },
+      flag: DescriptionFlag.Array,
+      description: {
+        flag: DescriptionFlag.Array,
+        description: {
+          flag: DescriptionFlag.Array,
+          description: PropertyType.Number,
+        },
       },
     });
     expect(Randomizer.create<boolean[]>()).toMatchObject({
-      isArray: true,
-      type: PropertyType.Boolean,
+      flag: DescriptionFlag.Array,
+      description: PropertyType.Boolean,
     });
     expect(Randomizer.create<Function[]>()).toMatchObject({
-      isArray: true,
-      type: PropertyType.Function,
+      flag: DescriptionFlag.Array,
+      description: PropertyType.Function,
     });
     expect(Randomizer.create<Date[]>()).toMatchObject({
-      isArray: true,
-      type: PropertyType.Date,
+      flag: DescriptionFlag.Array,
+      description: PropertyType.Date,
     });
     expect(Randomizer.create<object[]>()).toMatchObject({
-      isArray: true,
-      type: PropertyType.Object,
+      flag: DescriptionFlag.Array,
+      description: PropertyType.Object,
     });
     expect(Randomizer.create<null[]>()).toMatchObject({
-      isArray: true,
-      type: PropertyType.Null,
+      flag: DescriptionFlag.Array,
+      description: PropertyType.Null,
     });
   });
 
@@ -56,7 +59,7 @@ describe('Test transformer.', () => {
     }
 
     expect(Randomizer.create<A>()).toMatchObject([
-      { key: 'a', type: PropertyType.String },
+      { key: 'a', description: PropertyType.String },
     ]);
   });
 
@@ -66,13 +69,13 @@ describe('Test transformer.', () => {
     }
 
     expect(Randomizer.create<A>()).toMatchObject([
-      { key: 'a', type: PropertyType.String },
+      { key: 'a', description: PropertyType.String },
     ]);
   });
 
   test('should generate description for class which extends other class', () => {
     class C {
-      c: string;
+      c!: string;
     }
 
     class B extends C {}
@@ -84,7 +87,7 @@ describe('Test transformer.', () => {
     expect(Randomizer.create<A<B>>()).toMatchObject([
       {
         key: 'a',
-        type: [{ key: 'uid', type: PropertyType.String }],
+        description: [{ key: 'c', description: PropertyType.String }],
       },
     ]);
   });
@@ -100,21 +103,31 @@ describe('Test transformer.', () => {
     expect(
       Randomizer.create<A<string, number[], boolean[], object[][]>>()
     ).toMatchObject([
-      { key: 'b', type: PropertyType.String },
-      { key: 'c', isArray: true, type: PropertyType.Number },
+      { key: 'b', description: PropertyType.String },
+      {
+        key: 'c',
+        flag: DescriptionFlag.Array,
+        description: PropertyType.Number,
+      },
       {
         key: 'd',
-        isArray: true,
-        type: { isArray: true, type: PropertyType.Boolean },
+        flag: DescriptionFlag.Array,
+        description: {
+          flag: DescriptionFlag.Array,
+          description: PropertyType.Boolean,
+        },
       },
       {
         key: 'f',
-        isArray: true,
-        type: {
-          isArray: true,
-          type: {
-            isArray: true,
-            type: { isArray: true, type: PropertyType.Object },
+        flag: DescriptionFlag.Array,
+        description: {
+          flag: DescriptionFlag.Array,
+          description: {
+            flag: DescriptionFlag.Array,
+            description: {
+              flag: DescriptionFlag.Array,
+              description: PropertyType.Object,
+            },
           },
         },
       },
@@ -132,21 +145,31 @@ describe('Test transformer.', () => {
     expect(
       Randomizer.create<A<string, number[], boolean[], object[][]>>()
     ).toMatchObject([
-      { key: 'b', type: PropertyType.String },
-      { key: 'c', isArray: true, type: PropertyType.Number },
+      { key: 'b', description: PropertyType.String },
+      {
+        key: 'c',
+        flag: DescriptionFlag.Array,
+        description: PropertyType.Number,
+      },
       {
         key: 'd',
-        isArray: true,
-        type: { isArray: true, type: PropertyType.Boolean },
+        flag: DescriptionFlag.Array,
+        description: {
+          flag: DescriptionFlag.Array,
+          description: PropertyType.Boolean,
+        },
       },
       {
         key: 'f',
-        isArray: true,
-        type: {
-          isArray: true,
-          type: {
-            isArray: true,
-            type: { isArray: true, type: PropertyType.Object },
+        flag: DescriptionFlag.Array,
+        description: {
+          flag: DescriptionFlag.Array,
+          description: {
+            flag: DescriptionFlag.Array,
+            description: {
+              flag: DescriptionFlag.Array,
+              description: PropertyType.Object,
+            },
           },
         },
       },
@@ -169,10 +192,10 @@ describe('Test transformer.', () => {
     expect(Randomizer.create<A<B<C>>>()).toMatchObject([
       {
         key: 'a',
-        type: [
+        description: [
           {
             key: 'b',
-            type: [{ key: 'c', type: PropertyType.String }],
+            description: [{ key: 'c', description: PropertyType.String }],
           },
         ],
       },
@@ -195,10 +218,10 @@ describe('Test transformer.', () => {
     expect(Randomizer.create<A<B<C<boolean>>>>()).toMatchObject([
       {
         key: 'a',
-        type: [
+        description: [
           {
             key: 'b',
-            type: [{ key: 'c', type: PropertyType.Boolean }],
+            description: [{ key: 'c', description: PropertyType.Boolean }],
           },
         ],
       },
@@ -220,12 +243,18 @@ describe('Test transformer.', () => {
     expect(Randomizer.create<A<string[]>>()).toEqual([
       {
         key: 'a',
-        isArray: false,
-        type: [
+        flag: null,
+        description: [
           {
             key: 'g',
-            isArray: false,
-            type: [{ key: 'n', isArray: true, type: PropertyType.String }],
+            flag: null,
+            description: [
+              {
+                key: 'n',
+                flag: DescriptionFlag.Array,
+                description: PropertyType.String,
+              },
+            ],
           },
         ],
       },
@@ -247,12 +276,18 @@ describe('Test transformer.', () => {
     expect(Randomizer.create<A<string[]>>()).toEqual([
       {
         key: 'a',
-        isArray: false,
-        type: [
+        flag: null,
+        description: [
           {
             key: 'g',
-            isArray: false,
-            type: [{ key: 'n', isArray: true, type: PropertyType.String }],
+            flag: null,
+            description: [
+              {
+                key: 'n',
+                flag: DescriptionFlag.Array,
+                description: PropertyType.String,
+              },
+            ],
           },
         ],
       },
@@ -275,18 +310,21 @@ describe('Test transformer.', () => {
     expect(Randomizer.create<A<string[], boolean>>()).toEqual([
       {
         key: 'a',
-        isArray: false,
-        type: [
+        flag: null,
+        description: [
           {
             key: 'g',
-            isArray: true,
-            type: [
+            flag: DescriptionFlag.Array,
+            description: [
               {
                 key: 'n',
-                isArray: true,
-                type: { isArray: true, type: PropertyType.String },
+                flag: DescriptionFlag.Array,
+                description: {
+                  flag: DescriptionFlag.Array,
+                  description: PropertyType.String,
+                },
               },
-              { key: 'd', isArray: false, type: PropertyType.Boolean },
+              { key: 'd', flag: null, description: PropertyType.Boolean },
             ],
           },
         ],
@@ -310,18 +348,21 @@ describe('Test transformer.', () => {
     expect(Randomizer.create<A<string[], boolean>>()).toEqual([
       {
         key: 'a',
-        isArray: false,
-        type: [
+        flag: null,
+        description: [
           {
             key: 'g',
-            isArray: true,
-            type: [
+            flag: DescriptionFlag.Array,
+            description: [
               {
                 key: 'n',
-                isArray: true,
-                type: { isArray: true, type: PropertyType.String },
+                flag: DescriptionFlag.Array,
+                description: {
+                  flag: DescriptionFlag.Array,
+                  description: PropertyType.String,
+                },
               },
-              { key: 'd', isArray: false, type: PropertyType.Boolean },
+              { key: 'd', flag: null, description: PropertyType.Boolean },
             ],
           },
         ],
@@ -348,28 +389,34 @@ describe('Test transformer.', () => {
     expect(Randomizer.create<A<Array<E<string, number>>, object>>()).toEqual([
       {
         key: 'b',
-        isArray: true,
-        type: [
-          { key: 'h', isArray: false, type: PropertyType.String },
+        flag: DescriptionFlag.Array,
+        description: [
+          { key: 'h', flag: null, description: PropertyType.String },
           {
             key: 'i',
-            isArray: true,
-            type: [
+            flag: DescriptionFlag.Array,
+            description: [
               {
                 key: 'l',
-                isArray: true,
-                type: { isArray: true, type: PropertyType.String },
+                flag: DescriptionFlag.Array,
+                description: {
+                  flag: DescriptionFlag.Array,
+                  description: PropertyType.String,
+                },
               },
               {
                 key: 'm',
-                isArray: true,
-                type: { isArray: true, type: PropertyType.Number },
+                flag: DescriptionFlag.Array,
+                description: {
+                  flag: DescriptionFlag.Array,
+                  description: PropertyType.Number,
+                },
               },
             ],
           },
         ],
       },
-      { key: 'c', isArray: false, type: PropertyType.Object },
+      { key: 'c', flag: null, description: PropertyType.Object },
     ]);
   });
 
@@ -396,28 +443,34 @@ describe('Test transformer.', () => {
     expect(Randomizer.create<A<Array<E<string, number>>, object>>()).toEqual([
       {
         key: 'b',
-        isArray: true,
-        type: [
-          { key: 'h', isArray: false, type: PropertyType.String },
+        flag: DescriptionFlag.Array,
+        description: [
+          { key: 'h', flag: null, description: PropertyType.String },
           {
             key: 'i',
-            isArray: true,
-            type: [
+            flag: DescriptionFlag.Array,
+            description: [
               {
                 key: 'l',
-                isArray: true,
-                type: { isArray: true, type: PropertyType.String },
+                flag: DescriptionFlag.Array,
+                description: {
+                  flag: DescriptionFlag.Array,
+                  description: PropertyType.String,
+                },
               },
               {
                 key: 'm',
-                isArray: true,
-                type: { isArray: true, type: PropertyType.Number },
+                flag: DescriptionFlag.Array,
+                description: {
+                  flag: DescriptionFlag.Array,
+                  description: PropertyType.Number,
+                },
               },
             ],
           },
         ],
       },
-      { key: 'c', isArray: false, type: PropertyType.Object },
+      { key: 'c', flag: null, description: PropertyType.Object },
     ]);
   });
 
@@ -442,17 +495,27 @@ describe('Test transformer.', () => {
     expect(Randomizer.create<A<string, number>>()).toEqual([
       {
         key: 't',
-        isArray: false,
-        type: [
-          { key: 'g', isArray: true, type: PropertyType.String },
+        flag: null,
+        description: [
+          {
+            key: 'g',
+            flag: DescriptionFlag.Array,
+            description: PropertyType.String,
+          },
           {
             key: 'h',
-            isArray: false,
-            type: [
+            flag: null,
+            description: [
               {
                 key: 'i',
-                isArray: false,
-                type: [{ key: 'p', isArray: true, type: PropertyType.Number }],
+                flag: null,
+                description: [
+                  {
+                    key: 'p',
+                    flag: DescriptionFlag.Array,
+                    description: PropertyType.Number,
+                  },
+                ],
               },
             ],
           },
