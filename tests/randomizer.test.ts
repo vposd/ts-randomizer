@@ -99,7 +99,7 @@ describe('Randomizer class', () => {
 
     test('should create object for class', () => {
       class A {
-        a: string;
+        a!: string;
       }
 
       expect(Randomizer.create<A>()).toMatchObject({ a: matchAnyString() });
@@ -107,7 +107,7 @@ describe('Randomizer class', () => {
 
     test('should create object for class with type arguments', () => {
       class A<T> {
-        a: T;
+        a!: T;
       }
 
       expect(Randomizer.create<A<number>>()).toMatchObject({
@@ -277,11 +277,11 @@ describe('.createMany', () => {
       }
 
       class A<T> {
-        a: B<T>;
+        a!: B<T>;
       }
 
       const result = Randomizer.build<A<string>>()
-        .with(x => (x.a.b = 'mutated'))
+        .with(x => (x ? (x.a.b = 'mutated') : x))
         .create();
 
       expect(result).toMatchObject({ a: { b: 'mutated' } });
@@ -294,13 +294,13 @@ describe('.createMany', () => {
       }
 
       class A<T> {
-        a: B<T>;
+        a!: B<T>;
       }
 
       const result = Randomizer.build<A<string>>()
-        .with(x => (x.a.b = 'mutated'))
-        .with(x => (x.a.c = 1))
-        .with(x => (x.a.b = 'mutated-2'))
+        .with(x => (x ? (x.a.b = 'mutated') : x))
+        .with(x => (x ? (x.a.c = 1) : x))
+        .with(x => (x ? (x.a.b = 'mutated-2') : x))
         .create();
 
       expect(result).toMatchObject({ a: { b: 'mutated-2', c: 1 } });
