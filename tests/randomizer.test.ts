@@ -65,6 +65,10 @@ describe('Randomizer class', () => {
       ]);
     });
 
+    test('should create object for turple type', () => {
+      expect(Randomizer.create<[number]>()).toMatchObject([expect.any(Number)]);
+    });
+
     test('should create object for interface', () => {
       interface A {
         a: string;

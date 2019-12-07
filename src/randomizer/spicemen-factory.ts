@@ -1,6 +1,11 @@
 import { isString, isArray, range } from 'lodash/fp';
 
-import { TypeDescription, PropertyDescription, PropertyType } from '../types';
+import {
+  TypeDescription,
+  PropertyDescription,
+  PropertyType,
+  DescriptionFlag,
+} from '../types';
 import {
   createString,
   createNumber,
@@ -75,12 +80,17 @@ export class SpecimenFactory<T> {
   }
 
   private generatePropertyValue(prop: PropertyDescription): Value<T> {
-    if (!prop.isArray) {
-      return new SpecimenFactory<T>(prop.type).create() as Value<T>;
+    if (prop.flag === DescriptionFlag.Array) {
+      return new SpecimenFactory(prop.description).createMany(
+        this.arrayValueCount
+      ) as Value<T>;
     }
-    return new SpecimenFactory(prop.type).createMany(
-      this.arrayValueCount
-    ) as Value<T>;
+    if (prop.flag === DescriptionFlag.Turple) {
+      return (prop.description as PropertyDescription[]).map(desc =>
+        new SpecimenFactory(desc).create()
+      ) as Value<T>;
+    }
+    return new SpecimenFactory<T>(prop.description).create() as Value<T>;
   }
 
   private generatePropertiesValues(props: PropertyDescription[]) {
