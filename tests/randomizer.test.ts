@@ -1,4 +1,6 @@
+import { PropertyType } from '../src/types';
 import { Randomizer } from '../src/randomizer/randomizer';
+import { SpecimenFactory } from '../src/randomizer/spicemen-factory';
 
 const matchAnyString = () =>
   expect.stringMatching(
@@ -7,6 +9,10 @@ const matchAnyString = () =>
 
 describe('Randomizer class', () => {
   describe('.create', () => {
+    test('should return undefined if description has not been provided', () => {
+      expect(Randomizer.create()).toBeUndefined();
+    });
+
     test('should create random values for basic types', () => {
       expect(Randomizer.create<string>()).toEqual(matchAnyString());
       expect(Randomizer.create<number>()).toEqual(expect.any(Number));
@@ -16,6 +22,10 @@ describe('Randomizer class', () => {
       expect(Randomizer.create<object>()).toEqual(expect.any(Object));
       expect(Randomizer.create<null>()).toBe(null);
       expect(Randomizer.create<undefined>()).toBe(undefined);
+    });
+
+    test('should create randon=m value for unknown type', () => {
+      expect(Randomizer.create<unknown>()).toEqual(expect.anything());
     });
 
     test('should create random values for basic array types', () => {
@@ -172,106 +182,118 @@ describe('Randomizer class', () => {
         },
       });
     });
-  });
 
-  test('should create object by interface with deep nested objects with type arguments', () => {
-    interface C<D> {
-      d: number;
-      k: D;
-    }
+    test('should create object by interface with deep nested objects with type arguments', () => {
+      interface C<D> {
+        d: number;
+        k: D;
+      }
 
-    interface A<T> {
-      t: C<T[]>;
-    }
+      interface A<T> {
+        t: C<T[]>;
+      }
 
-    expect(Randomizer.create<A<string>>()).toEqual({
-      t: {
-        d: expect.any(Number),
-        k: [
-          matchAnyString(),
-          matchAnyString(),
-          matchAnyString(),
-          matchAnyString(),
-          matchAnyString(),
-        ],
-      },
+      expect(Randomizer.create<A<string>>()).toEqual({
+        t: {
+          d: expect.any(Number),
+          k: [
+            matchAnyString(),
+            matchAnyString(),
+            matchAnyString(),
+            matchAnyString(),
+            matchAnyString(),
+          ],
+        },
+      });
     });
   });
-});
 
-describe('.createMany', () => {
-  test('should create random array values for basic types', () => {
-    expect(Randomizer.createMany<string[]>(2)).toEqual([
-      [
-        matchAnyString(),
-        matchAnyString(),
-        matchAnyString(),
-        matchAnyString(),
-        matchAnyString(),
-      ],
-      [
-        matchAnyString(),
-        matchAnyString(),
-        matchAnyString(),
-        matchAnyString(),
-        matchAnyString(),
-      ],
-    ]);
-    expect(Randomizer.createMany<number>(3)).toEqual([
-      expect.any(Number),
-      expect.any(Number),
-      expect.any(Number),
-    ]);
-    expect(Randomizer.createMany<boolean>(2)).toEqual([
-      expect.any(Boolean),
-      expect.any(Boolean),
-    ]);
-    expect(Randomizer.createMany<Function>(4)).toEqual([
-      expect.any(Function),
-      expect.any(Function),
-      expect.any(Function),
-      expect.any(Function),
-    ]);
-    expect(Randomizer.createMany<Date>(4)).toEqual([
-      expect.any(Date),
-      expect.any(Date),
-      expect.any(Date),
-      expect.any(Date),
-    ]);
-    expect(Randomizer.createMany<object>(2)).toEqual([
-      expect.any(Object),
-      expect.any(Object),
-    ]);
-    expect(Randomizer.createMany<null>(2)).toEqual([null, null]);
-  });
+  describe('.createMany', () => {
+    test('should return undefined if description has not been provided', () => {
+      expect(Randomizer.createMany()).toBeUndefined();
+    });
 
-  test('should create many random objects for interface', () => {
-    interface C<D> {
-      d: number;
-      k: D;
-    }
-
-    interface A<T> {
-      t: C<T[]>;
-    }
-
-    const expectedObject = {
-      t: {
-        d: expect.any(Number),
-        k: [
+    test('should create random array values for basic types', () => {
+      expect(Randomizer.createMany<string[]>(2)).toEqual([
+        [
           matchAnyString(),
           matchAnyString(),
           matchAnyString(),
           matchAnyString(),
           matchAnyString(),
         ],
-      },
-    };
+        [
+          matchAnyString(),
+          matchAnyString(),
+          matchAnyString(),
+          matchAnyString(),
+          matchAnyString(),
+        ],
+      ]);
+      expect(Randomizer.createMany<number>(3)).toEqual([
+        expect.any(Number),
+        expect.any(Number),
+        expect.any(Number),
+      ]);
+      expect(Randomizer.createMany<boolean>(2)).toEqual([
+        expect.any(Boolean),
+        expect.any(Boolean),
+      ]);
+      expect(Randomizer.createMany<Function>(4)).toEqual([
+        expect.any(Function),
+        expect.any(Function),
+        expect.any(Function),
+        expect.any(Function),
+      ]);
+      expect(Randomizer.createMany<Date>(4)).toEqual([
+        expect.any(Date),
+        expect.any(Date),
+        expect.any(Date),
+        expect.any(Date),
+      ]);
+      expect(Randomizer.createMany<object>(2)).toEqual([
+        expect.any(Object),
+        expect.any(Object),
+      ]);
+      expect(Randomizer.createMany<null>(2)).toEqual([null, null]);
+    });
 
-    expect(Randomizer.createMany<A<string>>(2)).toEqual([
-      expectedObject,
-      expectedObject,
-    ]);
+    test('should create many random objects for interface', () => {
+      interface C<D> {
+        d: number;
+        k: D;
+      }
+
+      interface A<T> {
+        t: C<T[]>;
+      }
+
+      const expectedObject = {
+        t: {
+          d: expect.any(Number),
+          k: [
+            matchAnyString(),
+            matchAnyString(),
+            matchAnyString(),
+            matchAnyString(),
+            matchAnyString(),
+          ],
+        },
+      };
+
+      expect(Randomizer.createMany<A<string>>(2)).toEqual([
+        expectedObject,
+        expectedObject,
+      ]);
+    });
+  });
+
+  describe('.build', () => {
+    test('should throw error if description has not been provided', () => {
+      expect(Randomizer.build).toThrowError(
+        '[Randomizer] Error: Missing type description'
+      );
+    });
   });
 
   describe('.with', () => {
@@ -308,6 +330,27 @@ describe('.createMany', () => {
         .create();
 
       expect(result).toMatchObject({ a: { b: 'mutated-2', c: 1 } });
+    });
+  });
+});
+
+describe('SpicemenFactory', () => {
+  describe('.create', () => {
+    test('should not throw error if key of property description is null', () => {
+      const spicemen = new SpecimenFactory([
+        { key: '', description: PropertyType.String },
+        { key: 'a', description: PropertyType.Number },
+      ]);
+      expect(spicemen.create()).toMatchObject({
+        a: expect.any(Number),
+      });
+    });
+  });
+
+  describe('.createMany', () => {
+    test('should create an empty array if arguments has not been provided', () => {
+      const spicemen = new SpecimenFactory(PropertyType.String);
+      expect(spicemen.createMany()).toMatchObject([]);
     });
   });
 });

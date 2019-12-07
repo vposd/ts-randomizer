@@ -3,12 +3,16 @@
   "version": "1.0.0",
   "description": "Library for typescript for easy creating data by requested type",
   "main": "main.ts",
+  "author": {
+    "name": "Valerii Posdnyakov",
+    "email": "vpposd@gmail.com"
+  },
   "scripts": {
     "build": "tsc",
     "version": "npm run format && git add -A src",
     "postversion": "git push && git push --tags",
     "install": "npm run build",
-    "test": "node tests/index.js && npx jest",
+    "test": "node tests/index.js && npx jest --coverage",
     "test-watch": "nodemon --watch src --watch tests -e ts --exec npm run test",
     "check": "gts check",
     "clean": "gts clean",
@@ -18,7 +22,6 @@
     "pretest": "npm run compile",
     "posttest": "npm run check"
   },
-  "author": "Valerii Pozdniakov",
   "license": "ISC",
   "files": [
     "index.js",
@@ -29,14 +32,15 @@
   "devDependencies": {
     "@types/jest": "^24.0.23",
     "@types/lodash": "^4.14.149",
+    "@types/node": "^10.0.3",
     "@types/uuid": "^3.4.6",
+    "codecov": "^3.6.1",
+    "gts": "^1.1.2",
+    "jest": "^24.9.0",
     "nodemon": "^2.0.1",
     "ts-jest": "^24.2.0",
     "tslint": "^5.20.1",
-    "jest": "^24.9.0",
-    "typescript": "^3.6.4",
-    "gts": "^1.1.2",
-    "@types/node": "^10.0.3"
+    "typescript": "^3.6.4"
   },
   "dependencies": {
     "uuid": "^3.3.3",
