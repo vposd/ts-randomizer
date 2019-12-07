@@ -73,6 +73,43 @@ describe('Test transformer.', () => {
     ]);
   });
 
+  test('should generate description for turples', () => {
+    interface B<C> {
+      c: C[];
+    }
+
+    interface A {
+      a: [number, B<boolean>];
+    }
+
+    expect(Randomizer.create<[A, boolean, number]>()).toMatchObject({
+      flag: DescriptionFlag.Turple,
+      description: [
+        {
+          description: [
+            {
+              flag: DescriptionFlag.Turple,
+              description: [
+                { description: PropertyType.Number },
+                {
+                  description: [
+                    {
+                      key: 'c',
+                      flag: DescriptionFlag.Array,
+                      description: PropertyType.Boolean,
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        { description: PropertyType.Boolean },
+        { description: PropertyType.Number },
+      ],
+    });
+  });
+
   test('should generate description for class which extends other class', () => {
     class C {
       c!: string;
