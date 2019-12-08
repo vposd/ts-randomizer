@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "A tool to create random data by requested types",
   "main": "index.ts",
-  "private": true,
   "author": {
     "name": "Valerii Posdnyakov",
     "email": "vpposd@gmail.com"
