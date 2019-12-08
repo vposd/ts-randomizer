@@ -1,4 +1,4 @@
-[![Code Style: Google](https://img.shields.io/badge/code%20style-google-blueviolet.svg)](https://github.com/google/gts) [![Build Status](https://travis-ci.com/vposd/ts-randomizer.svg?branch=master)](https://travis-ci.com/vposd/ts-randomizer)
+[![Build Status](https://travis-ci.com/vposd/ts-randomizer.svg?branch=master)](https://travis-ci.com/vposd/ts-randomizer) [![Code Style: Google](https://img.shields.io/badge/code%20style-google-blueviolet.svg)](https://github.com/google/gts)
 
 # Typescript Randomizer
 A tool to create random data by requested types.
@@ -24,6 +24,7 @@ Also there are some ready recipes:
 const data = Randomizer.create<string>();
 
 console.log(data);
+
 // "850eb858-f3b7-4d9c-9715-563a7fbd8f0d"
 ```
 
@@ -82,7 +83,7 @@ console.log(data);
 //      ],
 //      "d":true
 //   }
-//}
+// }
 ```
 For more examples, take a look for tests
 
