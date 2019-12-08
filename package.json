@@ -1,6 +1,6 @@
 {
   "name": "ts-randomizer",
-  "version": "1.0.15",
+  "version": "1.0.17",
   "description": "A tool to create random data by requested types",
   "main": "index.js",
   "types": "index.d.ts",
