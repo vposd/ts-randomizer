@@ -18,9 +18,11 @@ Randomizer doesn't work without transformer. The Transformer needs to be provide
 ### Create random data
 ```typescript
 const data = Randomizer.create<string>();
+
 console.log(data);
 // > "850eb858-f3b7-4d9c-9715-563a7fbd8f0d"
 ```
+
 ### Create many random data
 ```typescript
 interface A {
@@ -28,6 +30,7 @@ interface A {
 }
 
 const data = Randomizer.createMany<A>(2);
+
 console.log(data);
 // data equals
 // [
@@ -56,6 +59,7 @@ interface B<C, D> {
     c: C[],
     d: string;
 }
+
 class A<T> {
     a: B<T, boolean>
 }
