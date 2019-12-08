@@ -5,6 +5,7 @@ Unfortunately, TypeScript itself does not currently provide any easy way to use 
 The followings are the example usage of the custom transformer.
 
 ### webpack (with ts-loader or awesome-typescript-loader)
+[Check an example with karma-webpack and ts-patch](https://github.com/vposd/ts-randomizer/examples/karma-webpack)
 ```js
 // webpack.config.js
 const transformer = require('ts-randomizer').transformer;
@@ -29,7 +30,7 @@ module.exports = {
 ```
 
 ### ts-patch
-See [ts-patch's README](https://github.com/nonara/ts-patch/blob/master/README.md)
+See [ts-patch's README](https://github.com/nonara/ts-patch/blob/master/README.md), and [check an example](https://github.com/vposd/ts-randomizer/examples/karma-webpack)
 ```
 npm i -g ts-patch
 ts-patch install
@@ -48,7 +49,7 @@ ts-patch install
 ```
 
 ### ttypescript
-[Check an example jest with ttypescript](https://github.com/vposd/ts-randomizer/examples/jest)
+[Check an example with jest and ttypescript compiler](https://github.com/vposd/ts-randomizer/examples/jest)
 See [ttypescript's README](https://github.com/cevek/ttypescript/blob/master/README.md) for how to use this with module bundlers such as webpack or Rollup.
 ```json
 // tsconfig.json

@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "outDir": "dist",
+    "sourceMap": false,
+    "target": "es5",
+    "plugins": [{ "transform": "ts-randomizer", "import": "transformer" }]
+  },
+  "include": ["test"]
+}
