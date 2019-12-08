@@ -1,4 +1,4 @@
-[![Code Style: Google](https://img.shields.io/badge/code%20style-google-blueviolet.svg)](https://github.com/google/gts)
+[![Code Style: Google](https://img.shields.io/badge/code%20style-google-blueviolet.svg)](https://github.com/google/gts) [![Build Status](https://travis-ci.com/vposd/ts-randomizer.svg?branch=master)](https://travis-ci.com/vposd/ts-randomizer)
 
 # Typescript Randomizer
 A tool to create random data by requested types.
