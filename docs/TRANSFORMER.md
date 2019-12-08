@@ -27,6 +27,7 @@ module.exports = {
   },
 };
 ```
+
 ### ts-patch
 See [ts-patch's README](https://github.com/nonara/ts-patch/blob/master/README.md)
 ```
@@ -39,7 +40,7 @@ ts-patch install
   "compilerOptions": {
     ...,
     "plugins": [
-      { "transform": "ts-randomizer", "import": "transform" }
+      { "transform": "ts-randomizer", "import": "transformer" }
     ]
   },
   ...
@@ -47,6 +48,7 @@ ts-patch install
 ```
 
 ### ttypescript
+[Check an example jest with ttypescript](https://github.com/vposd/ts-randomizer/examples/jest)
 See [ttypescript's README](https://github.com/cevek/ttypescript/blob/master/README.md) for how to use this with module bundlers such as webpack or Rollup.
 ```json
 // tsconfig.json
@@ -54,7 +56,7 @@ See [ttypescript's README](https://github.com/cevek/ttypescript/blob/master/READ
   "compilerOptions": {
     ...,
     "plugins": [
-      { "transform": "ts-randomizer", "import": "transform" }
+      { "transform": "ts-randomizer", "import": "transformer" }
     ]
   },
   ...
@@ -62,7 +64,7 @@ See [ttypescript's README](https://github.com/cevek/ttypescript/blob/master/READ
 ```
 
 ### TypeScript API
-See debug forder for more details. Also, you can try it with ```$ npm run test```
+See [debug folder](https://github.com/vposd/ts-randomizer/debug) for more details. Also, you can try it with ```$ npm run test```
 ```typescript
 import * as ts from 'typescript';
 import { transformer } from 'ts-randomizer';
