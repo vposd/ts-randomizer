@@ -9,8 +9,8 @@ after_success:
   - npm run report-coverage
 deploy:
   provider: npm
-  email: '$NPM_EMAIL'
-  api_key: '$NPM_API_KEY'
+  email: $NPM_EMAIL
+  api_key: $NPM_API_KEY
   skip_cleanup: true
   on:
     repo: vposd/ts-randomizer
