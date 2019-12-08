@@ -54,7 +54,7 @@ See [ttypescript's README](https://github.com/cevek/ttypescript/blob/master/READ
   "compilerOptions": {
     ...,
     "plugins": [
-      { "transform": "ts-auto-mock/transformer" }
+      { "transform": "ts-randomizer/transformer" }
     ]
   },
   ...
