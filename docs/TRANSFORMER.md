@@ -5,7 +5,7 @@ Unfortunately, TypeScript itself does not currently provide any easy way to use 
 The followings are the example usage of the custom transformer.
 
 ### webpack (with ts-loader or awesome-typescript-loader)
-```
+```js
 // webpack.config.js
 const transformer = require('ts-randomizer/transformer').default;
 
@@ -48,8 +48,8 @@ ts-patch install
 
 ### ttypescript
 See [ttypescript's README](https://github.com/cevek/ttypescript/blob/master/README.md) for how to use this with module bundlers such as webpack or Rollup.
-```
-//tsconfig.json
+```json
+// tsconfig.json
 {
   "compilerOptions": {
     ...,
@@ -63,7 +63,7 @@ See [ttypescript's README](https://github.com/cevek/ttypescript/blob/master/READ
 
 ### TypeScript API
 See debug forder for more details. Also, you can try it with ```$ npm run test```
-```
+```typescript
 import * as ts from 'typescript';
 import { transformer } from 'ts-randomizer/transformer';
 
