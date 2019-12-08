@@ -16,6 +16,7 @@ Randomizer doesn't work without the typescript transformer. The transformer need
 Also, there are some ready examples:
  - [Jest](https://github.com/vposd/ts-randomizer/tree/master/examples/jest)
  - [Karma](https://github.com/vposd/ts-randomizer/tree/master/examples/karma-webpack)
+ - Angular CLI
 
 ## Example usage
 ### Create random data
