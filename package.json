@@ -1,6 +1,6 @@
 {
   "name": "ts-randomizer",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "A tool to create random data by requested types",
   "main": "index.js",
   "types": "index.d.ts",
@@ -25,7 +25,7 @@
     "report-coverage": "codecov",
     "test": "node tests/index.js && npx jest --coverage",
     "test-watch": "nodemon --watch src --watch tests -e ts --exec npm run test",
-    "version": "npm run format && git add -A src"
+    "version": "npm run check && git add -A src"
   },
   "license": "MIT",
   "files": [
