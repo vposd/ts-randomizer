@@ -29,9 +29,9 @@
   },
   "license": "MIT",
   "files": [
-    "build/src/",
-    "build/index.js",
-    "build/index.d.ts"
+    "src",
+    "index.js",
+    "index.d.ts"
   ],
   "devDependencies": {
     "@types/jest": "^24.0.23",
