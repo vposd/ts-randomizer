@@ -2,13 +2,14 @@
 
 # Typescript Randomizer
 A tool to create random data by requested types.
+It's designed to minimize the arrange phase of unit tests in order to maximize maintainability, making it easier to create objects containing random test data.
 
 ## Description
-Typescript Randomizer includes two main parts:
- - Typescript transformer to unlock type description for requested types
+Typescript Randomizer includes two parts:
+ - Typescript transformer to unlock type description for requested types.
  - Randomizer class with methods to create random data by requested types.
 
-Typescript transformer to unlock automatic mock creation for interfaces and classes
+Typescript transformer to unlock automatic creation a random data for interfaces and classes.
 
 ## How to install
 Randomizer doesn't work without transformer. The Transformer needs to be provided at compile time. There are different ways to do it.
