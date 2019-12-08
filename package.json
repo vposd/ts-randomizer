@@ -1,9 +1,9 @@
 {
   "name": "ts-randomizer",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "A tool to create random data by requested types",
-  "main": "build/index.js",
-  "types": "build/index.d.ts",
+  "main": "index.js",
+  "types": "index.d.ts",
   "author": {
     "name": "Valerii Posdnyakov",
     "email": "vpposd@gmail.com"
