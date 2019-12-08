@@ -73,6 +73,42 @@ describe('Test transformer.', () => {
     ]);
   });
 
+  test('should generate description for enum', () => {
+    enum A {
+      a = '1',
+      b = 2,
+    }
+
+    expect(Randomizer.create<A>()).toMatchObject({
+      flag: DescriptionFlag.Enum,
+      possibleValues: ['1', 2],
+      description: [],
+    });
+  });
+
+  test('should generate description for enum as prop', () => {
+    enum Enum {
+      a = '1',
+      b = 2,
+    }
+
+    interface A<T> {
+      a: T[];
+    }
+
+    expect(Randomizer.create<A<Enum>>()).toMatchObject([
+      {
+        key: 'a',
+        flag: DescriptionFlag.Array,
+        description: {
+          flag: DescriptionFlag.Enum,
+          possibleValues: ['1', 2],
+          description: [],
+        },
+      },
+    ]);
+  });
+
   test('should generate description for turples', () => {
     interface B<C> {
       c: C[];

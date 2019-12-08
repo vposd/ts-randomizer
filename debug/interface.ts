@@ -1,9 +1,9 @@
 import { Randomizer } from '../src/randomizer/randomizer';
-interface B<C, D> {
-  c: C[];
-  d: string;
+enum Enum {
+  a = '1',
 }
-class A<T> {
-  a!: B<T, boolean>;
+
+interface A<T> {
+  a: T[];
 }
-Randomizer.create<A<string>>();
+Randomizer.create<A<Enum>>();

@@ -79,6 +79,16 @@ describe('Randomizer class', () => {
       expect(Randomizer.create<[number]>()).toMatchObject([expect.any(Number)]);
     });
 
+    test('should create object for enum', () => {
+      enum A {
+        one = 1,
+        second = '2',
+      }
+      const data = Randomizer.create<A>();
+      const works = data === 1 || data === '2';
+      expect(works).toBe(true);
+    });
+
     test('should create object for interface', () => {
       interface A {
         a: string;

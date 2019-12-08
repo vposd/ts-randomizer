@@ -24,10 +24,12 @@ export type TypeDescription =
 export enum DescriptionFlag {
   Array,
   Turple,
+  Enum,
 }
 
 export interface PropertyDescription {
   key?: string;
   flag?: DescriptionFlag | null;
+  possibleValues?: unknown | unknown[];
   description: TypeDescription;
 }
