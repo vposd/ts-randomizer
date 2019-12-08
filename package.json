@@ -1,6 +1,6 @@
 {
   "name": "ts-randomizer",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A tool to create random data by requested types",
   "main": "index.ts",
   "author": {
@@ -28,7 +28,7 @@
   },
   "license": "MIT",
   "files": [
-    "build/src",
+    "build/src/",
     "build/index.js",
     "build/index.d.ts"
   ],
