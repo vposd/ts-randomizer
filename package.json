@@ -1,33 +1,39 @@
 {
   "name": "ts-randomizer",
   "version": "1.0.0",
-  "description": "Library for typescript for easy creating data by requested type",
-  "main": "main.ts",
+  "description": "A tool to create random data by requested types",
+  "main": "index.ts",
   "author": {
     "name": "Valerii Posdnyakov",
     "email": "vpposd@gmail.com"
   },
+  "homepage": "https://github.com/vposd/ts-randomizer#readme",
+  "bugs": {
+    "url": "https://github.com/vposd/ts-randomizer/issues"
+  },
   "scripts": {
-    "build": "tsc",
-    "version": "npm run format && git add -A src",
-    "postversion": "git push && git push --tags",
-    "install": "npm run build",
-    "test": "node tests/index.js && npx jest --coverage",
-    "test-watch": "nodemon --watch src --watch tests -e ts --exec npm run test",
+    "build": "tsc -p tsconfig.prod.json",
     "check": "gts check",
     "clean": "gts clean",
     "compile": "tsc -p .",
     "fix": "gts fix",
+    "install": "npm run compile",
+    "posttest": "npm run check",
+    "postversion": "git push && git push --tags",
     "prepare": "npm run compile",
     "pretest": "npm run compile",
-    "posttest": "npm run check"
+    "report-coverage": "codecov",
+    "test": "node tests/index.js && npx jest --coverage",
+    "test-watch": "nodemon --watch src --watch tests -e ts --exec npm run test",
+    "version": "npm run format && git add -A src"
   },
   "license": "ISC",
   "files": [
-    "index.js",
-    "index.ts",
-    "transformer.js",
-    "transformer.ts"
+    "build/src",
+    "build/src/randomizer",
+    "build/src/transformer",
+    "build/src/types.d.ts",
+    "build/src/types.js"
   ],
   "devDependencies": {
     "@types/jest": "^24.0.23",
@@ -44,7 +50,6 @@
   },
   "dependencies": {
     "uuid": "^3.3.3",
-    "lodash": "^4.17.15",
-    "path": "^0.12.7"
+    "lodash": "^4.17.15"
   }
 }

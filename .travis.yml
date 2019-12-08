@@ -1,0 +1,17 @@
+sudo: required
+language: node_js
+node_js:
+  - node
+script:
+  - npm run test
+  - npm run compile
+after_success:
+  - npm run report-coverage
+deploy:
+  provider: npm
+  email: vpposd@gmail.com
+  skip_cleanup: true
+  api_key:
+    secure: gAG1f1Bz6nYXHD0grM1s2ToXaBDXnwA2fqNHanEcTWmMz4zJwmg0zHbg7nWUpvfhETlr3GuPwz4+N68Vn9R10SMUO/Mt6oRDIZh8AVFkhVpZEorv2HK/E0yW040Kh3JnDQu+GUSmK5ieztLawwT41JENc7XCLfgsVQCZ8+cwN8tXHSS6fMN75TgvUawhBLrD4xiLRA+EKWFyi7FigkRc3SPWJbzDvTBVbanFSHoOR6gi6StsNeNUSjheK9nKd19wHNZ2anAQHA+/uR8C6lHdTnplP4YyTmu2M5F7s0t+c6zi/BJB8fSyRt17skEZJSqbI5OE7GGmwXZ2iuO1ewDdszBKeXiYA+nYxRk3eMYx+SQv7bL2BSp4T8Ub3B80hJC7OB6hVlJl2lkz+WL+A9gya3lpi/N8QTE6PExS5sSmMdPdA//9eupc9xz8u+y2N+auri089tNyfXGacjYJJ1rqreJLJbkR143h0NhKo1pLP/VWAhsellmgsQgdr5qcZwjvO1HjV2mjTu1d7bnk3e1jzkh6hIKP1Ex7QZgHswWqH/jtvT00rHCpg9Ro3plngZDnA8KcfJ/iVx1FQNt596Yf5gLrqraaFlccCBA4ygOzJqZNwW9mmikRWBICrBvJ2Q63RMZIgTfdjqAPMCRDXH+6wzCekIH1I13be5V0rp02AVc=
+  on:
+    repo: vposd/ts-randomizer
