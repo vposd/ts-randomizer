@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import { isEmpty, flatMap } from 'lodash/fp';
+import { isEmpty, flatMap, map } from 'lodash/fp';
 
 import {
   TypeArgumentsMap,
@@ -20,6 +20,12 @@ type DescriptionFactory<T> = (
   node: T,
   typeArgumentsMap?: TypeArgumentsMap
 ) => (checker: ts.TypeChecker) => TypeDescription;
+
+const getEnumValues = (type: ts.Type) =>
+  map(
+    literal => (literal as ts.LiteralType).value,
+    (type as ts.IntersectionType).types
+  );
 
 const getTurpleNodeDescription: DescriptionFactory<ts.TupleTypeNode> = (
   typeNode,
@@ -331,6 +337,16 @@ const generatePropertyDescription = (
         arrayTypeParam,
         typeArgumentsMap
       )(checker),
+    };
+  }
+
+  const enumValues = getEnumValues(type);
+
+  if (!isEmpty(enumValues)) {
+    return {
+      flag: DescriptionFlag.Enum,
+      possibleValues: enumValues,
+      description: [],
     };
   }
 

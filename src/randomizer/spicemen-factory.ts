@@ -1,4 +1,4 @@
-import { isString, isArray, range } from 'lodash/fp';
+import { isString, isArray, range, sample } from 'lodash/fp';
 
 import {
   TypeDescription,
@@ -89,6 +89,9 @@ export class SpecimenFactory<T> {
       return (prop.description as PropertyDescription[]).map(desc =>
         new SpecimenFactory(desc).create()
       ) as Value<T>;
+    }
+    if (prop.flag === DescriptionFlag.Enum && prop.possibleValues) {
+      return sample(prop.possibleValues as unknown[]) as Value<T>;
     }
     return new SpecimenFactory<T>(prop.description).create() as Value<T>;
   }

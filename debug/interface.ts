@@ -1,9 +1,7 @@
 import { Randomizer } from '../src/randomizer/randomizer';
-interface B<C, D> {
-  c: C[];
-  d: string;
+
+interface A<T> {
+  a: T[];
 }
-class A<T> {
-  a!: B<T, boolean>;
-}
+
 Randomizer.create<A<string>>();
