@@ -1,6 +1,6 @@
 {
   "name": "ts-randomizer",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A tool to create random data by requested types",
   "main": "index.ts",
   "author": {
@@ -26,7 +26,7 @@
     "test-watch": "nodemon --watch src --watch tests -e ts --exec npm run test",
     "version": "npm run format && git add -A src"
   },
-  "license": "ISC",
+  "license": "MIT",
   "files": [
     "build/src",
     "build/src/randomizer",
