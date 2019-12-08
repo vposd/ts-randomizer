@@ -10,9 +10,12 @@ Typescript Randomizer includes two main parts:
 
 Typescript transformer to unlock automatic mock creation for interfaces and classes
 
-# How to install
+## How to install
 Randomizer doesn't work without transformer. The Transformer needs to be provided at compile time. There are different ways to do it.
 [Please read the following guide to find your configuration](https://github.com/vposd/ts-randomizer/blob/master/docs/TRANSFORMER.md)
+
+Also there are some ready recipes:
+ - Work with Angular (In prorgess...)
 
 ## Example usage
 ### Create random data
@@ -20,7 +23,7 @@ Randomizer doesn't work without transformer. The Transformer needs to be provide
 const data = Randomizer.create<string>();
 
 console.log(data);
-// > "850eb858-f3b7-4d9c-9715-563a7fbd8f0d"
+// "850eb858-f3b7-4d9c-9715-563a7fbd8f0d"
 ```
 
 ### Create many random data
@@ -32,7 +35,7 @@ interface A {
 const data = Randomizer.createMany<A>(2);
 
 console.log(data);
-// data equals
+
 // [
 //    { a: "dbb04326-3f0d-4eb1-8bec-2b22fef39f0b" },
 //    { a: "3d48ee0b-2004-4745-8453-98b36d260fc4" },
@@ -49,7 +52,7 @@ const data = Randomizer.build<A>()
     .create();
 
 console.log(data);
-// data equals
+
 // { a: "my string" }
 ```
 
@@ -66,7 +69,7 @@ class A<T> {
 
 const data = Randomizer.create<A<string>>();
 console.log(data);
-// data equals
+
 // {
 //   "a":{
 //      "c":[
