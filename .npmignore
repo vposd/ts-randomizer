@@ -1,1 +1,4 @@
 build/
+build/debug/
+build/tests/
+build/manual-compile/
