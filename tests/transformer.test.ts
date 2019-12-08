@@ -467,8 +467,6 @@ describe('Test transformer.', () => {
       h!: H;
       // For ensure to resolve w/o Array<T>
       // tslint:disable-next-line: array-type
-      // For ensure to resolve w/o Array<T>
-      // tslint:disable-next-line: array-type
       i!: K<H, I[]>[];
     }
 
