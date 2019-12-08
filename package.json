@@ -1,9 +1,9 @@
 {
   "name": "ts-randomizer",
-  "version": "1.0.7",
+  "version": "1.0.9",
   "description": "A tool to create random data by requested types",
-  "main": "build/index.js",
-  "types": "build/index.d.ts",
+  "main": "index.js",
+  "types": "index.d.ts",
   "author": {
     "name": "Valerii Posdnyakov",
     "email": "vpposd@gmail.com"
@@ -29,9 +29,10 @@
   },
   "license": "MIT",
   "files": [
-    "build/src/",
-    "build/index.js",
-    "build/index.d.ts"
+    "src/**/*.js",
+    "src/**/*.d.ts",
+    "index.js",
+    "index.d.ts"
   ],
   "devDependencies": {
     "@types/jest": "^24.0.23",
