@@ -13,8 +13,9 @@ Typescript Randomizer includes two parts:
 Randomizer doesn't work without the typescript transformer. The transformer needs to be provided at compile time. There are many different ways to do it.
 [Please read the following guide to find your configuration](https://github.com/vposd/ts-randomizer/blob/master/docs/TRANSFORMER.md)
 
-Also, there are some ready recipes:
- - Work with Angular CLI (In prorgess...)
+Also, there are some ready examples:
+ - [Jest](https://github.com/vposd/ts-randomizer/tree/master/examples/jest)
+ - [Karma](https://github.com/vposd/ts-randomizer/tree/master/examples/karma-webpack)
 
 ## Example usage
 ### Create random data
@@ -41,7 +42,7 @@ console.log(data);
 //    { a: "3d48ee0b-2004-4745-8453-98b36d260fc4" },
 // ]
 ```
-### Create random data with set prop data
+### Create random data with default values
 ```typescript
 interaface A {
     a: string;
