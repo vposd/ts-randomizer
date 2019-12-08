@@ -17,7 +17,6 @@
     "clean": "gts clean",
     "compile": "tsc -p .",
     "fix": "gts fix",
-    "install": "npm run compile",
     "posttest": "npm run check",
     "postversion": "git push && git push --tags",
     "prepare": "npm run compile",
