@@ -6,17 +6,15 @@ It's designed to minimize the arrange phase of unit tests in order to maximize m
 
 ## Description
 Typescript Randomizer includes two parts:
- - Typescript transformer to unlock type description for requested types.
+ - Typescript transformer to generate a description for requested types.
  - Randomizer class with methods to create random data by requested types.
 
-Typescript transformer to unlock automatic creation a random data for interfaces and classes.
-
 ## How to install
-Randomizer doesn't work without transformer. The Transformer needs to be provided at compile time. There are different ways to do it.
+Randomizer doesn't work without the typescript transformer. The transformer needs to be provided at compile time. There are many different ways to do it.
 [Please read the following guide to find your configuration](https://github.com/vposd/ts-randomizer/blob/master/docs/TRANSFORMER.md)
 
-Also there are some ready recipes:
- - Work with Angular (In prorgess...)
+Also, there are some ready recipes:
+ - Work with Angular CLI (In prorgess...)
 
 ## Example usage
 ### Create random data
@@ -85,7 +83,7 @@ console.log(data);
 //   }
 // }
 ```
-For more examples, take a look for tests
+For more examples, take a look for tests folder
 
 # License
 This project is licensed under the MIT License

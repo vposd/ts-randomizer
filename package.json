@@ -1,6 +1,6 @@
 {
   "name": "ts-randomizer",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "A tool to create random data by requested types",
   "main": "index.js",
   "types": "index.d.ts",
@@ -12,6 +12,15 @@
   "bugs": {
     "url": "https://github.com/vposd/ts-randomizer/issues"
   },
+  "keywords": [
+    "typescript",
+    "autofixture",
+    "fixture",
+    "randomizer",
+    "tdd",
+    "mock",
+    "auto"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.prod.json",
     "check": "gts check",
