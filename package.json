@@ -38,10 +38,12 @@
   },
   "license": "MIT",
   "files": [
-    "src/**/*.js",
-    "src/**/*.d.ts",
+    "index.d.ts",
     "index.js",
-    "index.d.ts"
+    "src/**/*.d.ts",
+    "src/**/*.js",
+    "transformer.d.ts",
+    "transformer.js"
   ],
   "devDependencies": {
     "@types/jest": "^24.0.23",
