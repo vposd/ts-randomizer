@@ -4,5 +4,11 @@
     "rootDir": ".",
     "outDir": "build"
   },
-  "include": ["src/**/*.ts", "tests/**/*.ts", "debug/**/*.ts", "index.ts"]
+  "include": [
+    "src/**/*.ts",
+    "tests/**/*.ts",
+    "debug/**/*.ts",
+    "index.ts",
+    "transformer.ts"
+  ]
 }

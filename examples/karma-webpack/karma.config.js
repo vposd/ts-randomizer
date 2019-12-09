@@ -1,4 +1,4 @@
-const { transformer } = require('ts-randomizer');
+const { transformer } = require('ts-randomizer/transformer');
 
 module.exports = function(config) {
   const _config = {

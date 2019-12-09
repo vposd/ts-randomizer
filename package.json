@@ -1,6 +1,6 @@
 {
   "name": "ts-randomizer",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "A tool to create random data by requested types",
   "main": "index.js",
   "types": "index.d.ts",
@@ -38,10 +38,12 @@
   },
   "license": "MIT",
   "files": [
-    "src/**/*.js",
-    "src/**/*.d.ts",
+    "index.d.ts",
     "index.js",
-    "index.d.ts"
+    "src/**/*.d.ts",
+    "src/**/*.js",
+    "transformer.d.ts",
+    "transformer.js"
   ],
   "devDependencies": {
     "@types/jest": "^24.0.23",
@@ -54,10 +56,13 @@
     "nodemon": "^2.0.1",
     "ts-jest": "^24.2.0",
     "tslint": "^5.20.1",
-    "typescript": "^3.6.4"
+    "typescript": "^3.7.3"
   },
   "dependencies": {
     "uuid": "^3.3.3",
     "lodash": "^4.17.15"
+  },
+  "peerDependencies": {
+    "typescript": "^3.7.3"
   }
 }

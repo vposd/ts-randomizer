@@ -1,6 +1,8 @@
 module.exports = {
   globals: {
-    'ts-jest': {},
+    'ts-jest': {
+      compiler: 'ttypescript',
+    },
   },
   transform: {
     '^.+\\.tsx?$': 'ts-jest',
