@@ -146,6 +146,28 @@ describe('Test transformer.', () => {
     });
   });
 
+  test('should generate description for array type prop', () => {
+    class B {
+      b!: string;
+      c!: string;
+    }
+
+    class A {
+      a!: B[];
+    }
+
+    expect(Randomizer.create<A>()).toMatchObject([
+      {
+        key: 'a',
+        flag: DescriptionFlag.Array,
+        description: [
+          { key: 'b', flag: null, description: PropertyType.String },
+          { key: 'c', flag: null, description: PropertyType.String },
+        ],
+      },
+    ]);
+  });
+
   test('should generate description for class which extends other class', () => {
     class C {
       c!: string;

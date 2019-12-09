@@ -44,13 +44,26 @@ const getPropertyDeclarationDescription: DescriptionFactory<ts.PropertyDeclarati
   if (!node || !node.type) {
     return PropertyType.Null;
   }
+
   if (ts.isArrayTypeNode(node.type)) {
+    const type = checker.getTypeAtLocation(node.type.elementType);
     const symbol = checker.getSymbolAtLocation(node.name);
+    if (ts.isArrayTypeNode(node.type.elementType)) {
+      return {
+        key: symbol ? symbol.getName() : '',
+        flag: DescriptionFlag.Array,
+        description: generateNodeDescription(
+          node.type,
+          typeArgumentsMap
+        )(checker),
+      };
+    }
     return {
       key: symbol ? symbol.getName() : '',
       flag: DescriptionFlag.Array,
-      description: generateNodeDescription(
-        node.type,
+      description: generatePropertyDescription(
+        symbol ? symbol.getName() : '',
+        type,
         typeArgumentsMap
       )(checker),
     };
