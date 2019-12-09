@@ -7,7 +7,9 @@
     "outDir": "dist",
     "sourceMap": false,
     "target": "es5",
-    "plugins": [{ "transform": "ts-randomizer", "import": "transformer" }]
+    "plugins": [
+      { "transform": "ts-randomizer/transformer", "import": "transformer" }
+    ]
   },
   "include": ["test"]
 }

@@ -8,7 +8,7 @@ The followings are the example usage of the custom transformer.
 [Check an example with karma-webpack and ts-patch](https://github.com/vposd/ts-randomizer/examples/karma-webpack)
 ```js
 // webpack.config.js
-const transformer = require('ts-randomizer').transformer;
+const transformer = require('ts-randomizer/transformer').transformer;
 
 module.exports = {
   // ...
@@ -41,7 +41,7 @@ ts-patch install
   "compilerOptions": {
     ...,
     "plugins": [
-      { "transform": "ts-randomizer", "import": "transformer" }
+      { "transform": "ts-randomizer/transformer", "import": "transformer" }
     ]
   },
   ...
@@ -57,7 +57,7 @@ See [ttypescript's README](https://github.com/cevek/ttypescript/blob/master/READ
   "compilerOptions": {
     ...,
     "plugins": [
-      { "transform": "ts-randomizer", "import": "transformer" }
+      { "transform": "ts-randomizer/transformer", "import": "transformer" }
     ]
   },
   ...
@@ -68,7 +68,7 @@ See [ttypescript's README](https://github.com/cevek/ttypescript/blob/master/READ
 See [debug folder](https://github.com/vposd/ts-randomizer/debug) for more details. Also, you can try it with ```$ npm run test```
 ```typescript
 import * as ts from 'typescript';
-import { transformer } from 'ts-randomizer';
+import { transformer } from 'ts-randomizer/transformer';
 
 const program = ts.createProgram([/* your files to compile */], {
   strict: true,
