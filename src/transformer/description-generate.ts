@@ -121,18 +121,30 @@ const getArrayTypeDescription: DescriptionFactory<ts.ArrayTypeNode> = (
   return generatePropertyDescription(null, type, typeArgumentsMap)(checker);
 };
 
-const getPropertySignatureDescription: DescriptionFactory<ts.PropertySignature> = (
-  node,
-  typeArgumentsMap = {}
-) => checker => {
+const getPropertySignatureDescription: DescriptionFactory<
+  ts.PropertySignature | ts.PropertyDeclaration | ts.MethodSignature | ts.MethodDeclaration
+> = (node, typeArgumentsMap = {}) => checker => {
   const symbol = checker.getSymbolAtLocation(node.name);
 
   if (!symbol || !node.type) {
     return PropertyType.Null;
   }
 
+  if (ts.isMethodSignature(node) || ts.isMethodDeclaration(node)) {
+    const type = checker.getTypeAtLocation(node.type as ts.TypeNode);
+    return {
+      key: symbol.getName(),
+      flag: DescriptionFlag.Method,
+      description: generatePropertyDescription(
+        symbol.getName(),
+        type,
+        typeArgumentsMap
+      )(checker),
+    };
+  }
+
   // Return description with type node description
-  if (ts.isTypeReferenceNode(node.type)) {
+  if (node.type && ts.isTypeReferenceNode(node.type)) {
     const type = checker.getTypeAtLocation(node);
     return (
       generateArrayTypeArgumentDescription(
@@ -152,7 +164,7 @@ const getPropertySignatureDescription: DescriptionFactory<ts.PropertySignature> 
   }
 
   // Return description for node if its name is array
-  if (ts.isArrayTypeNode(node.type)) {
+  if (node.type && ts.isArrayTypeNode(node.type)) {
     const type = checker.getTypeAtLocation(node.type.elementType);
     if (ts.isArrayTypeNode(node.type.elementType)) {
       return {
@@ -292,7 +304,7 @@ const generateArrayTypeArgumentDescription = (
   const isArrayNode = isArrayType(type);
   const isTypeArray = type.symbol
     ? typeArgumentsMap[type.symbol.name] &&
-      typeArgumentsMap[type.symbol.name].isArray
+    typeArgumentsMap[type.symbol.name].isArray
     : false;
   const isArray = isArrayNode || isTypeArray;
 
@@ -427,6 +439,10 @@ export const generateNodeDescription: DescriptionFactory<ts.Node> = (
   // Return property declaration and array of properties declarations description
   if (ts.isPropertyDeclaration(node)) {
     return getPropertyDeclarationDescription(node, typeArgumentsMap)(checker);
+  }
+
+  if (ts.isMethodSignature(node) || ts.isMethodDeclaration(node)) {
+    return getPropertySignatureDescription(node, typeArgumentsMap)(checker);
   }
 
   // Then we need property signatures

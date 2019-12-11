@@ -109,6 +109,42 @@ describe('Test transformer.', () => {
     ]);
   });
 
+  test('should generate description for interface methods', () => {
+    interface A<T> {
+      a(): T;
+      b(): string;
+    }
+
+    expect(Randomizer.create<A<string>>()).toMatchObject([
+      {
+        key: 'a',
+        flag: DescriptionFlag.Method,
+        description: PropertyType.String,
+      },
+      {
+        key: 'b',
+        flag: DescriptionFlag.Method,
+        description: PropertyType.String,
+      },
+    ]);
+  });
+
+  test('should generate description for class methods', () => {
+    class A {
+      a(): string {
+        return '';
+      }
+    }
+
+    expect(Randomizer.create<A>()).toMatchObject([
+      {
+        key: 'a',
+        flag: DescriptionFlag.Method,
+        description: PropertyType.String,
+      },
+    ]);
+  });
+
   test('should generate description for turples', () => {
     interface B<C> {
       c: C[];
