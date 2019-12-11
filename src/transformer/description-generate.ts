@@ -15,11 +15,12 @@ import {
   getTypeNameByWrapperFunction,
   createTypeArgumentsMap,
 } from './utils';
+import { getTypeChecker } from './checker';
 
 type DescriptionFactory<T> = (
   node: T,
   typeArgumentsMap?: TypeArgumentsMap
-) => (checker: ts.TypeChecker) => TypeDescription;
+) => TypeDescription;
 
 const getEnumValues = (type: ts.Type) =>
   map(
@@ -30,17 +31,18 @@ const getEnumValues = (type: ts.Type) =>
 const getTurpleNodeDescription: DescriptionFactory<ts.TupleTypeNode> = (
   typeNode,
   typeArgumentsMap = {}
-) => checker => ({
+) => ({
   flag: DescriptionFlag.Turple,
   description: typeNode.elementTypes.map(i => ({
-    description: generateNodeDescription(i, typeArgumentsMap)(checker),
+    description: generateNodeDescription(i, typeArgumentsMap),
   })),
 });
 
 const getPropertyDeclarationDescription: DescriptionFactory<ts.PropertyDeclaration> = (
   node,
   typeArgumentsMap = {}
-) => checker => {
+) => {
+  const checker = getTypeChecker();
   if (!node || !node.type) {
     return PropertyType.Null;
   }
@@ -52,10 +54,7 @@ const getPropertyDeclarationDescription: DescriptionFactory<ts.PropertyDeclarati
       return {
         key: symbol ? symbol.getName() : '',
         flag: DescriptionFlag.Array,
-        description: generateNodeDescription(
-          node.type,
-          typeArgumentsMap
-        )(checker),
+        description: generateNodeDescription(node.type, typeArgumentsMap),
       };
     }
     return {
@@ -65,7 +64,7 @@ const getPropertyDeclarationDescription: DescriptionFactory<ts.PropertyDeclarati
         symbol ? symbol.getName() : '',
         type,
         typeArgumentsMap
-      )(checker),
+      ),
     };
   }
 
@@ -77,18 +76,14 @@ const getPropertyDeclarationDescription: DescriptionFactory<ts.PropertyDeclarati
   }
 
   return (
-    generateArrayTypeArgumentDescription(
-      node,
-      symbol,
-      typeArgumentsMap
-    )(checker) || {
+    generateArrayTypeArgumentDescription(node, symbol, typeArgumentsMap) || {
       key: symbol.getName(),
       flag: ts.isArrayTypeNode(node.type) ? DescriptionFlag.Array : null,
       description: generatePropertyDescription(
         symbol.getName(),
         type,
         typeArgumentsMap
-      )(checker),
+      ),
     }
   );
 };
@@ -96,14 +91,13 @@ const getPropertyDeclarationDescription: DescriptionFactory<ts.PropertyDeclarati
 const getArrayTypeDescription: DescriptionFactory<ts.ArrayTypeNode> = (
   node,
   typeArgumentsMap = {}
-) => checker => {
+) => {
+  const checker = getTypeChecker();
+
   if (ts.isArrayTypeNode(node.elementType)) {
     return {
       flag: DescriptionFlag.Array,
-      description: generateNodeDescription(
-        node.elementType,
-        typeArgumentsMap
-      )(checker),
+      description: generateNodeDescription(node.elementType, typeArgumentsMap),
     };
   }
 
@@ -111,19 +105,19 @@ const getArrayTypeDescription: DescriptionFactory<ts.ArrayTypeNode> = (
   if (isEmpty(typeArgumentsMap)) {
     return {
       flag: DescriptionFlag.Array,
-      description: generatePropertyDescription(
-        null,
-        type,
-        typeArgumentsMap
-      )(checker),
+      description: generatePropertyDescription(null, type, typeArgumentsMap),
     };
   }
-  return generatePropertyDescription(null, type, typeArgumentsMap)(checker);
+  return generatePropertyDescription(null, type, typeArgumentsMap);
 };
 
 const getPropertySignatureDescription: DescriptionFactory<
-  ts.PropertySignature | ts.PropertyDeclaration | ts.MethodSignature | ts.MethodDeclaration
-> = (node, typeArgumentsMap = {}) => checker => {
+  | ts.PropertySignature
+  | ts.PropertyDeclaration
+  | ts.MethodSignature
+  | ts.MethodDeclaration
+> = (node, typeArgumentsMap = {}) => {
+  const checker = getTypeChecker();
   const symbol = checker.getSymbolAtLocation(node.name);
 
   if (!symbol || !node.type) {
@@ -139,7 +133,7 @@ const getPropertySignatureDescription: DescriptionFactory<
         symbol.getName(),
         type,
         typeArgumentsMap
-      )(checker),
+      ),
     };
   }
 
@@ -147,18 +141,14 @@ const getPropertySignatureDescription: DescriptionFactory<
   if (node.type && ts.isTypeReferenceNode(node.type)) {
     const type = checker.getTypeAtLocation(node);
     return (
-      generateArrayTypeArgumentDescription(
-        node,
-        symbol,
-        typeArgumentsMap
-      )(checker) || {
+      generateArrayTypeArgumentDescription(node, symbol, typeArgumentsMap) || {
         key: symbol.getName(),
         flag: ts.isArrayTypeNode(node.type) ? DescriptionFlag.Array : null,
         description: generatePropertyDescription(
           symbol.getName(),
           type,
           typeArgumentsMap
-        )(checker),
+        ),
       }
     );
   }
@@ -170,10 +160,7 @@ const getPropertySignatureDescription: DescriptionFactory<
       return {
         key: symbol.getName(),
         flag: DescriptionFlag.Array,
-        description: generateNodeDescription(
-          node.type,
-          typeArgumentsMap
-        )(checker),
+        description: generateNodeDescription(node.type, typeArgumentsMap),
       };
     }
     return {
@@ -183,7 +170,7 @@ const getPropertySignatureDescription: DescriptionFactory<
         symbol.getName(),
         type,
         typeArgumentsMap
-      )(checker),
+      ),
     };
   }
 
@@ -194,10 +181,11 @@ const getPropertySignatureDescription: DescriptionFactory<
   };
 };
 
-const getTypeNodeDescription: DescriptionFactory<ts.TypeNode> = node => checker => {
+const getTypeNodeDescription: DescriptionFactory<ts.TypeNode> = node => {
+  const checker = getTypeChecker();
   const type = checker.getTypeFromTypeNode(node);
-  const argsMap = createTypeArgumentsMap(type)(checker);
-  return generatePropertyDescription(null, type, argsMap)(checker);
+  const argsMap = createTypeArgumentsMap(type);
+  return generatePropertyDescription(null, type, argsMap);
 };
 
 const mergeTypeArgumentsMaps = (
@@ -260,7 +248,9 @@ const generateDeclarationDescription = (
   node: ts.PropertyDeclaration,
   nodeTypeArguments: TypeArgumentsMap = {},
   typeArgumentsMap: TypeArgumentsMap = {}
-) => (checker: ts.TypeChecker) => {
+) => {
+  const checker = getTypeChecker();
+
   if (!node) {
     return PropertyType.Unknown;
   }
@@ -273,7 +263,7 @@ const generateDeclarationDescription = (
   }
 
   if (ts.isTupleTypeNode(node.type)) {
-    return getTurpleNodeDescription(node.type)(checker);
+    return getTurpleNodeDescription(node.type);
   }
 
   const nodeTypeNode = ts.isArrayTypeNode(node.type)
@@ -281,12 +271,12 @@ const generateDeclarationDescription = (
     : node.type;
 
   const nodeType = checker.getTypeFromTypeNode(nodeTypeNode);
-  const argumentsMap = createTypeArgumentsMap(nodeType)(checker);
+  const argumentsMap = createTypeArgumentsMap(nodeType);
 
   return generateNodeDescription(
     node,
     mergeTypeArgumentsMaps(argumentsMap, nodeTypeArguments, typeArgumentsMap)
-  )(checker);
+  );
 };
 
 /**
@@ -299,12 +289,13 @@ const generateArrayTypeArgumentDescription = (
   node: ts.Node,
   symbol: ts.Symbol,
   typeArgumentsMap: TypeArgumentsMap = {}
-) => (checker: ts.TypeChecker) => {
+) => {
+  const checker = getTypeChecker();
   const type = checker.getTypeAtLocation(node);
   const isArrayNode = isArrayType(type);
   const isTypeArray = type.symbol
     ? typeArgumentsMap[type.symbol.name] &&
-    typeArgumentsMap[type.symbol.name].isArray
+      typeArgumentsMap[type.symbol.name].isArray
     : false;
   const isArray = isArrayNode || isTypeArray;
 
@@ -323,7 +314,7 @@ const generateArrayTypeArgumentDescription = (
       symbol.getName(),
       argumentType || typeArgumentsMap[type.symbol.name].type,
       typeArgumentsMap
-    )(checker),
+    ),
   };
 };
 
@@ -337,7 +328,8 @@ const generatePropertyDescription = (
   key: string | null,
   type: ts.Type,
   typeArgumentsMap: TypeArgumentsMap = {}
-) => (checker: ts.TypeChecker): TypeDescription => {
+): TypeDescription => {
+  const checker = getTypeChecker();
   if (!type) {
     return PropertyType.Unknown;
   }
@@ -361,7 +353,7 @@ const generatePropertyDescription = (
         key,
         arrayTypeParam,
         typeArgumentsMap
-      )(checker),
+      ),
     };
   }
 
@@ -390,24 +382,24 @@ const generatePropertyDescription = (
           key,
           typeArg && typeArg.type,
           typeArgumentsMap
-        )(checker),
+        ),
       };
     }
     return generatePropertyDescription(
       key,
       typeArg && typeArg.type,
       typeArgumentsMap
-    )(checker);
+    );
   }
 
-  const nodeTypeArguments = createTypeArgumentsMap(type)(checker);
+  const nodeTypeArguments = createTypeArgumentsMap(type);
   return flatMap(
     node =>
       generateDeclarationDescription(
         node as ts.PropertyDeclaration,
         nodeTypeArguments,
         typeArgumentsMap
-      )(checker),
+      ),
     declarations
   );
 };
@@ -420,29 +412,29 @@ const generatePropertyDescription = (
 export const generateNodeDescription: DescriptionFactory<ts.Node> = (
   node,
   typeArgumentsMap = {}
-) => checker => {
+) => {
   // Return description for array type node
   if (ts.isArrayTypeNode(node)) {
-    return getArrayTypeDescription(node, typeArgumentsMap)(checker);
+    return getArrayTypeDescription(node, typeArgumentsMap);
   }
 
   // Return description for turple type node
   if (ts.isTupleTypeNode(node)) {
-    return getTurpleNodeDescription(node)(checker);
+    return getTurpleNodeDescription(node);
   }
 
   // Return description for type node
   if (ts.isTypeNode(node)) {
-    return getTypeNodeDescription(node)(checker);
+    return getTypeNodeDescription(node);
   }
 
   // Return property declaration and array of properties declarations description
   if (ts.isPropertyDeclaration(node)) {
-    return getPropertyDeclarationDescription(node, typeArgumentsMap)(checker);
+    return getPropertyDeclarationDescription(node, typeArgumentsMap);
   }
 
   if (ts.isMethodSignature(node) || ts.isMethodDeclaration(node)) {
-    return getPropertySignatureDescription(node, typeArgumentsMap)(checker);
+    return getPropertySignatureDescription(node, typeArgumentsMap);
   }
 
   // Then we need property signatures
@@ -450,5 +442,5 @@ export const generateNodeDescription: DescriptionFactory<ts.Node> = (
     return PropertyType.Null;
   }
 
-  return getPropertySignatureDescription(node, typeArgumentsMap)(checker);
+  return getPropertySignatureDescription(node, typeArgumentsMap);
 };

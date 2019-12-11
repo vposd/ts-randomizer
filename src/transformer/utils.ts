@@ -2,6 +2,7 @@ import * as ts from 'typescript';
 import { first, flatMap } from 'lodash/fp';
 
 import { PropertyType, TypeArgumentsMap } from '../types';
+import { getTypeChecker } from './checker';
 
 const TARGET_CALLERS = ['create', 'createMany', 'build'];
 const TARGET_CLASS_NAME = 'Randomizer';
@@ -10,9 +11,8 @@ const TARGET_CLASS_NAME = 'Randomizer';
  * Create type arguments map where key is type argument symbol name, value is concrete argument type
  * @param type Type
  */
-export const createTypeArgumentsMap = (type: ts.Type) => (
-  checker: ts.TypeChecker
-): TypeArgumentsMap => {
+export const createTypeArgumentsMap = (type: ts.Type): TypeArgumentsMap => {
+  const checker = getTypeChecker();
   const argumentsMap: TypeArgumentsMap = {};
   const symbol = type.getSymbol();
 
@@ -31,7 +31,7 @@ export const createTypeArgumentsMap = (type: ts.Type) => (
   if (isArrayType(type)) {
     const arrayTypeParam = getFirstTypeParameter(type);
     if (arrayTypeParam) {
-      return createTypeArgumentsMap(arrayTypeParam)(checker);
+      return createTypeArgumentsMap(arrayTypeParam);
     }
   }
 

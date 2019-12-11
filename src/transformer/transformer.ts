@@ -3,6 +3,7 @@ import { isArray } from 'lodash/fp';
 
 import { generateNodeDescription } from './description-generate';
 import { isTargetExpression } from './utils';
+import { setTypeChecker } from './checker';
 
 /**
  * Typescript transformer factory
@@ -10,8 +11,10 @@ import { isTargetExpression } from './utils';
  */
 export const transformer = (
   program: ts.Program
-): ts.TransformerFactory<ts.SourceFile> => context => file =>
-  ts.visitNode(file, visitNode(context, program.getTypeChecker()));
+): ts.TransformerFactory<ts.SourceFile> => context => file => {
+  setTypeChecker(program.getTypeChecker());
+  return ts.visitNode(file, visitNode(context, program.getTypeChecker()));
+};
 
 /**
  * Typescript AST Node visitor
@@ -33,7 +36,7 @@ const visitNode = (
   }
 
   const [typeArgument] = node.typeArguments;
-  const typeTemplate = generateNodeDescription(typeArgument)(checker);
+  const typeTemplate = generateNodeDescription(typeArgument);
   const template = isArray(typeTemplate)
     ? ts.createArrayLiteral(
         typeTemplate.map(property =>
