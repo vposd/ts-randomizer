@@ -86,7 +86,7 @@ describe('Test transformer.', () => {
     });
   });
 
-  test('should generate description for enum as prop', () => {
+  test('should generate description for enum as prop with type param ref', () => {
     enum Enum {
       a = '1',
       b = 2,
@@ -197,8 +197,8 @@ describe('Test transformer.', () => {
         key: 'a',
         flag: DescriptionFlag.Array,
         description: [
-          { key: 'b', flag: null, description: PropertyType.String },
-          { key: 'c', flag: null, description: PropertyType.String },
+          { key: 'b', description: PropertyType.String },
+          { key: 'c', description: PropertyType.String },
         ],
       },
     ]);

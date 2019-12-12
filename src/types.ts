@@ -1,6 +1,6 @@
 import * as ts from 'typescript';
 
-export interface TypeArgumentsMap {
+export interface TypeParamsMap {
   [key: string]: { type: ts.Type; isArray?: boolean };
 }
 
