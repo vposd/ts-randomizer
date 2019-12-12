@@ -10,11 +10,11 @@ export class Randomizer {
    * Creates anonymous variables by description of T.
    * @returns An anonymous variable of type T.
    */
-  static create<T>(...args: RandomizerArguments): Value<T> | undefined {
+  static create<T>(...args: RandomizerArguments): T | undefined {
     if (isUndefined(args[0])) {
       return undefined;
     }
-    return new SpecimenFactory<T>(args[0]).create();
+    return new SpecimenFactory<T>(args[0]).create() as T;
   }
 
   /**
@@ -25,14 +25,14 @@ export class Randomizer {
     firstArg?: TypeDescription | number,
     minCount?: number,
     maxCount?: number
-  ): Array<Value<T>> | undefined {
+  ): T[] | undefined {
     if (isUndefined(firstArg)) {
       return undefined;
     }
     return new SpecimenFactory<T>(firstArg as TypeDescription).createMany(
       minCount,
       maxCount
-    );
+    ) as T[];
   }
 
   /**

@@ -24,8 +24,16 @@ describe('Randomizer class', () => {
       expect(Randomizer.create<undefined>()).toBe(undefined);
     });
 
-    test('should create randon=m value for unknown type', () => {
-      expect(Randomizer.create<unknown>()).toEqual(expect.anything());
+    test('should create random value for unknown type', () => {
+      expect(Randomizer.create<unknown>()).toBe(null);
+    });
+
+    test('should create synthetic method', () => {
+      interface A {
+        a(): string;
+      }
+      const created = Randomizer.create<A>();
+      expect(created && created.a()).toEqual(expect.any(String));
     });
 
     test('should create random values for basic array types', () => {

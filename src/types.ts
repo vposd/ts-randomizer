@@ -1,6 +1,6 @@
 import * as ts from 'typescript';
 
-export interface TypeArgumentsMap {
+export interface TypeParamsMap {
   [key: string]: { type: ts.Type; isArray?: boolean };
 }
 
@@ -24,6 +24,7 @@ export type TypeDescription =
 export enum DescriptionFlag {
   Array,
   Turple,
+  Method,
   Enum,
 }
 

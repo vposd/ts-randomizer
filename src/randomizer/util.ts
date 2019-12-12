@@ -7,5 +7,4 @@ export const createBoolean = (): boolean => Boolean(random(0, 1));
 export const createFunction = (): Function => () => {};
 export const createDate = (): Date => new Date();
 export const createObject = (): object => ({});
-export const createUnknown = () =>
-  [createObject, createNumber, createBoolean, createString][random(0, 3)]();
+export const createUnknown = () => null;
