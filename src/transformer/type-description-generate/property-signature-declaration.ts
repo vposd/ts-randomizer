@@ -1,9 +1,9 @@
 import * as ts from 'typescript';
 
-import { DescriptionFactory, generateNodeDescription } from './node';
-import { TypeParamsMap, DescriptionFlag, PropertyType } from '../../types';
-import { createDescription } from './utils/create-description';
-import { getTypeChecker } from '../checker';
+import {DescriptionFactory, generateNodeDescription} from './node';
+import {TypeParamsMap, DescriptionFlag, PropertyType} from '../../types';
+import {createDescription} from './utils/create-description';
+import {getTypeChecker} from '../checker';
 import {
   isArrayType,
   getFirstTypeParameter,

@@ -1,4 +1,4 @@
-import { PropertyType, DescriptionFlag } from '../src/types';
+import {PropertyType, DescriptionFlag} from '../src/types';
 
 class Randomizer {
   static create = <T>(a?: T) => a;
@@ -59,7 +59,7 @@ describe('Test transformer.', () => {
     }
 
     expect(Randomizer.create<A>()).toMatchObject([
-      { key: 'a', description: PropertyType.String },
+      {key: 'a', description: PropertyType.String},
     ]);
   });
 
@@ -69,7 +69,7 @@ describe('Test transformer.', () => {
     }
 
     expect(Randomizer.create<A>()).toMatchObject([
-      { key: 'a', description: PropertyType.String },
+      {key: 'a', description: PropertyType.String},
     ]);
   });
 
@@ -162,7 +162,7 @@ describe('Test transformer.', () => {
             {
               flag: DescriptionFlag.Turple,
               description: [
-                { description: PropertyType.Number },
+                {description: PropertyType.Number},
                 {
                   description: [
                     {
@@ -176,8 +176,8 @@ describe('Test transformer.', () => {
             },
           ],
         },
-        { description: PropertyType.Boolean },
-        { description: PropertyType.Number },
+        {description: PropertyType.Boolean},
+        {description: PropertyType.Number},
       ],
     });
   });
@@ -197,8 +197,8 @@ describe('Test transformer.', () => {
         key: 'a',
         flag: DescriptionFlag.Array,
         description: [
-          { key: 'b', description: PropertyType.String },
-          { key: 'c', description: PropertyType.String },
+          {key: 'b', description: PropertyType.String},
+          {key: 'c', description: PropertyType.String},
         ],
       },
     ]);
@@ -218,7 +218,7 @@ describe('Test transformer.', () => {
     expect(Randomizer.create<A<B>>()).toMatchObject([
       {
         key: 'a',
-        description: [{ key: 'c', description: PropertyType.String }],
+        description: [{key: 'c', description: PropertyType.String}],
       },
     ]);
   });
@@ -234,7 +234,7 @@ describe('Test transformer.', () => {
     expect(
       Randomizer.create<A<string, number[], boolean[], object[][]>>()
     ).toMatchObject([
-      { key: 'b', description: PropertyType.String },
+      {key: 'b', description: PropertyType.String},
       {
         key: 'c',
         flag: DescriptionFlag.Array,
@@ -276,7 +276,7 @@ describe('Test transformer.', () => {
     expect(
       Randomizer.create<A<string, number[], boolean[], object[][]>>()
     ).toMatchObject([
-      { key: 'b', description: PropertyType.String },
+      {key: 'b', description: PropertyType.String},
       {
         key: 'c',
         flag: DescriptionFlag.Array,
@@ -326,7 +326,7 @@ describe('Test transformer.', () => {
         description: [
           {
             key: 'b',
-            description: [{ key: 'c', description: PropertyType.String }],
+            description: [{key: 'c', description: PropertyType.String}],
           },
         ],
       },
@@ -352,7 +352,7 @@ describe('Test transformer.', () => {
         description: [
           {
             key: 'b',
-            description: [{ key: 'c', description: PropertyType.Boolean }],
+            description: [{key: 'c', description: PropertyType.Boolean}],
           },
         ],
       },
@@ -455,7 +455,7 @@ describe('Test transformer.', () => {
                   description: PropertyType.String,
                 },
               },
-              { key: 'd', flag: null, description: PropertyType.Boolean },
+              {key: 'd', flag: null, description: PropertyType.Boolean},
             ],
           },
         ],
@@ -493,7 +493,7 @@ describe('Test transformer.', () => {
                   description: PropertyType.String,
                 },
               },
-              { key: 'd', flag: null, description: PropertyType.Boolean },
+              {key: 'd', flag: null, description: PropertyType.Boolean},
             ],
           },
         ],
@@ -522,7 +522,7 @@ describe('Test transformer.', () => {
         key: 'b',
         flag: DescriptionFlag.Array,
         description: [
-          { key: 'h', flag: null, description: PropertyType.String },
+          {key: 'h', flag: null, description: PropertyType.String},
           {
             key: 'i',
             flag: DescriptionFlag.Array,
@@ -547,7 +547,7 @@ describe('Test transformer.', () => {
           },
         ],
       },
-      { key: 'c', flag: null, description: PropertyType.Object },
+      {key: 'c', flag: null, description: PropertyType.Object},
     ]);
   });
 
@@ -574,7 +574,7 @@ describe('Test transformer.', () => {
         key: 'b',
         flag: DescriptionFlag.Array,
         description: [
-          { key: 'h', flag: null, description: PropertyType.String },
+          {key: 'h', flag: null, description: PropertyType.String},
           {
             key: 'i',
             flag: DescriptionFlag.Array,
@@ -599,7 +599,7 @@ describe('Test transformer.', () => {
           },
         ],
       },
-      { key: 'c', flag: null, description: PropertyType.Object },
+      {key: 'c', flag: null, description: PropertyType.Object},
     ]);
   });
 

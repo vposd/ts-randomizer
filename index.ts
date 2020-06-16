@@ -1,2 +1,2 @@
-import { Randomizer } from './src/randomizer/randomizer';
-export { Randomizer };
+import {Randomizer} from './src/randomizer/randomizer';
+export {Randomizer};

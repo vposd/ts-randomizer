@@ -1,7 +1,7 @@
-import { isEmpty } from 'lodash';
+import {isEmpty} from 'lodash';
 
-import { TypeParamsMap } from '../../../types';
-import { getTypeArguments, getFirstTypeParameter, isArrayType } from '../utils';
+import {TypeParamsMap} from '../../../types';
+import {getTypeArguments, getFirstTypeParameter, isArrayType} from '../utils';
 
 export const mergeTypeParamsMap = (
   argumentsMap: TypeParamsMap = {},

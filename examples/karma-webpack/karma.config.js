@@ -1,6 +1,6 @@
-const { transformer } = require('ts-randomizer/transformer');
+const {transformer} = require('ts-randomizer/transformer');
 
-module.exports = function(config) {
+module.exports = function (config) {
   const _config = {
     basePath: '',
     frameworks: ['jasmine'],

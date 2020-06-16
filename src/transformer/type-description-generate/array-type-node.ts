@@ -1,10 +1,10 @@
 import * as ts from 'typescript';
-import { isEmpty } from 'lodash/fp';
+import {isEmpty} from 'lodash/fp';
 
-import { DescriptionFactory, generateNodeDescription } from './node';
-import { DescriptionFlag } from '../../types';
-import { createDescription } from './utils/create-description';
-import { getTypeChecker } from '../checker';
+import {DescriptionFactory, generateNodeDescription} from './node';
+import {DescriptionFlag} from '../../types';
+import {createDescription} from './utils/create-description';
+import {getTypeChecker} from '../checker';
 
 export const getArrayTypeDescription: DescriptionFactory<ts.ArrayTypeNode> = (
   node,

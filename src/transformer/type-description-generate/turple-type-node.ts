@@ -1,7 +1,7 @@
 import * as ts from 'typescript';
 
-import { DescriptionFactory, generateNodeDescription } from './node';
-import { DescriptionFlag } from '../../types';
+import {DescriptionFactory, generateNodeDescription} from './node';
+import {DescriptionFlag} from '../../types';
 
 export const getTurpleNodeDescription: DescriptionFactory<ts.TupleTypeNode> = (
   typeNode,
