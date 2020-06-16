@@ -11,7 +11,7 @@ deploy:
   edge: true
   provider: npm
   on:
-    branch: master
+    branch: release
   email: '$NPM_EMAIL'
   api_key: '$NPM_API_KEY'
   skip_cleanup: true
