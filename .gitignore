@@ -3,6 +3,6 @@ build
 node_modules
 coverage
 **/*.js
-!tests/index.js
-!prettier.config.js
+!test/index.js
+!.prettierrc.js
 !jest.config.js
