@@ -1,5 +1,7 @@
 sudo: required
 language: node_js
+jobs:
+
 node_js:
   - node
 script:
@@ -8,6 +10,8 @@ script:
 deploy:
   edge: true
   provider: npm
+  on:
+    branch: release
   email: '$NPM_EMAIL'
   api_key: '$NPM_API_KEY'
   skip_cleanup: true

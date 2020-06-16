@@ -1,9 +1,9 @@
 import * as ts from 'typescript';
-import { flatMap } from 'lodash/fp';
+import {flatMap} from 'lodash/fp';
 
-import { TypeParamsMap } from '../../../types';
-import { getTypeChecker } from '../../checker';
-import { isArrayType, getFirstTypeParameter, getTypeArguments } from '../utils';
+import {TypeParamsMap} from '../../../types';
+import {getTypeChecker} from '../../checker';
+import {isArrayType, getFirstTypeParameter, getTypeArguments} from '../utils';
 
 /**
  * Create type arguments map where key is type argument symbol name, value is concrete argument type

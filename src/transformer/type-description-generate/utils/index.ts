@@ -1,7 +1,7 @@
 import * as ts from 'typescript';
-import { first } from 'lodash/fp';
+import {first} from 'lodash/fp';
 
-import { PropertyType } from '../../../types';
+import {PropertyType} from '../../../types';
 
 export const getTypeNameByWrapperFunction = (name: string) => {
   switch (name) {

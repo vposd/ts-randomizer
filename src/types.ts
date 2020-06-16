@@ -1,7 +1,7 @@
 import * as ts from 'typescript';
 
 export interface TypeParamsMap {
-  [key: string]: { type: ts.Type; isArray?: boolean };
+  [key: string]: {type: ts.Type; isArray?: boolean};
 }
 
 export enum PropertyType {

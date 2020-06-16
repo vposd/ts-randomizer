@@ -1,8 +1,8 @@
 import * as ts from 'typescript';
-import { isArray } from 'lodash/fp';
+import {isArray} from 'lodash/fp';
 
-import { generateNodeDescription } from './type-description-generate/node';
-import { setTypeChecker } from './checker';
+import {generateNodeDescription} from './type-description-generate/node';
+import {setTypeChecker} from './checker';
 
 const TARGET_CALLERS = ['create', 'createMany', 'build'];
 const TARGET_CLASS_NAME = 'Randomizer';

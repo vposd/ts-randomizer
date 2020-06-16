@@ -1,11 +1,11 @@
 import * as ts from 'typescript';
 
-import { TypeParamsMap, TypeDescription, PropertyType } from '../../types';
-import { getArrayTypeDescription } from './array-type-node';
-import { getTurpleNodeDescription } from './turple-type-node';
-import { getTypeNodeDescription } from './type-node';
-import { getPropertyDescription } from './property-signature-declaration';
-import { getMethodDescription } from './method-signature-declaration';
+import {TypeParamsMap, TypeDescription, PropertyType} from '../../types';
+import {getArrayTypeDescription} from './array-type-node';
+import {getTurpleNodeDescription} from './turple-type-node';
+import {getTypeNodeDescription} from './type-node';
+import {getPropertyDescription} from './property-signature-declaration';
+import {getMethodDescription} from './method-signature-declaration';
 
 export type DescriptionFactory<T> = (
   node: T,

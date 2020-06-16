@@ -1,7 +1,7 @@
-import { isUndefined } from 'lodash/fp';
+import {isUndefined} from 'lodash/fp';
 
-import { SpecimenFactory, Value } from './spicemen-factory';
-import { TypeDescription } from '../types';
+import {SpecimenFactory} from './spicemen-factory';
+import {TypeDescription} from '../types';
 
 type RandomizerArguments = [TypeDescription?];
 
