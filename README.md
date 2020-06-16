@@ -2,12 +2,37 @@
 
 # Typescript Randomizer
 A tool to create random data by requested types.
-It's designed to minimize the arrange phase of unit tests in order to maximize maintainability, making it easier to create objects containing random test data.
+It's designed to minimize the arrange phase of unit tests to maximize maintainability, making it easier to create objects containing random test data.
+So now we don't need for hand-coding anonymous variables as part of a test's arrange phase.
+
+Randomizer can help by creating variables with random data. Here's a simple example:
+
+```typescript
+// types
+class Entity {
+  id: string;
+  name: string;
+}
+
+interface Response<T> {
+  data: T;
+}
+
+// test
+it('some test', () => {
+  const response = Randomizer.create<Response<Entity>>();
+
+  // someClass returns the response data
+  const result = someClass.getEntityResult(response);
+
+  expect(result.id).toBe(response.entity.id)
+});
+```
 
 ## Description
 Typescript Randomizer includes two parts:
  - Typescript transformer to generate a description for requested types.
- - Randomizer class with methods to create random data by requested types.
+ - Randomizer class with methods to create random data according to generated description.
 
 ## How to install
 Randomizer doesn't work without the typescript transformer. The transformer needs to be provided at compile time. There are many different ways to do it.
@@ -23,8 +48,6 @@ Also, there are some ready examples:
 ```typescript
 const data = Randomizer.create<string>();
 
-console.log(data);
-
 // "850eb858-f3b7-4d9c-9715-563a7fbd8f0d"
 ```
 
@@ -36,8 +59,7 @@ interface A {
 
 const data = Randomizer.createMany<A>(2);
 
-console.log(data);
-
+//
 // [
 //    { a: "dbb04326-3f0d-4eb1-8bec-2b22fef39f0b" },
 //    { a: "3d48ee0b-2004-4745-8453-98b36d260fc4" },
@@ -52,8 +74,6 @@ interaface A {
 const data = Randomizer.build<A>()
     .with(x => x.a = 'my string')
     .create();
-
-console.log(data);
 
 // { a: "my string" }
 ```
@@ -70,7 +90,6 @@ class A<T> {
 }
 
 const data = Randomizer.create<A<string>>();
-console.log(data);
 
 // {
 //   "a":{

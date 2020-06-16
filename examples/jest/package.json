@@ -4,11 +4,11 @@
     "test": "npx jest"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.23",
-    "jest": "^24.9.0",
-    "ts-jest": "^24.2.0",
-    "ts-randomizer": "^1.0.22",
-    "ttypescript": "^1.5.8",
-    "typescript": "^3.7.3"
+    "@types/jest": "^26.0.0",
+    "jest": "^26.0.1",
+    "ts-jest": "^26.1.0",
+    "ts-randomizer": "^1.0.23",
+    "ttypescript": "^1.5.10",
+    "typescript": "^3.9.5"
   }
 }

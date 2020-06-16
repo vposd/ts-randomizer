@@ -1,6 +1,6 @@
-# Transformer
+# Typescript transformer
 
-## How to use the custom transformer
+## How to use the custom typescript transformer
 Unfortunately, TypeScript itself does not currently provide any easy way to use custom transformers (See https://github.com/Microsoft/TypeScript/issues/14419).
 The followings are the example usage of the custom transformer.
 
