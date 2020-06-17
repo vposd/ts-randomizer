@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import {transformer} from '../src/transformer/transformer';
+import { transformer } from '../src/transformer/transformer';
 
 export function compile(
   filePaths: string[],
@@ -17,7 +17,7 @@ export function compile(
     after: [],
   };
 
-  const {emitSkipped, diagnostics} = program.emit(
+  const { emitSkipped, diagnostics } = program.emit(
     undefined,
     writeFileCallback,
     undefined,

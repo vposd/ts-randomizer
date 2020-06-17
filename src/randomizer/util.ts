@@ -1,5 +1,5 @@
-import {v4 as uuid} from 'uuid';
-import {random} from 'lodash';
+import { v4 as uuid } from 'uuid';
+import { random } from 'lodash';
 
 export const createString = (): string => uuid();
 export const createNumber = (): number => random(0, 1e10);

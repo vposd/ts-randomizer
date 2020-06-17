@@ -1,5 +1,5 @@
 import ts = require('typescript');
-import {isEmpty, flatMap, map} from 'lodash/fp';
+import { isEmpty, flatMap, map } from 'lodash/fp';
 
 import {
   TypeParamsMap,
@@ -7,17 +7,17 @@ import {
   TypeDescription,
   DescriptionFlag,
 } from '../../../types';
-import {createTypeParamsMap} from '../type-params/create-params-map';
-import {generateNodeDescription} from '../node';
+import { createTypeParamsMap } from '../type-params/create-params-map';
+import { generateNodeDescription } from '../node';
 import {
   getPropertyNameBySyntaxKind,
   getTypeNameByWrapperFunction,
   getFirstTypeParameter,
   isArrayType,
 } from './index';
-import {getTurpleNodeDescription} from '../turple-type-node';
-import {getTypeChecker} from '../../checker';
-import {mergeTypeParamsMap} from '../type-params/marge-params-map';
+import { getTurpleNodeDescription } from '../turple-type-node';
+import { getTypeChecker } from '../../checker';
+import { mergeTypeParamsMap } from '../type-params/marge-params-map';
 
 const getEnumValues = (type: ts.Type) =>
   map(

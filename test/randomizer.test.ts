@@ -1,6 +1,6 @@
-import {PropertyType} from '../src/types';
-import {Randomizer} from '../src/randomizer/randomizer';
-import {SpecimenFactory} from '../src/randomizer/spicemen-factory';
+import { PropertyType } from '../src/types';
+import { Randomizer } from '../src/randomizer/randomizer';
+import { SpecimenFactory } from '../src/randomizer/spicemen-factory';
 
 const matchAnyString = () =>
   expect.stringMatching(
@@ -102,7 +102,7 @@ describe('Randomizer class', () => {
         a: string;
       }
 
-      expect(Randomizer.create<A>()).toMatchObject({a: matchAnyString()});
+      expect(Randomizer.create<A>()).toMatchObject({ a: matchAnyString() });
     });
 
     test('should create array of objects for interface', () => {
@@ -111,11 +111,11 @@ describe('Randomizer class', () => {
       }
 
       expect(Randomizer.create<A[]>()).toMatchObject([
-        {a: matchAnyString()},
-        {a: matchAnyString()},
-        {a: matchAnyString()},
-        {a: matchAnyString()},
-        {a: matchAnyString()},
+        { a: matchAnyString() },
+        { a: matchAnyString() },
+        { a: matchAnyString() },
+        { a: matchAnyString() },
+        { a: matchAnyString() },
       ]);
     });
 
@@ -134,7 +134,7 @@ describe('Randomizer class', () => {
         a!: string;
       }
 
-      expect(Randomizer.create<A>()).toMatchObject({a: matchAnyString()});
+      expect(Randomizer.create<A>()).toMatchObject({ a: matchAnyString() });
     });
 
     test('should create object for class with type arguments', () => {
@@ -328,7 +328,7 @@ describe('Randomizer class', () => {
         .with(x => (x ? (x.a.b = 'mutated') : x))
         .create();
 
-      expect(result).toMatchObject({a: {b: 'mutated'}});
+      expect(result).toMatchObject({ a: { b: 'mutated' } });
     });
 
     test('should register many property mutators and apply it on generate post-processing', () => {
@@ -347,7 +347,7 @@ describe('Randomizer class', () => {
         .with(x => (x ? (x.a.b = 'mutated-2') : x))
         .create();
 
-      expect(result).toMatchObject({a: {b: 'mutated-2', c: 1}});
+      expect(result).toMatchObject({ a: { b: 'mutated-2', c: 1 } });
     });
   });
 });
@@ -356,8 +356,8 @@ describe('SpicemenFactory', () => {
   describe('.create', () => {
     test('should not throw error if key of property description is null', () => {
       const spicemen = new SpecimenFactory([
-        {key: '', description: PropertyType.String},
-        {key: 'a', description: PropertyType.Number},
+        { key: '', description: PropertyType.String },
+        { key: 'a', description: PropertyType.Number },
       ]);
       expect(spicemen.create()).toMatchObject({
         a: expect.any(Number),

@@ -1,4 +1,4 @@
-import {isString, isArray, range, sample} from 'lodash/fp';
+import { isString, isArray, range, sample } from 'lodash/fp';
 
 import {
   TypeDescription,
@@ -108,7 +108,7 @@ export class SpecimenFactory<T> {
       }
       output[prop.key] = this.generatePropertyValue(prop);
       return output;
-    }, {} as {[key: string]: Value<T>});
+    }, {} as { [key: string]: Value<T> });
   }
 
   private generateValue(type: PropertyType) {

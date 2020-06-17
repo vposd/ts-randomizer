@@ -1,9 +1,9 @@
 import * as ts from 'typescript';
 
-import {DescriptionFactory} from './node';
-import {getTypeChecker} from '../checker';
-import {PropertyType, DescriptionFlag} from '../../types';
-import {createDescription} from './utils/create-description';
+import { DescriptionFactory } from './node';
+import { getTypeChecker } from '../checker';
+import { PropertyType, DescriptionFlag } from '../../types';
+import { createDescription } from './utils/create-description';
 
 export const getMethodDescription: DescriptionFactory<
   ts.MethodSignature | ts.MethodDeclaration
