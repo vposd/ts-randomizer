@@ -6,3 +6,4 @@ coverage
 !test/index.js
 !.prettierrc.js
 !jest.config.js
+!karma.conf.js

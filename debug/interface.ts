@@ -1,4 +1,4 @@
-import {Randomizer} from '../src/randomizer/randomizer';
+import { Randomizer } from '../src/randomizer/randomizer';
 
 interface A<T> {
   a(): T;

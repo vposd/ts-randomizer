@@ -7,7 +7,7 @@
     "@types/jest": "^26.0.0",
     "jest": "^26.0.1",
     "ts-jest": "^26.1.0",
-    "ts-randomizer": "^1.0.23",
+    "ts-randomizer": "^1.0.24",
     "ttypescript": "^1.5.10",
     "typescript": "^3.9.5"
   }

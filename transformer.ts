@@ -1,2 +1,2 @@
-import {transformer} from './src/transformer/transformer';
-export {transformer};
+import { transformer } from './src/transformer/transformer';
+export { transformer };
