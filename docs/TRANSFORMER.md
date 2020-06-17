@@ -5,10 +5,10 @@ Unfortunately, TypeScript itself does not currently provide any easy way to use 
 The followings are the example usage of the custom transformer.
 
 ### Angular CLI
-[Check an example project with instructions](https://github.com/vposd/ts-randomizer/tree/examples/angular)
+[Check an example project with instructions](https://github.com/vposd/ts-randomizer/tree/master/examples/angular)
 
 ### webpack (with ts-loader or awesome-typescript-loader)
-[Check an example with karma-webpack and ts-patch](https://github.com/vposd/ts-randomizer/tree/examples/karma-webpack)
+[Check an example with karma-webpack and ts-patch](https://github.com/vposd/ts-randomizer/tree/master/examples/karma-webpack)
 ```js
 // webpack.config.js
 const transformer = require('ts-randomizer/transformer').transformer;
@@ -33,7 +33,7 @@ module.exports = {
 ```
 
 ### ts-patch
-See [ts-patch's README](https://github.com/nonara/ts-patch/blob/master/README.md), and [check an example](https://github.com/vposd/ts-randomizer/tree/examples/karma-webpack)
+See [ts-patch's README](https://github.com/nonara/ts-patch/blob/master/README.md), and [check an example](https://github.com/vposd/ts-randomizer/tree/master/examples/karma-webpack)
 ```
 npm i -g ts-patch
 ts-patch install
@@ -52,7 +52,7 @@ ts-patch install
 ```
 
 ### ttypescript
-[Check an example with jest and ttypescript compiler](https://github.com/vposd/ts-randomizer/tree/examples/jest)
+[Check an example with jest and ttypescript compiler](https://github.com/vposd/ts-randomizer/tree/master/examples/jest)
 See [ttypescript's README](https://github.com/cevek/ttypescript/blob/master/README.md) for how to use this with module bundlers such as webpack or Rollup.
 ```json
 // tsconfig.json
@@ -68,7 +68,7 @@ See [ttypescript's README](https://github.com/cevek/ttypescript/blob/master/READ
 ```
 
 ### TypeScript API
-See [debug folder](https://github.com/vposd/ts-randomizer/tree/debug) for more details. Also, you can try it with ```$ npm run test```
+See [debug folder](https://github.com/vposd/ts-randomizer/tree/master/debug) for more details. Also, you can try it with ```$ npm run test```
 ```typescript
 import * as ts from 'typescript';
 import { transformer } from 'ts-randomizer/transformer';
