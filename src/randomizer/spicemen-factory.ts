@@ -24,7 +24,7 @@ export type Value<T> = T extends BasicType ? BasicType : T;
  * Creates anonymous variables by description of T.
  */
 export class SpecimenFactory<T> {
-  private readonly mutators: Array<Mutator<T>> = [];
+  private readonly mutators: Mutator<T>[] = [];
   private readonly arrayValueCount = 5;
 
   /**
@@ -40,7 +40,7 @@ export class SpecimenFactory<T> {
     return this.mutators.reduce(
       (out, mutator) => (mutator(out as T), out),
       this.generate()
-    ) as Value<T>;
+    ) as T;
   }
 
   /**
@@ -48,9 +48,7 @@ export class SpecimenFactory<T> {
    * @returns A sequence of anonymous object of type T.
    */
   createMany(minCount?: number, maxCount?: number) {
-    return range(minCount || 0, maxCount || 0).map(() =>
-      this.create()
-    ) as Array<Value<T>>;
+    return range(minCount || 0, maxCount || 0).map(() => this.create()) as T[];
   }
 
   /**
