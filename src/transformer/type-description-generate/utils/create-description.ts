@@ -32,7 +32,7 @@ const getEnumValues = (type: ts.Type) =>
  * @param typeArgumentsMap Parent node type arguments relations map
  */
 const createDeclarationDescription = (
-  node: ts.Declaration,
+  node: ts.Declaration | undefined,
   nodeTypeArguments: TypeParamsMap = {},
   typeArgumentsMap: TypeParamsMap = {}
 ) => {
@@ -92,7 +92,7 @@ export const createDescription = (
   }
 
   if (!type.symbol) {
-    const typeNode = checker.typeToTypeNode(type);
+    const typeNode = checker.typeToTypeNode(type, undefined, undefined);
     return getPropertyNameBySyntaxKind(typeNode);
   }
 
@@ -145,6 +145,6 @@ export const createDescription = (
   return flatMap(
     node =>
       createDeclarationDescription(node, nodeTypeArguments, typeArgumentsMap),
-    declarations
+    declarations.filter(x => x !== undefined)
   );
 };

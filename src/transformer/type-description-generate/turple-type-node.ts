@@ -8,7 +8,7 @@ export const getTurpleNodeDescription: DescriptionFactory<ts.TupleTypeNode> = (
   typeArgumentsMap = {}
 ) => ({
   flag: DescriptionFlag.Turple,
-  description: typeNode.elementTypes.map(i => ({
+  description: typeNode.elements.map(i => ({
     description: generateNodeDescription(i, typeArgumentsMap),
   })),
 });

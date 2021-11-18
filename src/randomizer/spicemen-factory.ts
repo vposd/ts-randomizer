@@ -89,9 +89,8 @@ export class SpecimenFactory<T> {
       ) as Value<T>;
     }
     if (prop.flag === DescriptionFlag.Method) {
-      return (() => new SpecimenFactory<T>(prop.description).create()) as Value<
-        T
-      >;
+      return (() =>
+        new SpecimenFactory<T>(prop.description).create()) as Value<T>;
     }
     if (prop.flag === DescriptionFlag.Enum && prop.possibleValues) {
       return sample(prop.possibleValues as unknown[]) as Value<T>;

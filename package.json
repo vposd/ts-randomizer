@@ -1,7 +1,7 @@
 {
   "name": "ts-randomizer",
-  "version": "1.0.24",
-  "description": "A tool to create random data by requested types",
+  "version": "2.0.0",
+  "description": "A tool to create random data by type parameters",
   "main": "index.js",
   "types": "index.d.ts",
   "author": {
@@ -46,24 +46,25 @@
     "transformer.js"
   ],
   "devDependencies": {
-    "@types/jest": "^26.0.0",
-    "@types/lodash": "^4.14.155",
-    "@types/node": "^13.11.1",
-    "@types/uuid": "^8.0.0",
-    "codecov": "^3.7.0",
-    "eslint": "^7.2.0",
-    "gts": "^2.0.2",
-    "jest": "^26.0.1",
-    "nodemon": "^2.0.4",
-    "ts-jest": "^26.1.0",
-    "tslint": "^6.1.2",
-    "typescript": "^3.8.3"
+    "@types/jest": "^27.0.2",
+    "@types/lodash": "^4.14.177",
+    "@types/node": "^16.11.7",
+    "@types/uuid": "^8.3.3",
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
+    "codecov": "^3.8.3",
+    "eslint": "^8.2.0",
+    "gts": "^3.1.0",
+    "jest": "^27.3.1",
+    "nodemon": "^2.0.15",
+    "ts-jest": "^27.0.7",
+    "typescript": "^4.4.4"
   },
   "dependencies": {
-    "uuid": "^8.1.0",
-    "lodash": "^4.17.15"
+    "uuid": "^8.3.2",
+    "lodash": "^4.17.21"
   },
   "peerDependencies": {
-    "typescript": "^3.9.5"
+    "typescript": "^4.4.4"
   }
 }
