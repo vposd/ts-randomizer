@@ -2,7 +2,11 @@
 build
 node_modules
 coverage
+./*.index.js
+./*.transformer.js
 **/*.js
+**/*.js.map
+**/*.d.ts
 !test/index.js
 !.prettierrc.js
 !jest.config.js

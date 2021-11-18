@@ -11,12 +11,15 @@ const TARGET_CLASS_NAME = 'Randomizer';
  * Typescript transformer factory
  * @param program Program
  */
-export const transformer = (
-  program: ts.Program | { getTypeChecker(): ts.TypeChecker }
-): ts.TransformerFactory<ts.SourceFile> => context => file => {
-  setTypeChecker(program.getTypeChecker());
-  return ts.visitNode(file, visitNode(context, program.getTypeChecker()));
-};
+export const transformer =
+  (
+    program: ts.Program | { getTypeChecker(): ts.TypeChecker }
+  ): ts.TransformerFactory<ts.SourceFile> =>
+  context =>
+  file => {
+    setTypeChecker(program.getTypeChecker());
+    return ts.visitNode(file, visitNode(context, program.getTypeChecker()));
+  };
 
 const isTargetExpression = (target: ts.CallExpression) =>
   ts.isPropertyAccessExpression(target.expression) &&
@@ -29,32 +32,31 @@ const isTargetExpression = (target: ts.CallExpression) =>
  * @param context Transformation context
  * @param checker Type checker
  */
-const visitNode = (
-  context: ts.TransformationContext,
-  checker: ts.TypeChecker
-): ts.Visitor => node => {
-  node = ts.visitEachChild(node, visitNode(context, checker), context);
+const visitNode =
+  (context: ts.TransformationContext, checker: ts.TypeChecker): ts.Visitor =>
+  node => {
+    node = ts.visitEachChild(node, visitNode(context, checker), context);
 
-  if (
-    !ts.isCallExpression(node) ||
-    !isTargetExpression(node) ||
-    !node.typeArguments
-  ) {
-    return node;
-  }
+    if (
+      !ts.isCallExpression(node) ||
+      !isTargetExpression(node) ||
+      !node.typeArguments
+    ) {
+      return node;
+    }
 
-  const [typeArgument] = node.typeArguments;
-  const typeTemplate = generateNodeDescription(typeArgument);
-  const template = isArray(typeTemplate)
-    ? ts.createArrayLiteral(
-        typeTemplate.map(property =>
-          ts.createRegularExpressionLiteral(JSON.stringify(property))
+    const [typeArgument] = node.typeArguments;
+    const typeTemplate = generateNodeDescription(typeArgument);
+    const template = isArray(typeTemplate)
+      ? ts.createArrayLiteral(
+          typeTemplate.map(property =>
+            ts.createRegularExpressionLiteral(JSON.stringify(property))
+          )
         )
-      )
-    : ts.createRegularExpressionLiteral(JSON.stringify(typeTemplate));
+      : ts.createRegularExpressionLiteral(JSON.stringify(typeTemplate));
 
-  return ts.updateCall(node, node.expression, node.typeArguments, [
-    template,
-    ...node.arguments,
-  ]);
-};
+    return ts.updateCall(node, node.expression, node.typeArguments, [
+      template,
+      ...node.arguments,
+    ]);
+  };
