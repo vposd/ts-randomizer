@@ -33,6 +33,9 @@ export const getPropertyNameBySyntaxKind = (
     return PropertyType.Unknown;
   }
   let kind: ts.SyntaxKind | undefined = propertySignature.kind;
+  if (ts.isLiteralTypeNode(propertySignature)) {
+    kind = propertySignature.literal.kind;
+  }
   if (
     ts.isPropertyDeclaration(propertySignature) ||
     ts.isPropertySignature(propertySignature)
