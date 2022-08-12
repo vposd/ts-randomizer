@@ -15,7 +15,7 @@ import {
   getFirstTypeParameter,
   isArrayType,
 } from './index';
-import { getTurpleNodeDescription } from '../turple-type-node';
+import { getTupleNodeDescription } from '../tuple-type-node';
 import { getTypeChecker } from '../../checker';
 import { mergeTypeParamsMap } from '../type-params/marge-params-map';
 
@@ -59,7 +59,7 @@ const createDeclarationDescription = (
   }
 
   if (ts.isTupleTypeNode(node.type)) {
-    return getTurpleNodeDescription(node.type);
+    return getTupleNodeDescription(node.type);
   }
 
   const nodeTypeNode = ts.isArrayTypeNode(node.type)

@@ -83,7 +83,7 @@ export class SpecimenFactory<T> {
         this.arrayValueCount
       ) as Value<T>;
     }
-    if (prop.flag === DescriptionFlag.Turple) {
+    if (prop.flag === DescriptionFlag.Tuple) {
       return (prop.description as PropertyDescription[]).map(desc =>
         new SpecimenFactory(desc).create()
       ) as Value<T>;

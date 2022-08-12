@@ -1,6 +1,6 @@
 import { PropertyType } from '../src/types';
 import { Randomizer } from '../src/randomizer/randomizer';
-import { SpecimenFactory } from '../src/randomizer/spicemen-factory';
+import { SpecimenFactory } from '../src/randomizer/specimen-factory';
 
 const matchAnyString = () =>
   expect.stringMatching(
@@ -83,7 +83,7 @@ describe('Randomizer class', () => {
       ]);
     });
 
-    test('should create object for turple type', () => {
+    test('should create object for tuple type', () => {
       expect(Randomizer.create<[number]>()).toMatchObject([expect.any(Number)]);
     });
 

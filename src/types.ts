@@ -23,7 +23,7 @@ export type TypeDescription =
 
 export enum DescriptionFlag {
   Array,
-  Turple,
+  Tuple,
   Method,
   Enum,
 }
