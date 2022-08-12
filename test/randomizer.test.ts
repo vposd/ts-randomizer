@@ -352,14 +352,14 @@ describe('Randomizer class', () => {
   });
 });
 
-describe('SpicemenFactory', () => {
+describe('SpecimenFactory', () => {
   describe('.create', () => {
     test('should not throw error if key of property description is null', () => {
-      const spicemen = new SpecimenFactory([
+      const specimen = new SpecimenFactory([
         { key: '', description: PropertyType.String },
         { key: 'a', description: PropertyType.Number },
       ]);
-      expect(spicemen.create()).toMatchObject({
+      expect(specimen.create()).toMatchObject({
         a: expect.any(Number),
       });
     });
@@ -367,8 +367,8 @@ describe('SpicemenFactory', () => {
 
   describe('.createMany', () => {
     test('should create an empty array if arguments has not been provided', () => {
-      const spicemen = new SpecimenFactory(PropertyType.String);
-      expect(spicemen.createMany()).toMatchObject([]);
+      const specimen = new SpecimenFactory(PropertyType.String);
+      expect(specimen.createMany()).toMatchObject([]);
     });
   });
 });
