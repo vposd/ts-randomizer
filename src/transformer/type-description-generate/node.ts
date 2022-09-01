@@ -2,7 +2,7 @@ import * as ts from 'typescript';
 
 import { TypeParamsMap, TypeDescription, PropertyType } from '../../types';
 import { getArrayTypeDescription } from './array-type-node';
-import { getTurpleNodeDescription } from './turple-type-node';
+import { getTupleNodeDescription } from './tuple-type-node';
 import { getTypeNodeDescription } from './type-node';
 import { getPropertyDescription } from './property-signature-declaration';
 import { getMethodDescription } from './method-signature-declaration';
@@ -26,9 +26,9 @@ export const generateNodeDescription: DescriptionFactory<ts.Node> = (
     return getArrayTypeDescription(node, typeArgumentsMap);
   }
 
-  // Return description for turple type node
+  // Return description for tuple type node
   if (ts.isTupleTypeNode(node)) {
-    return getTurpleNodeDescription(node);
+    return getTupleNodeDescription(node);
   }
 
   // Return description for type node

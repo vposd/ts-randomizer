@@ -1,6 +1,6 @@
 import { PropertyType } from '../src/types';
 import { Randomizer } from '../src/randomizer/randomizer';
-import { SpecimenFactory } from '../src/randomizer/spicemen-factory';
+import { SpecimenFactory } from '../src/randomizer/specimen-factory';
 
 const matchAnyString = () =>
   expect.stringMatching(
@@ -83,7 +83,7 @@ describe('Randomizer class', () => {
       ]);
     });
 
-    test('should create object for turple type', () => {
+    test('should create object for tuple type', () => {
       expect(Randomizer.create<[number]>()).toMatchObject([expect.any(Number)]);
     });
 
@@ -352,14 +352,14 @@ describe('Randomizer class', () => {
   });
 });
 
-describe('SpicemenFactory', () => {
+describe('SpecimenFactory', () => {
   describe('.create', () => {
     test('should not throw error if key of property description is null', () => {
-      const spicemen = new SpecimenFactory([
+      const specimen = new SpecimenFactory([
         { key: '', description: PropertyType.String },
         { key: 'a', description: PropertyType.Number },
       ]);
-      expect(spicemen.create()).toMatchObject({
+      expect(specimen.create()).toMatchObject({
         a: expect.any(Number),
       });
     });
@@ -367,8 +367,8 @@ describe('SpicemenFactory', () => {
 
   describe('.createMany', () => {
     test('should create an empty array if arguments has not been provided', () => {
-      const spicemen = new SpecimenFactory(PropertyType.String);
-      expect(spicemen.createMany()).toMatchObject([]);
+      const specimen = new SpecimenFactory(PropertyType.String);
+      expect(specimen.createMany()).toMatchObject([]);
     });
   });
 });

@@ -145,7 +145,7 @@ describe('Test transformer.', () => {
     ]);
   });
 
-  test('should generate description for turples', () => {
+  test('should generate description for tuples', () => {
     interface B<C> {
       c: C[];
     }
@@ -155,12 +155,12 @@ describe('Test transformer.', () => {
     }
 
     expect(Randomizer.create<[A, boolean, number]>()).toMatchObject({
-      flag: DescriptionFlag.Turple,
+      flag: DescriptionFlag.Tuple,
       description: [
         {
           description: [
             {
-              flag: DescriptionFlag.Turple,
+              flag: DescriptionFlag.Tuple,
               description: [
                 { description: PropertyType.Number },
                 {

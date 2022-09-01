@@ -12,7 +12,7 @@ export function compile(
     target: ts.ScriptTarget.ES5,
   });
 
-  const tramsformers: ts.CustomTransformers = {
+  const transformers: ts.CustomTransformers = {
     before: [transformer(program)],
     after: [],
   };
@@ -22,7 +22,7 @@ export function compile(
     writeFileCallback,
     undefined,
     false,
-    tramsformers
+    transformers
   );
 
   if (emitSkipped) {
