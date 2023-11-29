@@ -1,10 +1,9 @@
 ---
-name: Pull request check
+name: Deploy release
 
 on:
-  pull_request:
+  push:
     branches:
-      - master
       - release
 
 jobs:
@@ -19,3 +18,7 @@ jobs:
       - run: npm ci
       - run: npm run check
       - run: npm test
+      - run: npm run build
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
