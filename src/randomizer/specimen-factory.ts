@@ -83,7 +83,7 @@ export class SpecimenFactory<T> {
         this.arrayValueCount
       ) as Value<T>;
     }
-    if (prop.flag === DescriptionFlag.Turple) {
+    if (prop.flag === DescriptionFlag.Tuple) {
       return (prop.description as PropertyDescription[]).map(desc =>
         new SpecimenFactory(desc).create()
       ) as Value<T>;
@@ -99,13 +99,16 @@ export class SpecimenFactory<T> {
   }
 
   private generatePropertiesValues(props: PropertyDescription[]) {
-    return props.reduce((output, prop) => {
-      if (!prop || !prop.key) {
+    return props.reduce(
+      (output, prop) => {
+        if (!prop || !prop.key) {
+          return output;
+        }
+        output[prop.key] = this.generatePropertyValue(prop);
         return output;
-      }
-      output[prop.key] = this.generatePropertyValue(prop);
-      return output;
-    }, {} as { [key: string]: Value<T> });
+      },
+      {} as { [key: string]: Value<T> }
+    );
   }
 
   private generateValue(type: PropertyType) {

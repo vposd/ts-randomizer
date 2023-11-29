@@ -1,6 +1,6 @@
 import { isUndefined } from 'lodash/fp';
 
-import { SpecimenFactory } from './spicemen-factory';
+import { SpecimenFactory } from './specimen-factory';
 import { TypeDescription } from '../types';
 
 type RandomizerArguments = [TypeDescription?];
@@ -36,7 +36,7 @@ export class Randomizer {
   }
 
   /**
-   * Returns a spicemen factory
+   * Returns a specimen factory
    */
   static build<T>(...args: RandomizerArguments): SpecimenFactory<T> {
     if (isUndefined(args[0])) {

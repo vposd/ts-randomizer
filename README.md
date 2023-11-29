@@ -1,4 +1,7 @@
-[![npm version](https://badge.fury.io/js/ts-randomizer.svg)](https://badge.fury.io/js/ts-randomizer) [![Build Status](https://travis-ci.com/vposd/ts-randomizer.svg?branch=master)](https://travis-ci.com/vposd/ts-randomizer) [![Code Style: Google](https://img.shields.io/badge/code%20style-google-blueviolet.svg)](https://github.com/google/gts)
+[![License](https://img.shields.io/:license-mit-blue.svg)](https://vposd.mit-license.org/)
+[![npm version](https://badge.fury.io/js/ts-randomizer.svg)](https://badge.fury.io/js/ts-randomizer)
+[![Release](https://github.com/vposd/ts-randomizer/actions/workflows/release.yml/badge.svg)](https://github.com/vposd/ts-randomizer/actions/workflows/release.yml)
+[![Code Style: Google](https://img.shields.io/badge/code%20style-google-blueviolet.svg)](https://github.com/google/gts)
 
 # Typescript Randomizer
 A tool to create random data by requested types.
