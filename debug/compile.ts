@@ -8,7 +8,6 @@ export function compile(
   const program = ts.createProgram(filePaths, {
     outDir: 'build/manual-compile',
     noEmitOnError: true,
-    suppressImplicitAnyIndexErrors: true,
     target: ts.ScriptTarget.ES5,
   });
 

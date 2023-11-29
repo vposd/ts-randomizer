@@ -18,7 +18,10 @@ export const transformer =
   context =>
   file => {
     setTypeChecker(program.getTypeChecker());
-    return ts.visitNode(file, visitNode(context, program.getTypeChecker()));
+    return ts.visitNode(
+      file,
+      visitNode(context, program.getTypeChecker())
+    ) as ts.SourceFile;
   };
 
 const isTargetExpression = (target: ts.CallExpression) =>
@@ -48,15 +51,17 @@ const visitNode =
     const [typeArgument] = node.typeArguments;
     const typeTemplate = generateNodeDescription(typeArgument);
     const template = isArray(typeTemplate)
-      ? ts.createArrayLiteral(
+      ? ts.factory.createArrayLiteralExpression(
           typeTemplate.map(property =>
-            ts.createRegularExpressionLiteral(JSON.stringify(property))
+            ts.factory.createRegularExpressionLiteral(JSON.stringify(property))
           )
         )
-      : ts.createRegularExpressionLiteral(JSON.stringify(typeTemplate));
+      : ts.factory.createRegularExpressionLiteral(JSON.stringify(typeTemplate));
 
-    return ts.updateCall(node, node.expression, node.typeArguments, [
-      template,
-      ...node.arguments,
-    ]);
+    return ts.factory.updateCallExpression(
+      node,
+      node.expression,
+      node.typeArguments,
+      [template, ...node.arguments]
+    );
   };
