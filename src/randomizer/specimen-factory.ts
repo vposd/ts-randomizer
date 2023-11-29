@@ -99,13 +99,16 @@ export class SpecimenFactory<T> {
   }
 
   private generatePropertiesValues(props: PropertyDescription[]) {
-    return props.reduce((output, prop) => {
-      if (!prop || !prop.key) {
+    return props.reduce(
+      (output, prop) => {
+        if (!prop || !prop.key) {
+          return output;
+        }
+        output[prop.key] = this.generatePropertyValue(prop);
         return output;
-      }
-      output[prop.key] = this.generatePropertyValue(prop);
-      return output;
-    }, {} as { [key: string]: Value<T> });
+      },
+      {} as { [key: string]: Value<T> }
+    );
   }
 
   private generateValue(type: PropertyType) {
