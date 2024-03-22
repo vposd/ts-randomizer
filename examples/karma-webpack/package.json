@@ -10,7 +10,7 @@
     "karma": "^5.1.0",
     "karma-chrome-launcher": "^3.1.0",
     "karma-jasmine": "^3.3.1",
-    "karma-webpack": "^4.0.2",
+    "karma-webpack": "^5.0.1",
     "ts-patch": "^1.2.4",
     "ts-randomizer": "^1.0.24",
     "typescript": "^3.8.3",
