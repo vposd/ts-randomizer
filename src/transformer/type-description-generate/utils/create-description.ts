@@ -1,4 +1,4 @@
-import ts = require('typescript');
+import * as ts from 'typescript';
 import { isEmpty, flatMap, map } from 'lodash/fp';
 
 import {
