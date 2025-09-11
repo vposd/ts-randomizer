@@ -232,7 +232,7 @@ describe('Test transformer.', () => {
     }
 
     expect(
-      Randomizer.create<A<string, number[], boolean[], object[][]>>()
+      Randomizer.create<A<string, number[], boolean[], object[][]>>(),
     ).toMatchObject([
       { key: 'b', description: PropertyType.String },
       {
@@ -274,7 +274,7 @@ describe('Test transformer.', () => {
     }
 
     expect(
-      Randomizer.create<A<string, number[], boolean[], object[][]>>()
+      Randomizer.create<A<string, number[], boolean[], object[][]>>(),
     ).toMatchObject([
       { key: 'b', description: PropertyType.String },
       {

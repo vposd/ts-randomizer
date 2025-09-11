@@ -9,7 +9,7 @@ import { getMethodDescription } from './method-signature-declaration';
 
 export type DescriptionFactory<T> = (
   node: T,
-  typeArgumentsMap?: TypeParamsMap
+  typeArgumentsMap?: TypeParamsMap,
 ) => TypeDescription;
 
 /**
@@ -19,7 +19,7 @@ export type DescriptionFactory<T> = (
  */
 export const generateNodeDescription: DescriptionFactory<ts.Node> = (
   node,
-  typeArgumentsMap = {}
+  typeArgumentsMap = {},
 ) => {
   // Return description for array type node
   if (ts.isArrayTypeNode(node)) {

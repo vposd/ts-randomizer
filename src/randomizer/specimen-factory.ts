@@ -39,7 +39,7 @@ export class SpecimenFactory<T> {
   create() {
     return this.mutators.reduce(
       (out, mutator) => (mutator(out as T), out),
-      this.generate()
+      this.generate(),
     ) as T;
   }
 
@@ -80,12 +80,12 @@ export class SpecimenFactory<T> {
   private generatePropertyValue(prop: PropertyDescription): Value<T> {
     if (prop.flag === DescriptionFlag.Array) {
       return new SpecimenFactory(prop.description).createMany(
-        this.arrayValueCount
+        this.arrayValueCount,
       ) as Value<T>;
     }
     if (prop.flag === DescriptionFlag.Tuple) {
       return (prop.description as PropertyDescription[]).map(desc =>
-        new SpecimenFactory(desc).create()
+        new SpecimenFactory(desc).create(),
       ) as Value<T>;
     }
     if (prop.flag === DescriptionFlag.Method) {
@@ -107,7 +107,7 @@ export class SpecimenFactory<T> {
         output[prop.key] = this.generatePropertyValue(prop);
         return output;
       },
-      {} as { [key: string]: Value<T> }
+      {} as { [key: string]: Value<T> },
     );
   }
 

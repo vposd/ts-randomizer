@@ -2,7 +2,14 @@
   "extends": "./node_modules/gts/tsconfig-google.json",
   "compilerOptions": {
     "rootDir": ".",
-    "outDir": "build"
+    "outDir": "build",
+    "lib": ["ES2023", "DOM"]
   },
-  "include": ["src/**/*.ts", "debug/**/*.ts", "test/**/*.ts"]
+  "include": [
+    "src/**/*.ts",
+    "debug/**/*.ts",
+    "test/**/*.ts",
+    "index.ts",
+    "transformer.ts"
+  ]
 }
