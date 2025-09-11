@@ -3,6 +3,7 @@ module.exports = {
     '^.+\\.tsx?$': 'ts-jest',
   },
   testRegex: '(build/manual-compile/test/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$',
+  testPathIgnorePatterns: ['<rootDir>/examples/'],
   moduleFileExtensions: ['js', 'jsx', 'json', 'node'],
   modulePathIgnorePatterns: ['build/test'],
   extensionsToTreatAsEsm: ['.ts'],
