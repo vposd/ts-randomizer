@@ -5,7 +5,7 @@ import { DescriptionFlag } from '../../types';
 
 export const getTupleNodeDescription: DescriptionFactory<ts.TupleTypeNode> = (
   typeNode,
-  typeArgumentsMap = {}
+  typeArgumentsMap = {},
 ) => ({
   flag: DescriptionFlag.Tuple,
   description: typeNode.elements.map(i => ({

@@ -8,7 +8,7 @@ import { getTypeChecker } from '../checker';
 
 export const getArrayTypeDescription: DescriptionFactory<ts.ArrayTypeNode> = (
   node,
-  typeArgumentsMap = {}
+  typeArgumentsMap = {},
 ) => {
   const checker = getTypeChecker();
 

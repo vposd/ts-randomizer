@@ -6,7 +6,7 @@ import { getTypeArguments, getFirstTypeParameter, isArrayType } from '../utils';
 export const mergeTypeParamsMap = (
   argumentsMap: TypeParamsMap = {},
   nodeTypeArguments: TypeParamsMap = {},
-  typeArgumentsMap: TypeParamsMap = {}
+  typeArgumentsMap: TypeParamsMap = {},
 ) => {
   const newArgumentsMap = isEmpty(argumentsMap)
     ? isEmpty(nodeTypeArguments) ||

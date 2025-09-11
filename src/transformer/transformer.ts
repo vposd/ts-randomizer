@@ -13,14 +13,14 @@ const TARGET_CLASS_NAME = 'Randomizer';
  */
 export const transformer =
   (
-    program: ts.Program | { getTypeChecker(): ts.TypeChecker }
+    program: ts.Program | { getTypeChecker(): ts.TypeChecker },
   ): ts.TransformerFactory<ts.SourceFile> =>
   context =>
   file => {
     setTypeChecker(program.getTypeChecker());
     return ts.visitNode(
       file,
-      visitNode(context, program.getTypeChecker())
+      visitNode(context, program.getTypeChecker()),
     ) as ts.SourceFile;
   };
 
@@ -53,8 +53,8 @@ const visitNode =
     const template = isArray(typeTemplate)
       ? ts.factory.createArrayLiteralExpression(
           typeTemplate.map(property =>
-            ts.factory.createRegularExpressionLiteral(JSON.stringify(property))
-          )
+            ts.factory.createRegularExpressionLiteral(JSON.stringify(property)),
+          ),
         )
       : ts.factory.createRegularExpressionLiteral(JSON.stringify(typeTemplate));
 
@@ -62,6 +62,6 @@ const visitNode =
       node,
       node.expression,
       node.typeArguments,
-      [template, ...node.arguments]
+      [template, ...node.arguments],
     );
   };

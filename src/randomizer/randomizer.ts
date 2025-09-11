@@ -24,14 +24,14 @@ export class Randomizer {
   static createMany<T>(
     firstArg?: TypeDescription | number,
     minCount?: number,
-    maxCount?: number
+    maxCount?: number,
   ): T[] | undefined {
     if (isUndefined(firstArg)) {
       return undefined;
     }
     return new SpecimenFactory<T>(firstArg as TypeDescription).createMany(
       minCount,
-      maxCount
+      maxCount,
     ) as T[];
   }
 
