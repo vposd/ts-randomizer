@@ -22,7 +22,7 @@ import { mergeTypeParamsMap } from '../type-params/marge-params-map';
 const getEnumValues = (type: ts.Type) =>
   map(
     literal => (literal as ts.LiteralType).value,
-    (type as ts.IntersectionType).types
+    (type as ts.IntersectionType).types,
   );
 
 /**
@@ -34,7 +34,7 @@ const getEnumValues = (type: ts.Type) =>
 const createDeclarationDescription = (
   node: ts.Declaration | undefined,
   nodeTypeArguments: TypeParamsMap = {},
-  typeArgumentsMap: TypeParamsMap = {}
+  typeArgumentsMap: TypeParamsMap = {},
 ) => {
   const checker = getTypeChecker();
 
@@ -71,7 +71,7 @@ const createDeclarationDescription = (
 
   return generateNodeDescription(
     node,
-    mergeTypeParamsMap(argumentsMap, nodeTypeArguments, typeArgumentsMap)
+    mergeTypeParamsMap(argumentsMap, nodeTypeArguments, typeArgumentsMap),
   );
 };
 
@@ -84,7 +84,7 @@ const createDeclarationDescription = (
 export const createDescription = (
   key: string | null,
   type: ts.Type,
-  typeArgumentsMap: TypeParamsMap = {}
+  typeArgumentsMap: TypeParamsMap = {},
 ): TypeDescription => {
   const checker = getTypeChecker();
   if (!type) {
@@ -122,7 +122,7 @@ export const createDescription = (
 
   const declarations = flatMap(
     p => p.declarations,
-    checker.getPropertiesOfType(type)
+    checker.getPropertiesOfType(type),
   );
 
   if (!declarations.length) {
@@ -134,7 +134,7 @@ export const createDescription = (
         description: createDescription(
           key,
           typeArg && typeArg.type,
-          typeArgumentsMap
+          typeArgumentsMap,
         ),
       };
     }
@@ -145,6 +145,6 @@ export const createDescription = (
   return flatMap(
     node =>
       createDeclarationDescription(node, nodeTypeArguments, typeArgumentsMap),
-    declarations.filter(x => x !== undefined)
+    declarations.filter(x => x !== undefined),
   );
 };

@@ -23,7 +23,7 @@ export const createTypeParamsMap = (type: ts.Type): TypeParamsMap => {
       ts.isInterfaceDeclaration(d) || ts.isClassDeclaration(d)
         ? d.typeParameters
         : [],
-    symbol.declarations
+    symbol.declarations,
   );
 
   if (isArrayType(type)) {

@@ -19,7 +19,7 @@ import {
 const generateArrayTypeArgumentDescription = (
   node: ts.Node,
   symbol: ts.Symbol,
-  typeArgumentsMap: TypeParamsMap = {}
+  typeArgumentsMap: TypeParamsMap = {},
 ) => {
   const checker = getTypeChecker();
   const type = checker.getTypeAtLocation(node);
@@ -44,7 +44,7 @@ const generateArrayTypeArgumentDescription = (
     description: createDescription(
       symbol.getName(),
       argumentType || typeArgumentsMap[type.symbol.name].type,
-      typeArgumentsMap
+      typeArgumentsMap,
     ),
   };
 };
@@ -69,7 +69,7 @@ export const getPropertyDescription: DescriptionFactory<
         description: createDescription(
           symbol.getName(),
           type,
-          typeArgumentsMap
+          typeArgumentsMap,
         ),
       }
     );

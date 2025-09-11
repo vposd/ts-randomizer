@@ -4,7 +4,7 @@ import { SpecimenFactory } from '../src/randomizer/specimen-factory';
 
 const matchAnyString = () =>
   expect.stringMatching(
-    /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
   );
 
 describe('Randomizer class', () => {
@@ -309,7 +309,7 @@ describe('Randomizer class', () => {
   describe('.build', () => {
     test('should throw error if description has not been provided', () => {
       expect(Randomizer.build).toThrowError(
-        '[Randomizer] Error: Missing type description'
+        '[Randomizer] Error: Missing type description',
       );
     });
   });

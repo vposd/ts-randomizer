@@ -27,7 +27,7 @@ export const getPropertyNameBySyntaxKind = (
     | ts.PropertySignature
     | ts.PropertyDeclaration
     | ts.TypeNode
-    | undefined
+    | undefined,
 ): PropertyType => {
   if (!propertySignature) {
     return PropertyType.Unknown;
@@ -61,10 +61,10 @@ export const getPropertyNameBySyntaxKind = (
       return ts.isPropertyDeclaration(propertySignature) ||
         ts.isPropertySignature(propertySignature)
         ? getPropertyNameBySyntaxKind(
-            (propertySignature.type as ts.ArrayTypeNode).elementType
+            (propertySignature.type as ts.ArrayTypeNode).elementType,
           )
         : getPropertyNameBySyntaxKind(
-            (propertySignature as ts.ArrayTypeNode).elementType
+            (propertySignature as ts.ArrayTypeNode).elementType,
           );
     default:
       return PropertyType.Unknown;
