@@ -5,4 +5,11 @@ module.exports = {
   testRegex: '(build/manual-compile/test/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$',
   moduleFileExtensions: ['js', 'jsx', 'json', 'node'],
   modulePathIgnorePatterns: ['build/test'],
+  extensionsToTreatAsEsm: ['.ts'],
+  globals: {
+    'ts-jest': {
+      useESM: true,
+    },
+  },
+  transformIgnorePatterns: ['node_modules/(?!(uuid)/)'],
 };
